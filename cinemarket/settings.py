@@ -73,15 +73,15 @@ WSGI_APPLICATION = 'cinemarket.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-import os, socket
+import socket, os
 
-def resolve_ipv4(host):
+def get_ipv4(hostname):
     try:
-        return socket.getaddrinfo(host, None, socket.AF_INET)[0][4][0]
+        return socket.getaddrinfo(hostname, None, socket.AF_INET)[0][4][0]
     except Exception:
-        return host
+        return hostname
 
-db_host = resolve_ipv4("db.ipvfsirzkjyyppcwkkwk.supabase.co")
+db_host = get_ipv4("db.ipvfsirzkjyyppcwkkwk.supabase.co")
 
 DATABASES = {
     'default': {
