@@ -75,22 +75,17 @@ WSGI_APPLICATION = 'cinemarket.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 import socket, os
 
-def get_ipv4(hostname):
-    try:
-        return socket.getaddrinfo(hostname, None, socket.AF_INET)[0][4][0]
-    except Exception:
-        return hostname
-
-db_host = get_ipv4("db.ipvfsirzkjyyppcwkkwk.supabase.co")
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PGDATABASE', 'postgres'),
-        'USER': os.environ.get('PGUSER', 'postgres'),
-        'PASSWORD': os.environ.get('PGPASSWORD', 'Nico2409.'),
-        'HOST': db_host,
+        'NAME': 'postgres',
+        'USER': 'postgres.ipvfsirzkjyyppcwkkwk',
+        'PASSWORD': 'Nico2409.',  # tu contraseña real de Supabase
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
