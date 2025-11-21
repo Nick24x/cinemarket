@@ -73,18 +73,15 @@ WSGI_APPLICATION = 'cinemarket.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-import os
-import psycopg2
-import socket
+import os, socket
 
-
-def force_ipv4(host):
+def resolve_ipv4(host):
     try:
         return socket.getaddrinfo(host, None, socket.AF_INET)[0][4][0]
     except Exception:
         return host
-    
-db_host = os.environ.get('PGHOST', 'db.ipvfsirzkjyyppcwkkwk.supabase.co')
+
+db_host = resolve_ipv4("db.ipvfsirzkjyyppcwkkwk.supabase.co")
 
 DATABASES = {
     'default': {
@@ -92,8 +89,8 @@ DATABASES = {
         'NAME': os.environ.get('PGDATABASE', 'postgres'),
         'USER': os.environ.get('PGUSER', 'postgres'),
         'PASSWORD': os.environ.get('PGPASSWORD', 'Nico2409.'),
-        'HOST': force_ipv4(db_host),
-        'PORT': os.environ.get('PGPORT', '5432'),
+        'HOST': db_host,
+        'PORT': '5432',
     }
 }
 
