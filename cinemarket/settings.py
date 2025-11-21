@@ -143,3 +143,7 @@ MP_ACCESS_TOKEN = "APP_USR-2568026340823469-111821-9bad41b9acf67046efac2b64bde81
 LOGIN_URL = '/usuarios/login/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://cinemarket-production.up.railway.app',
+]
