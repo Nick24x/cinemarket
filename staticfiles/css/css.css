@@ -1,0 +1,230 @@
+/* ==== FONDO GENERAL ==== */
+body {
+  background: radial-gradient(circle at top, #20263b 0, #050814 45%, #02030a 100%);
+  color: #f5f5f5;
+}
+
+/* ==== NAVBAR ==== */
+.navbar-dark {
+  background: rgba(2, 3, 10, 0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.navbar-brand {
+  font-size: 1.3rem;
+}
+
+.brand-accent {
+  color: #4cc9f0;
+}
+
+/* ==== BARRA DE BÚSQUEDA ==== */
+.search-pill {
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+  max-width: 380px;
+  height: 44px;
+  padding: 0 14px;
+}
+
+.search-pill input {
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-size: 0.95rem;
+}
+
+.search-pill input::placeholder {
+  color: #6b7280;
+}
+
+.search-pill input:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* ==== HERO ==== */
+.hero-img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  filter: brightness(0.55);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.58) 45%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+}
+
+.hero-overlay-content {
+  max-width: 780px;
+  margin-left: 6%;
+  animation: fadeInUp 0.45s ease both;
+}
+
+/* Flechas carrusel más alejadas del texto */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 7%;
+}
+
+/* --- Flechas del carrusel en blanco y más visibles --- */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+  width: 3rem;
+  height: 3rem;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+/* flecha derecha */
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M4.646 1.646a.5.5 0 0 0 0 .708L9.293 7l-4.647 4.646a.5.5 0 0 0 .708.708l5-5a.5.5 0 0 0 0-.708l-5-5a.5.5 0 0 0-.708 0z'/%3e%3c/svg%3e");
+}
+
+/* separarlas un poco más hacia los bordes */
+.carousel-control-prev {
+  left: 1.2rem;
+}
+.carousel-control-next {
+  right: 1.2rem;
+}
+
+/* ==== PILLS DE GÉNERO ==== */
+.genre-pill {
+  border-radius: 999px;
+}
+
+.genre-pill.active {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+/* ==== TARJETAS DE PELÍCULAS ==== */
+.movie-card {
+  background: #050816;
+  border: none;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  animation: fadeInUp 0.4s ease both;
+  position: relative;         /* para el hover card */
+}
+
+/* efecto hover base */
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+  border-color: #38bdf8;
+}
+
+/* póster */
+.movie-poster {
+  height: 260px;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+/* oscurecer y hacer zoom al pasar el mouse */
+.movie-card:hover .movie-poster {
+  filter: brightness(0.35);
+  transform: scale(1.03);
+}
+
+.badge-rating {
+  background: #facc15;
+  color: #1f2933;
+  font-weight: 700;
+}
+
+/* ====== HOVER CARD (info flotante) ====== */
+.movie-hover-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(10px);
+  width: 90%;
+  max-width: 480px;
+  background: radial-gradient(circle at top, #1e293b 0%, #020617 70%);
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.movie-card:hover .movie-hover-card {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+.movie-hover-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.movie-hover-meta {
+  font-size: 0.9rem;
+  color: #facc15;
+}
+
+.movie-hover-meta span {
+  margin-right: 0.5rem;
+}
+
+.movie-hover-description {
+  font-size: 0.9rem;
+  color: rgba(226, 232, 240, 0.9);
+  margin-top: 0.5rem;
+}
+
+/* Tablas / badges redondos (de tu CSS anterior) */
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.badge {
+  border-radius: 999px;
+}
+
+/* Animación */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilo específico para las pantallas de autenticación */
+.auth-card {
+  background-color: #e5e7eb;  /* gris claro */
+  color: #111827;             /* texto oscuro */
+}
+
+.auth-card h1,
+.auth-card h2,
+.auth-card p,
+.auth-card label {
+  color: #111827;
+}
+
+.auth-card input.form-control {
+  background: #ffffff;
+  color: #111827;
+}
