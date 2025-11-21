@@ -74,16 +74,20 @@ WSGI_APPLICATION = 'cinemarket.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'Nico2409.',
-        'HOST': 'db.ipvfsirzkjyyppcwkkwk.supabase.co',
-        'PORT': '5432',
+        'NAME': os.environ.get('PGDATABASE', 'postgres'),
+        'USER': os.environ.get('PGUSER', 'postgres'),
+        'PASSWORD': os.environ.get('PGPASSWORD', 'Nico2409.'),
+        'HOST': os.environ.get('PGHOST', 'db.ipvfsirzkjyyppcwkkwk.supabase.co'),
+        'PORT': os.environ.get('PGPORT', '5432'),
     }
 }
+
+
 
 
 
