@@ -14,7 +14,11 @@ SECRET_KEY = 'django-insecure-b=@w%b$@utfdh93sa1(_zdwbkldsppq%sw7(r#)wcn1w1%##^r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    'cinemarket-production.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
