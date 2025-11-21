@@ -1,5 +1,5 @@
 """
-WSGI config for Cinemax project.
+WSGI config for cinemarke project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,9 +8,9 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
-
+from cinemarket.settings import *
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Cinemax.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinemarket.settings')
 
 application = get_wsgi_application()

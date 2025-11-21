@@ -1,5 +1,5 @@
 """
-ASGI config for Cinemax project.
+ASGI config for cinemarket project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -8,9 +8,9 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/asgi/
 """
 
 import os
-
+from cinemarket.settings import *
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Cinemax.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cinemarket.settings')
 
 application = get_asgi_application()

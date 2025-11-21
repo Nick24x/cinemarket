@@ -217,7 +217,7 @@ def reportes_admin(request):
     if request.GET.get('export') in ('1', 'csv'):
         import csv
         resp = HttpResponse(content_type='text/csv; charset=utf-8')
-        resp['Content-Disposition'] = 'attachment; filename=reportes_cinemax.csv'
+        resp['Content-Disposition'] = 'attachment; filename=reportes_cinemarket.csv'
         w = csv.writer(resp)
         w.writerow(['Fecha', 'Usuario', 'Tipo', 'Título', 'Género', 'Precio', 'Estado'])
         for t in qs:
