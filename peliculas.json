@@ -1,0 +1,902 @@
+[
+  {
+    "titulo": "Guardianes de la Galaxia",
+    "genero": "Acción",
+    "anio": 2014,
+    "calificacion": 4.5,
+    "precio_arriendo": 2300,
+    "descripcion": "Un grupo de inadaptados galácticos debe unirse para salvar la galaxia.",
+    "imagen": "https://via.placeholder.com/400x600?text=Guardianes+de+la+Galaxia"
+  },
+  {
+    "titulo": "Interstellar",
+    "genero": "Ciencia ficción",
+    "anio": 2014,
+    "calificacion": 4.8,
+    "precio_arriendo": 2800,
+    "descripcion": "Un grupo de astronautas viaja a través de un agujero de gusano en busca de un nuevo hogar.",
+    "imagen": "https://via.placeholder.com/400x600?text=Interstellar"
+  },
+  {
+    "titulo": "La La Land",
+    "genero": "Romance",
+    "anio": 2016,
+    "calificacion": 4.3,
+    "precio_arriendo": 1650,
+    "descripcion": "Una actriz y un músico persiguen sus sueños mientras se enamoran en Los Ángeles.",
+    "imagen": "https://via.placeholder.com/400x600?text=La+La+Land"
+  },
+  {
+    "titulo": "Coco",
+    "genero": "Infantil",
+    "anio": 2017,
+    "calificacion": 4.9,
+    "precio_arriendo": 1500,
+    "descripcion": "Un niño viaja a la Tierra de los Muertos para descubrir el secreto de su familia.",
+    "imagen": "https://via.placeholder.com/400x600?text=Coco"
+  },
+  {
+    "titulo": "Avengers: Endgame",
+    "genero": "Acción",
+    "anio": 2019,
+    "calificacion": 4.7,
+    "precio_arriendo": 2300,
+    "descripcion": "Los Vengadores se reúnen para revertir el chasquido de Thanos y salvar el universo.",
+    "imagen": "https://via.placeholder.com/400x600?text=Avengers%3A+Endgame"
+  },
+  {
+    "titulo": "Frozen 2",
+    "genero": "Infantil",
+    "anio": 2019,
+    "calificacion": 4.4,
+    "precio_arriendo": 3300,
+    "descripcion": "Elsa y Anna viajan a un bosque encantado para descubrir el origen de los poderes de Elsa.",
+    "imagen": "https://via.placeholder.com/400x600?text=Frozen+2"
+  },
+  {
+    "titulo": "Toy Story 4",
+    "genero": "Infantil",
+    "anio": 2019,
+    "calificacion": 4.6,
+    "precio_arriendo": 2200,
+    "descripcion": "Woody y Buzz viven una nueva aventura cuando un juguete casero llamado Forky aparece.",
+    "imagen": "https://via.placeholder.com/400x600?text=Toy+Story+4"
+  },
+  {
+    "titulo": "Scream VI",
+    "genero": "Terror",
+    "anio": 2023,
+    "calificacion": 4.0,
+    "precio_arriendo": 2500,
+    "descripcion": "Los sobrevivientes de los asesinatos de Woodsboro intentan empezar de nuevo en Nueva York.",
+    "imagen": "https://via.placeholder.com/400x600?text=Scream+VI"
+  },
+  {
+    "titulo": "The Batman",
+    "genero": "Acción",
+    "anio": 2022,
+    "calificacion": 4.5,
+    "precio_arriendo": 2700,
+    "descripcion": "Batman investiga una serie de asesinatos misteriosos en una Gotham sumida en la corrupción.",
+    "imagen": "https://via.placeholder.com/400x600?text=The+Batman"
+  },
+  {
+    "titulo": "Jurassic World",
+    "genero": "Acción",
+    "anio": 2015,
+    "calificacion": 4.1,
+    "precio_arriendo": 2000,
+    "descripcion": "Un nuevo parque de dinosaurios se sale de control cuando una criatura modificada escapa.",
+    "imagen": "https://via.placeholder.com/400x600?text=Jurassic+World"
+  },
+  {
+    "titulo": "Annabelle",
+    "genero": "Terror",
+    "anio": 2014,
+    "calificacion": 3.6,
+    "precio_arriendo": 1700,
+    "descripcion": "Una muñeca poseída convierte la vida de una joven pareja en una pesadilla.",
+    "imagen": "https://via.placeholder.com/400x600?text=Annabelle"
+  },
+  {
+    "titulo": "It",
+    "genero": "Terror",
+    "anio": 2017,
+    "calificacion": 4.3,
+    "precio_arriendo": 2150,
+    "descripcion": "Un grupo de niños se enfrenta a una entidad maligna que adopta la forma de un payaso.",
+    "imagen": "https://via.placeholder.com/400x600?text=It"
+  },
+  {
+    "titulo": "Titanic",
+    "genero": "Romance",
+    "anio": 1997,
+    "calificacion": 4.7,
+    "precio_arriendo": 1900,
+    "descripcion": "Una historia de amor entre clases sociales a bordo del famoso barco condenado.",
+    "imagen": "https://via.placeholder.com/400x600?text=Titanic"
+  },
+  {
+    "titulo": "Inception",
+    "genero": "Ciencia ficción",
+    "anio": 2010,
+    "calificacion": 4.8,
+    "precio_arriendo": 2500,
+    "descripcion": "Un ladrón especializado en robar secretos a través de los sueños recibe una última misión.",
+    "imagen": "https://via.placeholder.com/400x600?text=Inception"
+  },
+  {
+    "titulo": "Up: Una aventura de altura",
+    "genero": "Infantil",
+    "anio": 2009,
+    "calificacion": 4.7,
+    "precio_arriendo": 1800,
+    "descripcion": "Un anciano y un niño explorador viajan en una casa flotante sostenida por globos.",
+    "imagen": "https://via.placeholder.com/400x600?text=Up%3A+Una+aventura+de+altura"
+  },
+  {
+    "titulo": "Spider-Man: No Way Home",
+    "genero": "Acción",
+    "anio": 2021,
+    "calificacion": 4.6,
+    "precio_arriendo": 2600,
+    "descripcion": "Peter Parker enfrenta las consecuencias de un hechizo que abre el multiverso.",
+    "imagen": "https://via.placeholder.com/400x600?text=Spider-Man%3A+No+Way+Home"
+  },
+  {
+    "titulo": "Black Panther",
+    "genero": "Acción",
+    "anio": 2018,
+    "calificacion": 4.4,
+    "precio_arriendo": 2200,
+    "descripcion": "T’Challa regresa a Wakanda para reclamar el trono y proteger su nación del peligro.",
+    "imagen": "https://via.placeholder.com/400x600?text=Black+Panther"
+  },
+  {
+    "titulo": "El Rey León",
+    "genero": "Infantil",
+    "anio": 1994,
+    "calificacion": 4.8,
+    "precio_arriendo": 1700,
+    "descripcion": "Simba debe aceptar su destino como rey tras la trágica muerte de su padre.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Rey+Le%C3%B3n"
+  },
+  {
+    "titulo": "Buscando a Nemo",
+    "genero": "Infantil",
+    "anio": 2003,
+    "calificacion": 4.6,
+    "precio_arriendo": 1800,
+    "descripcion": "Un pez payaso cruza el océano para rescatar a su hijo capturado por humanos.",
+    "imagen": "https://via.placeholder.com/400x600?text=Buscando+a+Nemo"
+  },
+  {
+    "titulo": "Deadpool",
+    "genero": "Acción",
+    "anio": 2016,
+    "calificacion": 4.2,
+    "precio_arriendo": 2100,
+    "descripcion": "Un mercenario con sentido del humor rompe la cuarta pared mientras busca venganza.",
+    "imagen": "https://via.placeholder.com/400x600?text=Deadpool"
+  },
+  {
+    "titulo": "Logan",
+    "genero": "Acción",
+    "anio": 2017,
+    "calificacion": 4.7,
+    "precio_arriendo": 2300,
+    "descripcion": "Un envejecido Wolverine protege a una misteriosa niña mutante en un futuro cercano.",
+    "imagen": "https://via.placeholder.com/400x600?text=Logan"
+  },
+  {
+    "titulo": "Joker",
+    "genero": "Drama",
+    "anio": 2019,
+    "calificacion": 4.7,
+    "precio_arriendo": 2400,
+    "descripcion": "La transformación de un comediante fracasado en el icónico villano de Gotham.",
+    "imagen": "https://via.placeholder.com/400x600?text=Joker"
+  },
+  {
+    "titulo": "Parásitos",
+    "genero": "Drama",
+    "anio": 2019,
+    "calificacion": 4.6,
+    "precio_arriendo": 2300,
+    "descripcion": "Una familia pobre se infiltra en el hogar de una familia rica con consecuencias inesperadas.",
+    "imagen": "https://via.placeholder.com/400x600?text=Par%C3%A1sitos"
+  },
+  {
+    "titulo": "Venom",
+    "genero": "Acción",
+    "anio": 2018,
+    "calificacion": 3.8,
+    "precio_arriendo": 1900,
+    "descripcion": "Un periodista obtiene poderes después de unirse con un simbionte alienígena.",
+    "imagen": "https://via.placeholder.com/400x600?text=Venom"
+  },
+  {
+    "titulo": "Shrek",
+    "genero": "Comedia",
+    "anio": 2001,
+    "calificacion": 4.6,
+    "precio_arriendo": 1700,
+    "descripcion": "Un ogro gruñón emprende una misión para rescatar a una princesa.",
+    "imagen": "https://via.placeholder.com/400x600?text=Shrek"
+  },
+  {
+    "titulo": "Shrek 2",
+    "genero": "Comedia",
+    "anio": 2004,
+    "calificacion": 4.5,
+    "precio_arriendo": 1800,
+    "descripcion": "Shrek conoce a sus suegros reales mientras el Hada Madrina trama un plan.",
+    "imagen": "https://via.placeholder.com/400x600?text=Shrek+2"
+  },
+  {
+    "titulo": "Rápidos y Furiosos 7",
+    "genero": "Acción",
+    "anio": 2015,
+    "calificacion": 4.1,
+    "precio_arriendo": 2100,
+    "descripcion": "El equipo se enfrenta a un enemigo que busca vengar a su hermano.",
+    "imagen": "https://via.placeholder.com/400x600?text=R%C3%A1pidos+y+Furiosos+7"
+  },
+  {
+    "titulo": "Rápidos y Furiosos 8",
+    "genero": "Acción",
+    "anio": 2017,
+    "calificacion": 3.9,
+    "precio_arriendo": 2200,
+    "descripcion": "Dom se vuelve contra su familia tras caer bajo el control de una ciberterrorista.",
+    "imagen": "https://via.placeholder.com/400x600?text=R%C3%A1pidos+y+Furiosos+8"
+  },
+  {
+    "titulo": "Piratas del Caribe: La maldición del Perla Negra",
+    "genero": "Aventura",
+    "anio": 2003,
+    "calificacion": 4.5,
+    "precio_arriendo": 2000,
+    "descripcion": "Jack Sparrow intenta recuperar su barco y romper una maldición pirata.",
+    "imagen": "https://via.placeholder.com/400x600?text=Piratas+del+Caribe%3A+La+maldici%C3%B3n+del+Perla+Negra"
+  },
+  {
+    "titulo": "Piratas del Caribe: El cofre de la muerte",
+    "genero": "Aventura",
+    "anio": 2006,
+    "calificacion": 4.2,
+    "precio_arriendo": 2100,
+    "descripcion": "Jack Sparrow debe saldar su deuda con Davy Jones antes de que sea tarde.",
+    "imagen": "https://via.placeholder.com/400x600?text=Piratas+del+Caribe%3A+El+cofre+de+la+muerte"
+  },
+  {
+    "titulo": "Matrix",
+    "genero": "Ciencia ficción",
+    "anio": 1999,
+    "calificacion": 4.7,
+    "precio_arriendo": 2100,
+    "descripcion": "Un programador descubre que la realidad es una simulación controlada por máquinas.",
+    "imagen": "https://via.placeholder.com/400x600?text=Matrix"
+  },
+  {
+    "titulo": "Matrix Reloaded",
+    "genero": "Ciencia ficción",
+    "anio": 2003,
+    "calificacion": 4.0,
+    "precio_arriendo": 2000,
+    "descripcion": "Neo profundiza en su papel como el Elegido mientras la guerra con las máquinas continúa.",
+    "imagen": "https://via.placeholder.com/400x600?text=Matrix+Reloaded"
+  },
+  {
+    "titulo": "Matrix Revolutions",
+    "genero": "Ciencia ficción",
+    "anio": 2003,
+    "calificacion": 3.8,
+    "precio_arriendo": 1900,
+    "descripcion": "La batalla final entre humanos y máquinas decide el destino de Sion.",
+    "imagen": "https://via.placeholder.com/400x600?text=Matrix+Revolutions"
+  },
+  {
+    "titulo": "Avatar",
+    "genero": "Ciencia ficción",
+    "anio": 2009,
+    "calificacion": 4.5,
+    "precio_arriendo": 2600,
+    "descripcion": "Un exmarine se integra a una tribu alienígena en el exuberante mundo de Pandora.",
+    "imagen": "https://via.placeholder.com/400x600?text=Avatar"
+  },
+  {
+    "titulo": "Avatar: El camino del agua",
+    "genero": "Ciencia ficción",
+    "anio": 2022,
+    "calificacion": 4.4,
+    "precio_arriendo": 2800,
+    "descripcion": "Jake Sully y su familia deben protegerse cuando una nueva amenaza llega a Pandora.",
+    "imagen": "https://via.placeholder.com/400x600?text=Avatar%3A+El+camino+del+agua"
+  },
+  {
+    "titulo": "El Señor de los Anillos: La Comunidad del Anillo",
+    "genero": "Aventura",
+    "anio": 2001,
+    "calificacion": 4.9,
+    "precio_arriendo": 2400,
+    "descripcion": "Un joven hobbit se embarca en una misión para destruir un anillo oscuro.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Se%C3%B1or+de+los+Anillos%3A+La+Comunidad+del+Anillo"
+  },
+  {
+    "titulo": "El Señor de los Anillos: Las Dos Torres",
+    "genero": "Aventura",
+    "anio": 2002,
+    "calificacion": 4.8,
+    "precio_arriendo": 2400,
+    "descripcion": "La Comunidad se divide mientras la guerra por la Tierra Media se intensifica.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Se%C3%B1or+de+los+Anillos%3A+Las+Dos+Torres"
+  },
+  {
+    "titulo": "El Señor de los Anillos: El Retorno del Rey",
+    "genero": "Aventura",
+    "anio": 2003,
+    "calificacion": 4.9,
+    "precio_arriendo": 2500,
+    "descripcion": "La batalla final por la Tierra Media y el destino del Anillo Único.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Se%C3%B1or+de+los+Anillos%3A+El+Retorno+del+Rey"
+  },
+  {
+    "titulo": "Harry Potter y la piedra filosofal",
+    "genero": "Aventura",
+    "anio": 2001,
+    "calificacion": 4.6,
+    "precio_arriendo": 1900,
+    "descripcion": "Un niño descubre que es mago y comienza sus estudios en Hogwarts.",
+    "imagen": "https://via.placeholder.com/400x600?text=Harry+Potter+y+la+piedra+filosofal"
+  },
+  {
+    "titulo": "Harry Potter y la cámara secreta",
+    "genero": "Aventura",
+    "anio": 2002,
+    "calificacion": 4.5,
+    "precio_arriendo": 1900,
+    "descripcion": "Extraños sucesos ponen en peligro a los estudiantes en Hogwarts.",
+    "imagen": "https://via.placeholder.com/400x600?text=Harry+Potter+y+la+c%C3%A1mara+secreta"
+  },
+  {
+    "titulo": "Harry Potter y el prisionero de Azkaban",
+    "genero": "Aventura",
+    "anio": 2004,
+    "calificacion": 4.7,
+    "precio_arriendo": 2000,
+    "descripcion": "Un peligroso prisionero escapa de Azkaban y parece perseguir a Harry.",
+    "imagen": "https://via.placeholder.com/400x600?text=Harry+Potter+y+el+prisionero+de+Azkaban"
+  },
+  {
+    "titulo": "Guardianes de la Galaxia Vol. 2",
+    "genero": "Acción",
+    "anio": 2017,
+    "calificacion": 4.3,
+    "precio_arriendo": 2200,
+    "descripcion": "El equipo enfrenta nuevas amenazas mientras Peter Quill descubre su origen.",
+    "imagen": "https://via.placeholder.com/400x600?text=Guardianes+de+la+Galaxia+Vol.+2"
+  },
+  {
+    "titulo": "Doctor Strange",
+    "genero": "Acción",
+    "anio": 2016,
+    "calificacion": 4.2,
+    "precio_arriendo": 2100,
+    "descripcion": "Un neurocirujano aprende las artes místicas tras un accidente que cambia su vida.",
+    "imagen": "https://via.placeholder.com/400x600?text=Doctor+Strange"
+  },
+  {
+    "titulo": "Doctor Strange en el multiverso de la locura",
+    "genero": "Acción",
+    "anio": 2022,
+    "calificacion": 4.0,
+    "precio_arriendo": 2600,
+    "descripcion": "Strange explora realidades alternas mientras una vieja aliada se convierte en amenaza.",
+    "imagen": "https://via.placeholder.com/400x600?text=Doctor+Strange+en+el+multiverso+de+la+locura"
+  },
+  {
+    "titulo": "Ratatouille",
+    "genero": "Infantil",
+    "anio": 2007,
+    "calificacion": 4.7,
+    "precio_arriendo": 1700,
+    "descripcion": "Un ratón sueña con ser chef en un prestigioso restaurante de París.",
+    "imagen": "https://via.placeholder.com/400x600?text=Ratatouille"
+  },
+  {
+    "titulo": "Los Increíbles",
+    "genero": "Infantil",
+    "anio": 2004,
+    "calificacion": 4.6,
+    "precio_arriendo": 1800,
+    "descripcion": "Una familia de superhéroes intenta vivir una vida normal en el anonimato.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Incre%C3%ADbles"
+  },
+  {
+    "titulo": "Los Increíbles 2",
+    "genero": "Infantil",
+    "anio": 2018,
+    "calificacion": 4.4,
+    "precio_arriendo": 2000,
+    "descripcion": "Helen vuelve a la acción mientras Bob se queda en casa con los niños.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Incre%C3%ADbles+2"
+  },
+  {
+    "titulo": "Mi vecino Totoro",
+    "genero": "Infantil",
+    "anio": 1988,
+    "calificacion": 4.8,
+    "precio_arriendo": 1600,
+    "descripcion": "Dos niñas se mudan al campo y conocen a criaturas mágicas del bosque.",
+    "imagen": "https://via.placeholder.com/400x600?text=Mi+vecino+Totoro"
+  },
+  {
+    "titulo": "El viaje de Chihiro",
+    "genero": "Infantil",
+    "anio": 2001,
+    "calificacion": 4.9,
+    "precio_arriendo": 1900,
+    "descripcion": "Una niña queda atrapada en un mundo de espíritus y debe encontrar la forma de volver.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+viaje+de+Chihiro"
+  },
+  {
+    "titulo": "Your Name",
+    "genero": "Romance",
+    "anio": 2016,
+    "calificacion": 4.8,
+    "precio_arriendo": 2200,
+    "descripcion": "Dos adolescentes intercambian cuerpos misteriosamente y crean un vínculo único.",
+    "imagen": "https://via.placeholder.com/400x600?text=Your+Name"
+  },
+  {
+    "titulo": "Orgullo y Prejuicio",
+    "genero": "Romance",
+    "anio": 2005,
+    "calificacion": 4.5,
+    "precio_arriendo": 1800,
+    "descripcion": "Elizabeth Bennet se enfrenta a sus prejuicios y al reservado señor Darcy.",
+    "imagen": "https://via.placeholder.com/400x600?text=Orgullo+y+Prejuicio"
+  },
+  {
+    "titulo": "Bajo la misma estrella",
+    "genero": "Romance",
+    "anio": 2014,
+    "calificacion": 4.4,
+    "precio_arriendo": 1700,
+    "descripcion": "Dos adolescentes con cáncer viven una intensa historia de amor.",
+    "imagen": "https://via.placeholder.com/400x600?text=Bajo+la+misma+estrella"
+  },
+  {
+    "titulo": "Diario de una pasión",
+    "genero": "Romance",
+    "anio": 2004,
+    "calificacion": 4.6,
+    "precio_arriendo": 1800,
+    "descripcion": "Una historia de amor de verano se convierte en un recuerdo inolvidable.",
+    "imagen": "https://via.placeholder.com/400x600?text=Diario+de+una+pasi%C3%B3n"
+  },
+  {
+    "titulo": "Rapidos y Furiosos 9",
+    "genero": "Acción",
+    "anio": 2021,
+    "calificacion": 3.7,
+    "precio_arriendo": 2300,
+    "descripcion": "Dom y su equipo se enfrentan a un enemigo con lazos familiares.",
+    "imagen": "https://via.placeholder.com/400x600?text=Rapidos+y+Furiosos+9"
+  },
+  {
+    "titulo": "John Wick 3: Parabellum",
+    "genero": "Acción",
+    "anio": 2019,
+    "calificacion": 4.4,
+    "precio_arriendo": 2300,
+    "descripcion": "John Wick es perseguido por una recompensa global tras romper las reglas del hotel.",
+    "imagen": "https://via.placeholder.com/400x600?text=John+Wick+3%3A+Parabellum"
+  },
+  {
+    "titulo": "John Wick 4",
+    "genero": "Acción",
+    "anio": 2023,
+    "calificacion": 4.5,
+    "precio_arriendo": 2700,
+    "descripcion": "John busca derrotar a la Alta Mesa mientras nuevos enemigos aparecen.",
+    "imagen": "https://via.placeholder.com/400x600?text=John+Wick+4"
+  },
+  {
+    "titulo": "La lista de Schindler",
+    "genero": "Drama",
+    "anio": 1993,
+    "calificacion": 4.9,
+    "precio_arriendo": 2100,
+    "descripcion": "Un empresario alemán salva a cientos de judíos durante el Holocausto.",
+    "imagen": "https://via.placeholder.com/400x600?text=La+lista+de+Schindler"
+  },
+  {
+    "titulo": "Forrest Gump",
+    "genero": "Drama",
+    "anio": 1994,
+    "calificacion": 4.8,
+    "precio_arriendo": 2000,
+    "descripcion": "La vida de un hombre con un gran corazón que presencia momentos clave de la historia.",
+    "imagen": "https://via.placeholder.com/400x600?text=Forrest+Gump"
+  },
+  {
+    "titulo": "Gladiador",
+    "genero": "Acción",
+    "anio": 2000,
+    "calificacion": 4.7,
+    "precio_arriendo": 2100,
+    "descripcion": "Un general romano traicionado busca venganza en la arena de los gladiadores.",
+    "imagen": "https://via.placeholder.com/400x600?text=Gladiador"
+  },
+  {
+    "titulo": "El Club de la Pelea",
+    "genero": "Drama",
+    "anio": 1999,
+    "calificacion": 4.7,
+    "precio_arriendo": 2000,
+    "descripcion": "Un hombre insomne funda un club clandestino que se sale de control.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Club+de+la+Pelea"
+  },
+  {
+    "titulo": "El Conjuro",
+    "genero": "Terror",
+    "anio": 2013,
+    "calificacion": 4.4,
+    "precio_arriendo": 2000,
+    "descripcion": "Los Warren investigan una presencia oscura en una granja aislada.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Conjuro"
+  },
+  {
+    "titulo": "El Conjuro 2",
+    "genero": "Terror",
+    "anio": 2016,
+    "calificacion": 4.2,
+    "precio_arriendo": 2100,
+    "descripcion": "Los Warren ayudan a una familia inglesa atormentada por un espíritu malicioso.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Conjuro+2"
+  },
+  {
+    "titulo": "La Monja",
+    "genero": "Terror",
+    "anio": 2018,
+    "calificacion": 3.4,
+    "precio_arriendo": 1900,
+    "descripcion": "Un sacerdote y una novicia investigan una presencia demoníaca en un convento.",
+    "imagen": "https://via.placeholder.com/400x600?text=La+Monja"
+  },
+  {
+    "titulo": "La Monja II",
+    "genero": "Terror",
+    "anio": 2023,
+    "calificacion": 3.6,
+    "precio_arriendo": 2300,
+    "descripcion": "La entidad demoníaca Valak reaparece en un internado europeo.",
+    "imagen": "https://via.placeholder.com/400x600?text=La+Monja+II"
+  },
+  {
+    "titulo": "Actividad Paranormal",
+    "genero": "Terror",
+    "anio": 2007,
+    "calificacion": 3.7,
+    "precio_arriendo": 1700,
+    "descripcion": "Una pareja decide grabar lo que sucede en su casa durante la noche.",
+    "imagen": "https://via.placeholder.com/400x600?text=Actividad+Paranormal"
+  },
+  {
+    "titulo": "Hereditary",
+    "genero": "Terror",
+    "anio": 2018,
+    "calificacion": 4.1,
+    "precio_arriendo": 2100,
+    "descripcion": "Una familia descubre oscuros secretos tras la muerte de la abuela.",
+    "imagen": "https://via.placeholder.com/400x600?text=Hereditary"
+  },
+  {
+    "titulo": "Midsommar",
+    "genero": "Terror",
+    "anio": 2019,
+    "calificacion": 4.0,
+    "precio_arriendo": 2200,
+    "descripcion": "Un festival sueco de verano se convierte en una pesadilla para un grupo de amigos.",
+    "imagen": "https://via.placeholder.com/400x600?text=Midsommar"
+  },
+  {
+    "titulo": "El Aro",
+    "genero": "Terror",
+    "anio": 2002,
+    "calificacion": 4.0,
+    "precio_arriendo": 1800,
+    "descripcion": "Una periodista investiga una cinta de video maldita que causa la muerte en siete días.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Aro"
+  },
+  {
+    "titulo": "La Llorona",
+    "genero": "Terror",
+    "anio": 2019,
+    "calificacion": 3.3,
+    "precio_arriendo": 1600,
+    "descripcion": "Una madre fantasma persigue a los niños de una familia que ha sido maldecida.",
+    "imagen": "https://via.placeholder.com/400x600?text=La+Llorona"
+  },
+  {
+    "titulo": "La forma del agua",
+    "genero": "Romance",
+    "anio": 2017,
+    "calificacion": 4.3,
+    "precio_arriendo": 2000,
+    "descripcion": "Una mujer muda se enamora de una misteriosa criatura anfibia.",
+    "imagen": "https://via.placeholder.com/400x600?text=La+forma+del+agua"
+  },
+  {
+    "titulo": "El Gran Showman",
+    "genero": "Musical",
+    "anio": 2017,
+    "calificacion": 4.3,
+    "precio_arriendo": 2000,
+    "descripcion": "La historia de P. T. Barnum y la creación de su famoso circo.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Gran+Showman"
+  },
+  {
+    "titulo": "Bohemian Rhapsody",
+    "genero": "Musical",
+    "anio": 2018,
+    "calificacion": 4.5,
+    "precio_arriendo": 2200,
+    "descripcion": "La vida de Freddie Mercury y el ascenso de la banda Queen.",
+    "imagen": "https://via.placeholder.com/400x600?text=Bohemian+Rhapsody"
+  },
+  {
+    "titulo": "Un lugar en silencio",
+    "genero": "Terror",
+    "anio": 2018,
+    "calificacion": 4.2,
+    "precio_arriendo": 2100,
+    "descripcion": "Una familia debe vivir en silencio para evitar criaturas que cazan por el sonido.",
+    "imagen": "https://via.placeholder.com/400x600?text=Un+lugar+en+silencio"
+  },
+  {
+    "titulo": "Un lugar en silencio 2",
+    "genero": "Terror",
+    "anio": 2020,
+    "calificacion": 4.1,
+    "precio_arriendo": 2200,
+    "descripcion": "La familia Abbott descubre que el peligro no solo está en el bosque.",
+    "imagen": "https://via.placeholder.com/400x600?text=Un+lugar+en+silencio+2"
+  },
+  {
+    "titulo": "Soul",
+    "genero": "Infantil",
+    "anio": 2020,
+    "calificacion": 4.7,
+    "precio_arriendo": 2100,
+    "descripcion": "Un profesor de música vive una experiencia fuera del cuerpo que lo hace replantearse la vida.",
+    "imagen": "https://via.placeholder.com/400x600?text=Soul"
+  },
+  {
+    "titulo": "Encanto",
+    "genero": "Infantil",
+    "anio": 2021,
+    "calificacion": 4.5,
+    "precio_arriendo": 2200,
+    "descripcion": "La única hija sin poderes de una familia mágica debe salvar el milagro que los sostiene.",
+    "imagen": "https://via.placeholder.com/400x600?text=Encanto"
+  },
+  {
+    "titulo": "Los Minions",
+    "genero": "Infantil",
+    "anio": 2015,
+    "calificacion": 4.0,
+    "precio_arriendo": 1800,
+    "descripcion": "Los minions buscan a un nuevo villano al que servir en una aventura mundial.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Minions"
+  },
+  {
+    "titulo": "Los Minions: Nace un villano",
+    "genero": "Infantil",
+    "anio": 2022,
+    "calificacion": 3.9,
+    "precio_arriendo": 2100,
+    "descripcion": "El joven Gru sueña con ser un supervillano junto a sus inseparables minions.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Minions%3A+Nace+un+villano"
+  },
+  {
+    "titulo": "Kung Fu Panda",
+    "genero": "Infantil",
+    "anio": 2008,
+    "calificacion": 4.5,
+    "precio_arriendo": 1800,
+    "descripcion": "Un torpe panda es elegido para convertirse en el legendario Guerrero Dragón.",
+    "imagen": "https://via.placeholder.com/400x600?text=Kung+Fu+Panda"
+  },
+  {
+    "titulo": "Cómo entrenar a tu dragón",
+    "genero": "Infantil",
+    "anio": 2010,
+    "calificacion": 4.6,
+    "precio_arriendo": 1900,
+    "descripcion": "Un joven vikingo se hace amigo de un temido dragón y cambia el destino de su aldea.",
+    "imagen": "https://via.placeholder.com/400x600?text=C%C3%B3mo+entrenar+a+tu+drag%C3%B3n"
+  },
+  {
+    "titulo": "Megamente",
+    "genero": "Comedia",
+    "anio": 2010,
+    "calificacion": 4.2,
+    "precio_arriendo": 1800,
+    "descripcion": "Un supervillano se queda sin héroe al que enfrentar y debe replantear su vida.",
+    "imagen": "https://via.placeholder.com/400x600?text=Megamente"
+  },
+  {
+    "titulo": "Los Cazafantasmas",
+    "genero": "Comedia",
+    "anio": 1984,
+    "calificacion": 4.3,
+    "precio_arriendo": 1700,
+    "descripcion": "Un grupo de científicos abre un negocio de caza de fantasmas en Nueva York.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Cazafantasmas"
+  },
+  {
+    "titulo": "Los Cazafantasmas: Más allá",
+    "genero": "Comedia",
+    "anio": 2021,
+    "calificacion": 4.0,
+    "precio_arriendo": 2100,
+    "descripcion": "Una familia descubre su conexión con los cazafantasmas originales.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Cazafantasmas%3A+M%C3%A1s+all%C3%A1"
+  },
+  {
+    "titulo": "El Hombre Araña 2",
+    "genero": "Acción",
+    "anio": 2004,
+    "calificacion": 4.4,
+    "precio_arriendo": 1900,
+    "descripcion": "Peter Parker lucha contra el Doctor Octopus mientras intenta equilibrar su vida.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Hombre+Ara%C3%B1a+2"
+  },
+  {
+    "titulo": "El Hombre Araña 3",
+    "genero": "Acción",
+    "anio": 2007,
+    "calificacion": 3.7,
+    "precio_arriendo": 1900,
+    "descripcion": "Peter enfrenta a nuevos enemigos mientras lucha contra su propio lado oscuro.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Hombre+Ara%C3%B1a+3"
+  },
+  {
+    "titulo": "El Sorprendente Hombre Araña",
+    "genero": "Acción",
+    "anio": 2012,
+    "calificacion": 4.0,
+    "precio_arriendo": 2000,
+    "descripcion": "Un nuevo Peter Parker descubre sus poderes y se enfrenta al Lagarto.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Sorprendente+Hombre+Ara%C3%B1a"
+  },
+  {
+    "titulo": "El Sorprendente Hombre Araña 2",
+    "genero": "Acción",
+    "anio": 2014,
+    "calificacion": 4.0,
+    "precio_arriendo": 2200,
+    "descripcion": "Spider-Man se enfrenta a Electro mientras su vida personal se complica.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Sorprendente+Hombre+Ara%C3%B1a+2"
+  },
+  {
+    "titulo": "Capitán América: El soldado del invierno",
+    "genero": "Acción",
+    "anio": 2014,
+    "calificacion": 4.5,
+    "precio_arriendo": 2200,
+    "descripcion": "Steve Rogers descubre una conspiración dentro de S.H.I.E.L.D. mientras enfrenta a un viejo amigo.",
+    "imagen": "https://via.placeholder.com/400x600?text=Capit%C3%A1n+Am%C3%A9rica%3A+El+soldado+del+invierno"
+  },
+  {
+    "titulo": "Capitán América: Civil War",
+    "genero": "Acción",
+    "anio": 2016,
+    "calificacion": 4.6,
+    "precio_arriendo": 2400,
+    "descripcion": "Los Vengadores se dividen cuando un acuerdo gubernamental intenta controlarlos.",
+    "imagen": "https://via.placeholder.com/400x600?text=Capit%C3%A1n+Am%C3%A9rica%3A+Civil+War"
+  },
+  {
+    "titulo": "Thor: Ragnarok",
+    "genero": "Acción",
+    "anio": 2017,
+    "calificacion": 4.4,
+    "precio_arriendo": 2300,
+    "descripcion": "Thor debe evitar el fin de Asgard mientras se enfrenta a su poderosa hermana Hela.",
+    "imagen": "https://via.placeholder.com/400x600?text=Thor%3A+Ragnarok"
+  },
+  {
+    "titulo": "Ant-Man",
+    "genero": "Acción",
+    "anio": 2015,
+    "calificacion": 4.0,
+    "precio_arriendo": 1900,
+    "descripcion": "Un ladrón con buen corazón se convierte en un superhéroe capaz de hacerse diminuto.",
+    "imagen": "https://via.placeholder.com/400x600?text=Ant-Man"
+  },
+  {
+    "titulo": "Ant-Man and the Wasp",
+    "genero": "Acción",
+    "anio": 2018,
+    "calificacion": 4.0,
+    "precio_arriendo": 2000,
+    "descripcion": "Scott Lang equilibra su vida de padre y héroe mientras trabaja con la Avispa.",
+    "imagen": "https://via.placeholder.com/400x600?text=Ant-Man+and+the+Wasp"
+  },
+  {
+    "titulo": "Tiburon",
+    "genero": "Terror",
+    "anio": 1975,
+    "calificacion": 4.3,
+    "precio_arriendo": 1900,
+    "descripcion": "Un enorme tiburón blanco aterroriza a los habitantes de una pequeña isla.",
+    "imagen": "https://via.placeholder.com/400x600?text=Tiburon"
+  },
+  {
+    "titulo": "Megadolón",
+    "genero": "Acción",
+    "anio": 2018,
+    "calificacion": 3.5,
+    "precio_arriendo": 2000,
+    "descripcion": "Un grupo de científicos se enfrenta a un tiburón prehistórico gigante.",
+    "imagen": "https://via.placeholder.com/400x600?text=Megadol%C3%B3n"
+  },
+  {
+    "titulo": "Los Juegos del Hambre",
+    "genero": "Acción",
+    "anio": 2012,
+    "calificacion": 4.4,
+    "precio_arriendo": 2000,
+    "descripcion": "Katniss Everdeen se ofrece voluntaria para participar en un mortal reality show.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Juegos+del+Hambre"
+  },
+  {
+    "titulo": "Los Juegos del Hambre: En llamas",
+    "genero": "Acción",
+    "anio": 2013,
+    "calificacion": 4.5,
+    "precio_arriendo": 2100,
+    "descripcion": "Katniss se convierte en símbolo de rebelión mientras regresa a la arena.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Juegos+del+Hambre%3A+En+llamas"
+  },
+  {
+    "titulo": "Los Juegos del Hambre: Sinsajo Parte 1",
+    "genero": "Acción",
+    "anio": 2014,
+    "calificacion": 4.0,
+    "precio_arriendo": 2000,
+    "descripcion": "Katniss lidera la rebelión desde el Distrito 13.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Juegos+del+Hambre%3A+Sinsajo+Parte+1"
+  },
+  {
+    "titulo": "Los Juegos del Hambre: Sinsajo Parte 2",
+    "genero": "Acción",
+    "anio": 2015,
+    "calificacion": 4.1,
+    "precio_arriendo": 2100,
+    "descripcion": "La batalla final contra el Capitolio decide el futuro de Panem.",
+    "imagen": "https://via.placeholder.com/400x600?text=Los+Juegos+del+Hambre%3A+Sinsajo+Parte+2"
+  },
+  {
+    "titulo": "El Gran Hotel Budapest",
+    "genero": "Comedia",
+    "anio": 2014,
+    "calificacion": 4.3,
+    "precio_arriendo": 1900,
+    "descripcion": "Las aventuras de un conserje legendario y su joven aprendiz en un lujoso hotel europeo.",
+    "imagen": "https://via.placeholder.com/400x600?text=El+Gran+Hotel+Budapest"
+  },
+  {
+    "titulo": "Scott Pilgrim vs. The World",
+    "genero": "Comedia",
+    "anio": 2010,
+    "calificacion": 4.2,
+    "precio_arriendo": 1800,
+    "descripcion": "Scott debe derrotar a los siete exnovios malvados de la chica de sus sueños.",
+    "imagen": "https://via.placeholder.com/400x600?text=Scott+Pilgrim+vs.+The+World"
+  }
+]

@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><title>Catálogo - CineMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3">
+  <a class="navbar-brand fw-bold" href="{% url 'home' %}">CineMarket</a>
+  <form class="ms-auto d-flex" method="get">
+    <input class="form-control form-control-sm me-2" name="q" value="{{ q }}" placeholder="Buscar...">
+    <button class="btn btn-sm btn-outline-light">Buscar</button>
+  </form>
+</nav>
+
+{% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-success py-2 mb-2">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+<div class="container py-4">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for p in peliculas %}
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          {% if p.imagen %}<img src="{{ p.imagen.url }}" class="card-img-top" alt="{{ p.titulo }}">{% endif %}
+          <div class="card-body">
+            <h6 class="card-title mb-1">{{ p.titulo }}</h6>
+            <div class="text-muted small mb-2">{{ p.genero }} • {{ p.anio }}</div>
+            <div class="fw-bold mb-2">${{ p.precio_arriendo }}</div>
+            <div class="d-flex justify-content-between">
+              <!-- Arrendar (por ahora solo visual) -->
+              <button class="btn btn-dark btn-sm">Arrendar</button>
+
+              <!-- Comprar: manda un POST a la vista -->
+              <form method="post" action="{% url 'comprar_pelicula' p.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-dark btn-sm">
+                    Comprar
+                  </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No hay películas disponibles.</p>
+    {% endfor %}
+  </div>
+
+  {% if peliculas.paginator.num_pages > 1 %}
+  <nav class="mt-4">
+    <ul class="pagination">
+      {% if peliculas.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ peliculas.previous_page_number }}&q={{ q }}">Anterior</a></li>
+      {% else %}<li class="page-item disabled"><span class="page-link">Anterior</span></li>{% endif %}
+      <li class="page-item disabled"><span class="page-link">Página {{ peliculas.number }} de {{ peliculas.paginator.num_pages }}</span></li>
+      {% if peliculas.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ peliculas.next_page_number }}&q={{ q }}">Siguiente</a></li>
+      {% else %}<li class="page-item disabled"><span class="page-link">Siguiente</span></li>{% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+{% extends "panel/base_admin.html" %}
+{% load static humanize %}
+
+{% block title %}Reportes - Panel Admin{% endblock %}
+{% block nav_reportes_active %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-3">
+
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h3 class="mb-0">Reportes</h3>
+      <small class="text-muted">Analiza las ventas, arriendos y actividad de clientes.</small>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <form class="row g-2 align-items-end mb-3" method="get">
+    <div class="col-12 col-sm-6 col-md-3">
+      <label class="form-label mb-1">Tipo</label>
+      <select name="tipo" class="form-select">
+        <option value="todos"   {% if f_tipo == 'todos' %}selected{% endif %}>Todos</option>
+        <option value="compra"  {% if f_tipo == 'compra' %}selected{% endif %}>Compra</option>
+        <option value="arriendo"{% if f_tipo == 'arriendo' %}selected{% endif %}>Arriendo</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+      <label class="form-label mb-1">Género</label>
+      <select name="genero" class="form-select">
+        <option value="todos" {% if f_genero == 'todos' %}selected{% endif %}>Todos</option>
+        {% for g in generos %}
+          <option value="{{ g }}" {% if f_genero == g %}selected{% endif %}>{{ g }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-6 col-md-2">
+      <label class="form-label mb-1">Desde</label>
+      <input type="date" class="form-control" name="desde" value="{{ f_desde }}">
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label mb-1">Hasta</label>
+      <input type="date" class="form-control" name="hasta" value="{{ f_hasta }}">
+    </div>
+
+    <div class="col-12 col-md-2 d-flex gap-2">
+      <button class="btn btn-dark w-100" type="submit">
+        <i class="bi bi-funnel me-1"></i>Filtrar
+      </button>
+
+      <!-- Exportar conserva filtros -->
+      <a class="btn btn-outline-secondary w-100"
+         href="?tipo={{ f_tipo }}&genero={{ f_genero }}&desde={{ f_desde }}&hasta={{ f_hasta }}&export=csv">
+        <i class="bi bi-file-earmark-spreadsheet me-1"></i>CSV
+      </a>
+    </div>
+  </form>
+
+  <!-- KPIs -->
+  <div class="row g-3 mb-3">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <div class="text-muted small">Ventas totales</div>
+          <div class="fs-4 fw-bold">${{ ventas_totales|floatformat:0|intcomma }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <div class="text-muted small">Compras</div>
+          <div class="fs-4 fw-bold">{{ compras_count|intcomma }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <div class="text-muted small">Arriendos</div>
+          <div class="fs-4 fw-bold">{{ arriendos_count|intcomma }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <div class="text-muted small">Clientes activos</div>
+          <div class="fs-4 fw-bold">{{ clientes_activos|intcomma }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla / Estado vacío -->
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h6 class="mb-3">Transacciones filtradas</h6>
+
+      {% if transacciones %}
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Tipo</th>
+                <th>Título</th>
+                <th>Género</th>
+                <th class="text-end">Precio</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in transacciones %}
+              <tr>
+                <td>{{ t.fecha|date:"d-m-Y H:i" }}</td>
+                <td>{{ t.usuario.username }}</td>
+                <td class="text-capitalize">{{ t.tipo }}</td>
+                <td>{{ t.pelicula.titulo }}</td>
+                <td>{{ t.pelicula.genero }}</td>
+                <td class="text-end">${{ t.precio|floatformat:0|intcomma }}</td>
+                <td>
+                  {% if t.estado == 'completada' %}
+                    <span class="badge bg-success">Completada</span>
+                  {% else %}
+                    <span class="badge bg-secondary">Devuelta</span> 
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="text-center py-5">
+          <div class="fs-1 mb-2">🎞️</div>
+          <div class="fw-semibold">Sin transacciones para el filtro</div>
+          <div class="text-muted">Prueba cambiando el rango o el tipo.</div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

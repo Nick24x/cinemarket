@@ -1,0 +1,180 @@
+{% extends 'panel/base_admin.html' %}
+
+{% block title %}Editar película - Panel Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="row justify-content-center mb-3">
+    <div class="col-12 col-md-10 col-lg-8 d-flex justify-content-between align-items-center">
+      <a href="{% url 'admin_catalogo' %}" class="btn btn-link px-0">
+        &larr; Volver al catálogo
+      </a>
+      <h5 class="mb-0 text-muted">Editar película</h5>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h4 class="mb-3">Editar: {{ obj.titulo }}</h4>
+
+          <!-- Errores generales -->
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger py-2">
+            {{ form.non_field_errors }}
+          </div>
+          {% endif %}
+
+          <form method="post" enctype="multipart/form-data" class="row g-3">
+            {% csrf_token %}
+
+            <!-- Título -->
+            <div class="col-12">
+              <label class="form-label">Título</label>
+              <input type="text"
+                     name="titulo"
+                     class="form-control"
+                     value="{{ form.titulo.value|default_if_none:obj.titulo }}">
+              {% if form.titulo.errors %}
+                <div class="text-danger small">{{ form.titulo.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Género / Año -->
+            <div class="col-md-6">
+              <label class="form-label">Género</label>
+              <input type="text"
+                     name="genero"
+                     class="form-control"
+                     value="{{ form.genero.value|default_if_none:obj.genero }}">
+              {% if form.genero.errors %}
+                <div class="text-danger small">{{ form.genero.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Año</label>
+              <input type="number"
+                     name="anio"
+                     min="1900" max="2100"
+                     class="form-control"
+                     value="{{ form.anio.value|default_if_none:obj.anio }}">
+              {% if form.anio.errors %}
+                <div class="text-danger small">{{ form.anio.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Precio / Calificación -->
+            <div class="col-md-6">
+              <label class="form-label">Precio arriendo</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number"
+                       step="10" min="0"
+                       name="precio_arriendo"
+                       class="form-control text-end"
+                       value="{{ form.precio_arriendo.value|default_if_none:obj.precio_arriendo }}">
+                <span class="input-group-text">CLP</span>
+              </div>
+              {% if form.precio_arriendo.errors %}
+                <div class="text-danger small">{{ form.precio_arriendo.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Calificación</label>
+              <div class="input-group">
+                <span class="input-group-text">⭐</span>
+                <input type="number"
+                       step="0.1" min="0" max="5"
+                       name="calificacion"
+                       class="form-control text-end"
+                       value="{{ form.calificacion.value|default_if_none:obj.calificacion }}">
+                <span class="input-group-text">/5</span>
+              </div>
+              {% if form.calificacion.errors %}
+                <div class="text-danger small">{{ form.calificacion.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Disponible -->
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="id_disponible"
+                       name="disponible"
+                       {% if form.disponible.value or obj.disponible %}checked{% endif %}>
+                <label class="form-check-label" for="id_disponible">Disponible</label>
+              </div>
+              {% if form.disponible.errors %}
+                <div class="text-danger small">{{ form.disponible.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Imagen actual + nueva -->
+            <div class="col-md-6">
+              <label class="form-label d-block">Imagen actual</label>
+              {% if obj.imagen %}
+                <div class="mb-2">
+                  <img src="{{ obj.imagen.url }}" alt="" class="img-fluid rounded" style="max-height:180px;object-fit:cover;">
+                </div>
+              {% else %}
+                <p class="text-muted small mb-2">Sin imagen asociada.</p>
+              {% endif %}
+              <!-- Campo clear si tu form lo tiene -->
+              {% if form.imagen.field.widget.clear_checkbox_label %}
+                <div class="form-check">
+                  {{ form.imagen.clear_checkbox }}
+                  <label class="form-check-label" for="{{ form.imagen.clear_checkbox.id_for_label }}">
+                    {{ form.imagen.field.widget.clear_checkbox_label }}
+                  </label>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Modificar imagen</label>
+              <input type="file"
+                     name="imagen"
+                     class="form-control"
+                     id="id_imagen">
+              {% if form.imagen.errors %}
+                <div class="text-danger small">{{ form.imagen.errors|striptags }}</div>
+              {% endif %}
+              <div class="form-text">Opcional. JPG/PNG</div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="col-12">
+              <label class="form-label">Descripción</label>
+              <textarea name="descripcion"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Sinopsis, notas…">{{ form.descripcion.value|default_if_none:obj.descripcion }}</textarea>
+              {% if form.descripcion.errors %}
+                <div class="text-danger small">{{ form.descripcion.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Botones -->
+            <div class="col-12 d-flex justify-content-end gap-2 mt-2">
+              <a href="{% url 'admin_catalogo' %}" class="btn btn-outline-secondary">
+                Cancelar
+              </a>
+              <button class="btn btn-dark">
+                <i class="bi bi-save me-1"></i> Guardar
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

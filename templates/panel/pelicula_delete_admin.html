@@ -1,0 +1,27 @@
+{% extends 'panel/base_admin.html' %}
+
+{% block title %}Eliminar película - Panel Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h4 class="mb-3">¿Eliminar “{{ obj.titulo }}”?</h4>
+          <p class="text-muted">
+            Esta acción no se puede deshacer. La película será removida del catálogo y de las vistas de cliente.
+          </p>
+          <form method="post" class="d-flex justify-content-end gap-2">
+            {% csrf_token %}
+            <a href="{% url 'admin_catalogo' %}" class="btn btn-outline-secondary">Cancelar</a>
+            <button class="btn btn-danger">
+              <i class="bi bi-trash me-1"></i>Eliminar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

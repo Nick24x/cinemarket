@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Panel Admin - CineMarket{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons para íconos del panel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+  <!-- NAVBAR SUPERIOR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+      <!-- Logo / marca -->
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'admin_dashboard' %}">
+        <span class="me-2" style="font-size: 24px;"><i class="bi bi-film"></i></span> CineMarket
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#adminNavbar" aria-controls="adminNavbar"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="adminNavbar">
+        <!-- Menú principal -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <!-- Dashboard -->
+          <li class="nav-item">
+            <a class="nav-link
+                      {% block nav_dashboard_active %}{% endblock %}
+                      {% if request.resolver_match.url_name == 'admin_dashboard' %} active{% endif %}"
+               href="{% url 'admin_dashboard' %}">
+              <i class="bi bi-speedometer2 me-1"></i> Dashboard
+            </a>
+          </li>
+
+          <!-- Catálogo -->
+          <li class="nav-item">
+            <a class="nav-link
+                      {% block nav_catalogo_active %}{% endblock %}
+                      {% if request.resolver_match.url_name == 'admin_catalogo' %} active{% endif %}"
+               href="{% url 'admin_catalogo' %}">
+              <i class="bi bi-collection-play me-1"></i> Catálogo
+            </a>
+          </li>
+
+          <!-- Reportes -->
+          <li class="nav-item">
+            <a class="nav-link
+                      {% block nav_reportes_active %}{% endblock %}
+                      {% if request.resolver_match.url_name == 'admin_reportes' %} active{% endif %}"
+               href="{% url 'admin_reportes' %}">
+              <i class="bi bi-graph-up-arrow me-1"></i> Reportes
+            </a>
+          </li>
+
+          <!-- Transacciones -->
+          <li class="nav-item">
+            <a class="nav-link
+                      {% block nav_transacciones_active %}{% endblock %}
+                      {% if request.resolver_match.url_name == 'admin_transacciones' %} active{% endif %}"
+               href="{% url 'admin_transacciones' %}">
+              <i class="bi bi-receipt-cutoff me-1"></i> Transacciones
+            </a>
+          </li>
+        </ul>
+
+        <!-- Lado derecho: cliente / usuario / logout -->
+        <div class="d-flex align-items-center gap-2">
+          <a href="{% url 'home' %}" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-bag-check me-1"></i> Cliente
+          </a>
+
+          <div class="dropdown">
+            <button class="btn btn-outline-light btn-sm dropdown-toggle"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i>{{ request.user.username|default:"Admin" }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><span class="dropdown-item-text small text-muted">
+                Sesión actual
+              </span></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-right me-1"></i>Cerrar sesión
+              </a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <main class="container-fluid p-4 flex-grow-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER SIMPLE -->
+  <footer class="bg-white border-top py-2 mt-auto">
+    <div class="container-fluid small text-muted text-center">
+      © {{ now|date:"Y" }} CineMarket · Panel de administración
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

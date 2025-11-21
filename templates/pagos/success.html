@@ -1,0 +1,16 @@
+{% extends "panel/home.html" %}
+
+{% block title %}Pago completado{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center text-light">
+  <h2 class="mb-3">¡Pago realizado con éxito! 🎉</h2>
+  <p class="mb-2">
+    Has {{ transaccion.tipo }} la película <strong>{{ transaccion.pelicula.titulo }}</strong>.
+  </p>
+  <p class="text-muted mb-4">
+    Monto: ${{ transaccion.precio }} CLP · Estado: {{ transaccion.estado }}
+  </p>
+  <a href="{% url 'home' %}" class="btn btn-primary">Volver al catálogo</a>
+</div>
+{% endblock %}

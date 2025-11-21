@@ -1,0 +1,16 @@
+{% extends "panel/base_admin.html" %}
+
+{% block title %}Error con Mercado Pago{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-light">
+  <h3 class="mb-3">No se pudo iniciar el pago</h3>
+  <p class="text-muted">{{ mensaje }}</p>
+
+  <pre class="bg-dark text-success p-3 rounded small">
+{{ detalle|safe }}
+  </pre>
+
+  <a href="{% url 'home' %}" class="btn btn-primary mt-3">Volver al catálogo</a>
+</div>
+{% endblock %}
