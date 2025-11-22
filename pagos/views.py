@@ -20,9 +20,9 @@ def iniciar_pago(request, pelicula_id, tipo):
     if tipo not in ("arriendo", "compra"):
         raise Http404("Tipo de operación no válido")
 
-    precio = float(pelicula.precio_arriendo)  # luego puedes cambiar a precio_compra si lo agregas
+    precio = float(pelicula.precio_arriendo)  # luego cambias si tienes precio_compra
 
-    # 1) Crear transacción en estado "pendiente"
+    # 1) Crear transacción pendiente
     trans = Transaccion.objects.create(
         usuario=request.user,
         pelicula=pelicula,
@@ -31,10 +31,12 @@ def iniciar_pago(request, pelicula_id, tipo):
         estado='pendiente',
     )
 
-    print("MP_ACCESS_TOKEN EN SERVER >>>", repr(settings.MP_ACCESS_TOKEN), type(settings.MP_ACCESS_TOKEN))
     sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
 
-    # URL del webhook (debe ser pública en producción)
+    # URLs absolutas para back_urls y webhook
+    success_url = request.build_absolute_uri(reverse("pagos:pago_success"))
+    failure_url = request.build_absolute_uri(reverse("pagos:pago_failure"))
+    pending_url = request.build_absolute_uri(reverse("pagos:pago_pending"))
     notification_url = request.build_absolute_uri(reverse("pagos:mp_webhook"))
 
     preference_data = {
@@ -49,15 +51,16 @@ def iniciar_pago(request, pelicula_id, tipo):
         "payer": {
             "email": request.user.email or "test_user@example.com"
         },
-        # Para poder identificar la transacción en el webhook
+        # ID de nuestra transacción
         "external_reference": str(trans.id),
 
+        # 👇 ESTO ES LO QUE MP ESTÁ EXIGIENDO
         "back_urls": {
-            "success": request.build_absolute_uri(reverse("pagos:pago_success")),
-            "failure": request.build_absolute_uri(reverse("pagos:pago_failure")),
-            "pending": request.build_absolute_uri(reverse("pagos:pago_pending")),
+            "success": success_url,
+            "failure": failure_url,
+            "pending": pending_url,
         },
-        "auto_return": "approved",
+        "auto_return": "approved",   # ahora sí, con success definido
 
         # Webhook
         "notification_url": notification_url,
@@ -68,7 +71,6 @@ def iniciar_pago(request, pelicula_id, tipo):
 
     print("MP preference response:", response)
 
-    # Guardamos el id de la preferencia en la transacción
     trans.mp_preference_id = response.get("id")
     trans.save()
 
@@ -79,7 +81,6 @@ def iniciar_pago(request, pelicula_id, tipo):
             "detalle": response,
         })
 
-    # Página puente que abre la pantalla de MP
     return render(request, "pagos/checkout_puente.html", {
         "init_point": init_point,
         "pelicula": pelicula,
