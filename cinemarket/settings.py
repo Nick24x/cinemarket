@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres.ipvfsirzkjyyppcwkkwk',
-        'PASSWORD': 'Nico2409.',  # tu contraseña real de Supabase
+        'PASSWORD': 'Nico2409.',
         'HOST': 'aws-1-us-east-2.pooler.supabase.com',
         'PORT': '5432',
         'OPTIONS': {
@@ -140,8 +140,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-MP_ACCESS_TOKEN = os.getenv("APP_USR-2568026340823469-111821-9bad41b9acf67046efac2b64bde81974-3001373544")  # token privado
-MP_PUBLIC_KEY = os.getenv("APP_USR-f60d0946-0e49-4625-9226-5e22cea85307")    
+import os
+
+MP_ACCESS_TOKEN = os.getenv("APP_USR-2568026340823469-111821-9bad41b9acf67046efac2b64bde81974-3001373544")
+MP_PUBLIC_KEY   = os.getenv("APP_USR-f60d0946-0e49-4625-9226-5e22cea85307")  
+
 LOGIN_URL = '/usuarios/login/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
