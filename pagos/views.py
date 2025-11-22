@@ -93,35 +93,17 @@ def iniciar_pago(request, pelicula_id, tipo):
 
 @login_required
 def pago_success(request):
-    """
-    Solo muestra un mensaje al usuario.
-    El guardado REAL del pago lo hace el webhook.
-    """
-    mp_status = request.GET.get("status")
-    mp_payment_id = request.GET.get("payment_id")
-    mp_pref_id = request.GET.get("preference_id")
-
-    transaccion = None
-    if mp_pref_id:
-        transaccion = Transaccion.objects.filter(mp_preference_id=mp_pref_id).first()
-
-    contexto = {
-        "transaccion": transaccion,
-        "mp_status": mp_status,
-        "mp_payment_id": mp_payment_id,
-        "mp_pref_id": mp_pref_id,
-    }
-    return render(request, "pagos/success.html", contexto)
+    return redirect('home')
 
 
 @login_required
 def pago_failure(request):
-    return render(request, "pagos/failure.html")
+    return redirect("home")
 
 
 @login_required
 def pago_pending(request):
-    return render(request, "pagos/pending.html")
+    return redirect("home")
 
 
 @csrf_exempt
