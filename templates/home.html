@@ -236,19 +236,28 @@
               <h6 class="card-title mb-1 text-truncate">{{ p.titulo }}</h6>
               <p class="small text-muted mb-2 text-truncate">{{ p.genero }}</p>
 
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-semibold text-info">
-                  ${{ p.precio_arriendo|floatformat:0 }}
-                </span>
-
-                <div class="btn-group btn-group-sm">
-                  <a href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}" class="btn btn-primary">
+              <div class="price-actions">
+                <!-- ARRENDAR -->
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-semibold text-info small">
+                    Arrendar: ${{ p.precio_arriendo|floatformat:0 }}
+                  </span>
+                  <a href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}"
+                     class="btn btn-primary btn-sm">
                     Arrendar
                   </a>
-                  <a href="{% url 'pagos:iniciar_pago' p.id 'compra' %}" class="btn btn-outline-light">
+                </div>
+
+                <!-- COMPRAR (más caro que arriendo) -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold text-success small">
+                    Comprar: ${{ p.precio_arriendo|add:"1500"|floatformat:0 }}
+                  </span>
+                  <a href="{% url 'pagos:iniciar_pago' p.id 'compra' %}"
+                     class="btn btn-outline-light btn-sm">
                     Comprar
                   </a>
-                </div>                
+                </div>
               </div>
 
             </div>

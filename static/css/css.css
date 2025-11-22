@@ -234,3 +234,11 @@ body {
   color: rgba(255, 255, 255, 0.92);
   font-weight: 500;
 }
+
+.price-actions .small {
+  font-size: 0.9rem;
+}
+
+.price-actions .btn {
+  min-width: 88px;
+}
