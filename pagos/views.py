@@ -54,17 +54,17 @@ def iniciar_pago(request, pelicula_id, tipo):
         # ID de nuestra transacción
         "external_reference": str(trans.id),
 
-        # 👇 ESTO ES LO QUE MP ESTÁ EXIGIENDO
         "back_urls": {
             "success": success_url,
             "failure": failure_url,
             "pending": pending_url,
         },
-        "auto_return": "approved",   # ahora sí, con success definido
 
-        # Webhook
+        # NO usamos auto_return para evitar el error de MP
         "notification_url": notification_url,
     }
+
+    print("PREFERENCE DATA ENVIADA A MP >>>", preference_data)
 
     result = sdk.preference().create(preference_data)
     response = result.get("response", {})
