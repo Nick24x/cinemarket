@@ -20,7 +20,7 @@ def iniciar_pago(request, pelicula_id, tipo):
     if tipo not in ("arriendo", "compra"):
         raise Http404("Tipo de operación no válido")
 
-    precio = float(pelicula.precio_arriendo)  # luego cambias si tienes precio_compra
+    precio = float(pelicula.precio_arriendo)
 
     # 1) Crear transacción pendiente
     trans = Transaccion.objects.create(
@@ -33,11 +33,17 @@ def iniciar_pago(request, pelicula_id, tipo):
 
     sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
 
-    # URLs absolutas para back_urls y webhook
+    # URLs absolutas
     success_url = request.build_absolute_uri(reverse("pagos:pago_success"))
     failure_url = request.build_absolute_uri(reverse("pagos:pago_failure"))
     pending_url = request.build_absolute_uri(reverse("pagos:pago_pending"))
     notification_url = request.build_absolute_uri(reverse("pagos:mp_webhook"))
+
+    # Forzar https (Railway soporta https)
+    success_url = success_url.replace("http://", "https://")
+    failure_url = failure_url.replace("http://", "https://")
+    pending_url = pending_url.replace("http://", "https://")
+    notification_url = notification_url.replace("http://", "https://")
 
     preference_data = {
         "items": [
@@ -59,12 +65,13 @@ def iniciar_pago(request, pelicula_id, tipo):
             "pending": pending_url,
         },
 
-        # 👇 activar redirección automática cuando el pago queda approved
+        # ahora sí, con success https
         "auto_return": "approved",
 
         "notification_url": notification_url,
     }
 
+    print("PREFERENCE DATA ENVIADA A MP >>>", preference_data)
 
     result = sdk.preference().create(preference_data)
     response = result.get("response", {})
@@ -81,7 +88,6 @@ def iniciar_pago(request, pelicula_id, tipo):
             "detalle": response,
         })
 
-    # 👇 ya no usamos checkout_puente, vamos directo a MP
     return redirect(init_point)
 
 
