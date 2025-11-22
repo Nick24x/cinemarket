@@ -59,9 +59,12 @@ def iniciar_pago(request, pelicula_id, tipo):
             "pending": pending_url,
         },
 
-        # sin auto_return, para que no moleste MP
+        # 👇 activar redirección automática cuando el pago queda approved
+        "auto_return": "approved",
+
         "notification_url": notification_url,
     }
+
 
     result = sdk.preference().create(preference_data)
     response = result.get("response", {})
@@ -119,51 +122,58 @@ def pago_pending(request):
 def mp_webhook(request):
     """
     MercadoPago llama a esta URL cuando cambia el estado de un pago.
-    Aquí consultamos el pago y actualizamos la Transaccion.
+    Actualizamos la Transaccion según el external_reference.
     """
-    if request.method == "POST":
-        try:
-            payload = json.loads(request.body.decode("utf-8") or "{}")
-        except json.JSONDecodeError:
-            payload = {}
+    # Log para ver si realmente llega algo
+    print("WEBHOOK RECIBIDO >>>", request.method, request.GET)
 
-        # MP puede mandar info en query o en el body, cubrimos ambas
-        topic = (
-            request.GET.get("topic")
-            or request.GET.get("type")
-            or payload.get("type")
-        )
+    # Intentamos leer JSON (si lo hay)
+    try:
+        payload = json.loads(request.body.decode("utf-8") or "{}")
+    except json.JSONDecodeError:
+        payload = {}
 
-        payment_id = (
-            request.GET.get("id")
-            or request.GET.get("data.id")
-            or (payload.get("data") or {}).get("id")
-        )
+    print("WEBHOOK PAYLOAD >>>", payload)
 
-        if topic == "payment" and payment_id:
-            sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
-            payment_info = sdk.payment().get(payment_id)
-            payment = payment_info.get("response", {})
+    # MP puede mandar info en query o en el body
+    topic = (
+        request.GET.get("topic")
+        or request.GET.get("type")
+        or payload.get("type")
+    )
 
-            status = payment.get("status")                 # approved, rejected, etc.
-            external_ref = payment.get("external_reference")  # ID de Transaccion
-            pref_id = payment.get("preference_id")
+    payment_id = (
+        request.GET.get("id")
+        or request.GET.get("data.id")
+        or (payload.get("data") or {}).get("id")
+    )
 
-            if external_ref:
-                try:
-                    trans = Transaccion.objects.get(id=external_ref)
-                    trans.mp_payment_id = str(payment_id)
-                    trans.mp_status = status
-                    trans.mp_preference_id = pref_id or trans.mp_preference_id
+    if topic == "payment" and payment_id:
+        sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
+        payment_info = sdk.payment().get(payment_id)
+        payment = payment_info.get("response", {})
 
-                    if status == "approved":
-                        trans.estado = "completada"
-                    elif status in ("rejected", "cancelled"):
-                        trans.estado = "rechazada"
+        print("INFO PAGO MP >>>", payment)
 
-                    trans.save()
-                except Transaccion.DoesNotExist:
-                    pass
+        status = payment.get("status")                  # approved, rejected, etc.
+        external_ref = payment.get("external_reference")  # ID de Transaccion
+        pref_id = payment.get("preference_id")
 
-    # MP solo necesita un 200 para considerar que el webhook respondió bien
+        if external_ref:
+            try:
+                trans = Transaccion.objects.get(id=external_ref)
+                trans.mp_payment_id = str(payment_id)
+                trans.mp_status = status
+                trans.mp_preference_id = pref_id or trans.mp_preference_id
+
+                if status == "approved":
+                    trans.estado = "completada"
+                elif status in ("rejected", "cancelled"):
+                    trans.estado = "rechazada"
+
+                trans.save()
+                print("TRANSACCION ACTUALIZADA >>>", trans.id, trans.estado)
+            except Transaccion.DoesNotExist:
+                print("NO SE ENCONTRO TRANSACCION CON ID", external_ref)
+
     return HttpResponse("OK", status=200)
