@@ -95,7 +95,7 @@
 
                   <h1 class="display-6 fw-bold mb-2">{{ p.titulo }}</h1>
 
-                  <p class="mb-2 text-muted">
+                  <p class="mb-2 hero-meta">
                     {{ p.genero }} • {{ p.anio }}
                     {% if p.calificacion %} • ⭐ {{ p.calificacion }}/5{% endif %}
                   </p>
@@ -105,8 +105,17 @@
                   </p>
 
                   <div class="d-flex flex-wrap gap-2">
-                    <button class="btn btn-primary btn-lg">Ver detalles</button>
-                    <button class="btn btn-outline-light btn-lg">Arrendar desde ${{ p.precio_arriendo }}</button>
+                    <!-- Arrendar -->
+                    <a href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}" 
+                       class="btn btn-primary btn-lg">
+                      Arrendar por ${{ p.precio_arriendo|floatformat:0 }}
+                    </a>
+
+                    <!-- Comprar -->
+                    <a href="{% url 'pagos:iniciar_pago' p.id 'compra' %}" 
+                       class="btn btn-outline-light btn-lg">
+                      Comprar por ${{ p.precio_arriendo|add:"1500"|floatformat:0 }}
+                    </a>
                   </div>
 
                 </div>
@@ -130,42 +139,36 @@
     </section>
     {% endif %}
 
-    <!-- FILTRO POR GÉNEROS -->
+    <!-- FILTRO POR GÉNERO -->
     <section class="mb-3">
       <div class="d-flex flex-wrap align-items-center gap-2">
         <span class="text-muted small text-uppercase">Explorar por género</span>
 
-        <!-- Todos -->
         <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Todos"
            class="btn btn-sm btn-outline-light genre-pill {% if not genre or genre|lower == 'todos' %}active{% endif %}">
           Todos
         </a>
 
-        <!-- Acción -->
         <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Acción"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Acción' %}active{% endif %}">
           Acción
         </a>
 
-        <!-- Terror -->
         <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Terror"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Terror' %}active{% endif %}">
           Terror
         </a>
 
-        <!-- Romance -->
         <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Romance"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Romance' %}active{% endif %}">
           Romance
         </a>
 
-        <!-- Comedia -->
         <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Comedia"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Comedia' %}active{% endif %}">
           Comedia
         </a>
 
-        <!-- Infantil -->
         <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Infantil"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Infantil' %}active{% endif %}">
           Infantil
@@ -234,7 +237,9 @@
               <p class="small text-muted mb-2 text-truncate">{{ p.genero }}</p>
 
               <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-semibold text-info">${{ p.precio_arriendo|floatformat:0 }}</span>
+                <span class="fw-semibold text-info">
+                  ${{ p.precio_arriendo|floatformat:0 }}
+                </span>
 
                 <div class="btn-group btn-group-sm">
                   <a href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}" class="btn btn-primary">
@@ -259,7 +264,7 @@
     <section class="mt-4">
       <nav aria-label="Paginación catálogo">
         <ul class="pagination pagination-sm justify-content-center mb-0">
-          <!-- Anterior -->
+
           {% if peliculas.has_previous %}
             <li class="page-item">
               <a class="page-link"
@@ -268,17 +273,12 @@
               </a>
             </li>
           {% else %}
-            <li class="page-item disabled">
-              <span class="page-link">«</span>
-            </li>
+            <li class="page-item disabled"><span class="page-link">«</span></li>
           {% endif %}
 
-          <!-- Números -->
           {% for i in peliculas.paginator.page_range %}
             {% if i == peliculas.number %}
-              <li class="page-item active">
-                <span class="page-link">{{ i }}</span>
-              </li>
+              <li class="page-item active"><span class="page-link">{{ i }}</span></li>
             {% else %}
               <li class="page-item">
                 <a class="page-link"
@@ -289,7 +289,6 @@
             {% endif %}
           {% endfor %}
 
-          <!-- Siguiente -->
           {% if peliculas.has_next %}
             <li class="page-item">
               <a class="page-link"
@@ -298,10 +297,9 @@
               </a>
             </li>
           {% else %}
-            <li class="page-item disabled">
-              <span class="page-link">»</span>
-            </li>
+            <li class="page-item disabled"><span class="page-link">»</span></li>
           {% endif %}
+
         </ul>
       </nav>
     </section>

@@ -228,3 +228,9 @@ body {
   background: #ffffff;
   color: #111827;
 }
+
+/* Texto visible para género, año y rating en el HERO */
+.hero-meta {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
