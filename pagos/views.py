@@ -51,7 +51,6 @@ def iniciar_pago(request, pelicula_id, tipo):
         "payer": {
             "email": request.user.email or "test_user@example.com"
         },
-        # ID de nuestra transacción
         "external_reference": str(trans.id),
 
         "back_urls": {
@@ -60,11 +59,9 @@ def iniciar_pago(request, pelicula_id, tipo):
             "pending": pending_url,
         },
 
-        # NO usamos auto_return para evitar el error de MP
+        # sin auto_return, para que no moleste MP
         "notification_url": notification_url,
     }
-
-    print("PREFERENCE DATA ENVIADA A MP >>>", preference_data)
 
     result = sdk.preference().create(preference_data)
     response = result.get("response", {})
@@ -81,12 +78,8 @@ def iniciar_pago(request, pelicula_id, tipo):
             "detalle": response,
         })
 
-    return render(request, "pagos/checkout_puente.html", {
-        "init_point": init_point,
-        "pelicula": pelicula,
-        "tipo": tipo,
-        "transaccion": trans,
-    })
+    # 👇 ya no usamos checkout_puente, vamos directo a MP
+    return redirect(init_point)
 
 
 @login_required
