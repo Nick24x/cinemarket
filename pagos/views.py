@@ -31,7 +31,7 @@ def iniciar_pago(request, pelicula_id, tipo):
         estado='pendiente',
     )
 
-    print("MP_ACCESS_TOKEN >>>", repr(settings.MP_ACCESS_TOKEN))
+    print("MP_ACCESS_TOKEN EN SERVER >>>", repr(settings.MP_ACCESS_TOKEN), type(settings.MP_ACCESS_TOKEN))
     sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
 
     # URL del webhook (debe ser pública en producción)

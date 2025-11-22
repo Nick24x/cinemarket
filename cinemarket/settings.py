@@ -142,8 +142,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 import os
 
-MP_ACCESS_TOKEN = os.getenv("APP_USR-2568026340823469-111821-9bad41b9acf67046efac2b64bde81974-3001373544")
-MP_PUBLIC_KEY   = os.getenv("APP_USR-f60d0946-0e49-4625-9226-5e22cea85307")  
+import os
+
+MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
+MP_PUBLIC_KEY   = os.getenv("MP_PUBLIC_KEY")
+
 
 LOGIN_URL = '/usuarios/login/'
 LOGIN_REDIRECT_URL = 'home'
