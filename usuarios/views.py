@@ -6,6 +6,9 @@ from peliculas.models import Pelicula
 from .forms import RegistroForm
 from .forms import PerfilForm
 from django.contrib import messages
+from django.urls import reverse
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 def home(request):
     # trae SOLO disponibles; si quieres probar, usa .all()
@@ -43,16 +46,45 @@ def logout_view(request):
 
 @login_required
 def mi_perfil(request):
+    """
+    Ver y editar datos básicos del usuario (username, email, etc.).
+    """
+    user = request.user
+
     if request.method == "POST":
-        form = PerfilForm(request.POST, instance=request.user)
+        form = PerfilForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, "Perfil actualizado correctamente.")
             return redirect("mi_perfil")
     else:
-        form = PerfilForm(instance=request.user)
+        form = PerfilForm(instance=user)
 
-    return render(request, "cuentas/mi_perfil.html", {
+    # URL interna para el botón "Cambiar contraseña"
+    url_password_change = reverse("cambiar_password")
+
+    return render(request, "usuarios/mi_perfil.html", {
         "form": form,
-        "user_obj": request.user,
+        "user": user,
+        "url_password_change": url_password_change,
+    })
+
+@login_required
+def cambiar_password(request):
+    """
+    Permite al usuario cambiar su contraseña.
+    Al guardar, se actualiza en la BD y se mantiene la sesión.
+    """
+    if request.method == "POST":
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()  # 🔹 AQUÍ se guarda la nueva contraseña en la BD
+            update_session_auth_hash(request, user)  # mantiene la sesión
+            messages.success(request, "Tu contraseña se actualizó correctamente.")
+            return redirect("mi_perfil")
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    return render(request, "usuarios/cambiar_password.html", {
+        "form": form
     })
