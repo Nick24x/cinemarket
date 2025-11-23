@@ -68,7 +68,7 @@
               {% endif %}
             </div>
 
-            <!-- Precio / Calificación -->
+            <!-- Precio arriendo -->
             <div class="col-md-6">
               <label class="form-label">Precio arriendo</label>
               <div class="input-group">
@@ -85,6 +85,24 @@
               {% endif %}
             </div>
 
+            <!-- Precio compra -->
+            <div class="col-md-6">
+              <label class="form-label">Precio compra</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number"
+                       step="10" min="0"
+                       name="precio_compra"
+                       class="form-control text-end"
+                       value="{{ form.precio_compra.value|default_if_none:obj.precio_compra }}">
+                <span class="input-group-text">CLP</span>
+              </div>
+              {% if form.precio_compra.errors %}
+                <div class="text-danger small">{{ form.precio_compra.errors|striptags }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Calificación -->
             <div class="col-md-6">
               <label class="form-label">Calificación</label>
               <div class="input-group">
@@ -126,7 +144,6 @@
               {% else %}
                 <p class="text-muted small mb-2">Sin imagen asociada.</p>
               {% endif %}
-              <!-- Campo clear si tu form lo tiene -->
               {% if form.imagen.field.widget.clear_checkbox_label %}
                 <div class="form-check">
                   {{ form.imagen.clear_checkbox }}

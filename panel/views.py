@@ -47,7 +47,6 @@ def dashboard(request):
         'ingreso_arriendos': ingreso_arriendos,
         'ingreso_compras': ingreso_compras,
         'ingresos_totales': ingresos_totales,
-        # >>> ahora ingreso_estimado muestra el total
         'ingreso_estimado': ingresos_totales,
     }
     return render(request, 'panel/dashboard.html', ctx)
@@ -60,7 +59,14 @@ def catalogo_admin(request):
     if request.method == 'POST' and request.POST.get('_accion') == 'crear':
         form = PeliculaForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            pelicula = form.save(commit=False)
+
+            # Si no se indicó precio_compra, lo calculamos a partir del arriendo
+            if not pelicula.precio_compra or pelicula.precio_compra == 0:
+                base = pelicula.precio_arriendo or 0
+                pelicula.precio_compra = base + 1500
+
+            pelicula.save()
             messages.success(request, 'Película agregada.')
             return redirect('admin_catalogo')
     else:
@@ -85,7 +91,14 @@ def pelicula_editar_admin(request, pk):
     if request.method == 'POST':
         form = PeliculaForm(request.POST, request.FILES, instance=obj)
         if form.is_valid():
-            form.save()
+            pelicula = form.save(commit=False)
+
+            # Si el precio_compra quedó vacío o en 0, lo recalculamos
+            if not pelicula.precio_compra or pelicula.precio_compra == 0:
+                base = pelicula.precio_arriendo or 0
+                pelicula.precio_compra = base + 1500
+
+            pelicula.save()
             messages.success(request, 'Película actualizada.')
             return redirect('admin_catalogo')
     else:
@@ -135,12 +148,13 @@ def transacciones_admin(request):
     trans = (
         Transaccion.objects
         .select_related('usuario', 'pelicula')
-        .order_by('-fecha')[:200]   # Optimizado: trae solo las 200 más recientes
+        .order_by('-fecha')[:200]
     )
 
     return render(request, 'panel/transacciones_admin.html', {
         'trans': trans,
     })
+
 
 @login_required
 @user_passes_test(is_admin)
@@ -167,6 +181,7 @@ def transaccion_devolver(request, trans_id):
     messages.success(request, 'Transacción marcada como devuelta.')
     return redirect('admin_transacciones')
 
+
 def _parse_date(s):
     """
     Acepta 'dd-mm-aaaa' o 'aaaa-mm-dd'. Retorna datetime.date o None.
@@ -179,6 +194,7 @@ def _parse_date(s):
         except ValueError:
             continue
     return None
+
 
 @login_required
 @user_passes_test(is_admin)
@@ -202,10 +218,8 @@ def reportes_admin(request):
     if desde:
         qs = qs.filter(fecha__date__gte=desde)
     if hasta:
-        # incluir día completo
         qs = qs.filter(fecha__date__lte=hasta)
 
-    # Métricas (solo completadas para ventas totales)
     ventas_totales = (qs.filter(estado='completada')
                         .aggregate(total=Sum('precio'))['total'] or 0)
 
@@ -213,7 +227,6 @@ def reportes_admin(request):
     arriendos_count = qs.filter(tipo='arriendo').count()
     clientes_activos = qs.values('usuario').distinct().count()
 
-    # Exportar CSV
     if request.GET.get('export') in ('1', 'csv'):
         import csv
         resp = HttpResponse(content_type='text/csv; charset=utf-8')
@@ -232,7 +245,6 @@ def reportes_admin(request):
             ])
         return resp
 
-    # Géneros disponibles (para el select)
     generos = (Pelicula.objects
                .values_list('genero', flat=True)
                .distinct().order_by('genero'))
@@ -248,6 +260,6 @@ def reportes_admin(request):
         'compras_count': compras_count,
         'arriendos_count': arriendos_count,
         'clientes_activos': clientes_activos,
-        'transacciones': qs[:200],  # paginado simple: top 200
+        'transacciones': qs[:200],
     }
     return render(request, 'panel/reportes_admin.html', ctx)
