@@ -155,3 +155,12 @@ LOGOUT_REDIRECT_URL = 'home'
 CSRF_TRUSTED_ORIGINS = [
     'https://cinemarket-production.up.railway.app',
 ]
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "nicolasespinoza2409@gmail.com"
+EMAIL_HOST_PASSWORD = "fswx zrcy goru wfvf"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+
+  <h2 class="mb-3">{{ pelicula.titulo }}</h2>
+
+  {% if expira_en %}
+    <p class="text-warning">
+      ⏳ Tu arriendo expira el: <strong>{{ expira_en|date:"d/m/Y H:i" }}</strong>
+    </p>
+  {% else %}
+    <p class="text-success">✔ Acceso permanente (compra)</p>
+  {% endif %}
+
+  <video controls style="width:100%; border-radius:10px;">
+      <source src="{{ video_url }}" type="video/mp4">
+      Tu navegador no soporta reproducción de video.
+  </video>
+
+</div>
+{% endblock %}

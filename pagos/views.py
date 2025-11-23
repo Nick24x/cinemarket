@@ -1,5 +1,7 @@
 import json
-
+import uuid
+from datetime import timedelta
+from django.core.mail import send_mail
 import mercadopago
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -7,10 +9,11 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils import timezone  # 👈 para fecha_expira
+from django.utils.html import strip_tags
 from peliculas.models import Pelicula
 from arriendos.models import Transaccion
-
+from django.template.loader import render_to_string
 
 @login_required
 def iniciar_pago(request, pelicula_id, tipo):
@@ -20,6 +23,7 @@ def iniciar_pago(request, pelicula_id, tipo):
     if tipo not in ("arriendo", "compra"):
         raise Http404("Tipo de operación no válido")
 
+    # Usar precio correcto según tipo
     if tipo == "arriendo":
         precio = float(pelicula.precio_arriendo)
     else:  # compra
@@ -68,9 +72,7 @@ def iniciar_pago(request, pelicula_id, tipo):
             "pending": pending_url,
         },
 
-        # ahora sí, con success https
         "auto_return": "approved",
-
         "notification_url": notification_url,
     }
 
@@ -114,8 +116,11 @@ def mp_webhook(request):
     """
     MercadoPago llama a esta URL cuando cambia el estado de un pago.
     Actualizamos la Transaccion según el external_reference.
+    Si el pago queda 'approved':
+      - marcamos la transacción como 'completada'
+      - generamos un link_token único
+      - seteamos fecha_expira para arriendos
     """
-    # Log para ver si realmente llega algo
     print("WEBHOOK RECIBIDO >>>", request.method, request.GET)
 
     # Intentamos leer JSON (si lo hay)
@@ -146,8 +151,8 @@ def mp_webhook(request):
 
         print("INFO PAGO MP >>>", payment)
 
-        status = payment.get("status")                  # approved, rejected, etc.
-        external_ref = payment.get("external_reference")  # ID de Transaccion
+        status = payment.get("status")                     # approved, rejected, etc.
+        external_ref = payment.get("external_reference")   # ID de Transaccion
         pref_id = payment.get("preference_id")
 
         if external_ref:
@@ -158,13 +163,61 @@ def mp_webhook(request):
                 trans.mp_preference_id = pref_id or trans.mp_preference_id
 
                 if status == "approved":
+                    # 👉 Generar token único si no existe aún
+                    if not trans.link_token:
+                        trans.link_token = uuid.uuid4().hex
+
+                    # 👉 Expiración solo para arriendo (ej: 48 horas)
+                    if trans.tipo == "arriendo":
+                        trans.fecha_expira = timezone.now() + timedelta(hours=48)
+                    else:  # compra -> sin expiración
+                        trans.fecha_expira = None
+
                     trans.estado = "completada"
+
+                    print("TRANSACCION APROBADA >>>", trans.id, trans.tipo)
+                    print("LINK TOKEN GENERADO >>>", trans.link_token)
+                    if trans.fecha_expira:
+                        print("EXPIRA EL >>>", trans.fecha_expira)
+
                 elif status in ("rejected", "cancelled"):
                     trans.estado = "rechazada"
 
                 trans.save()
                 print("TRANSACCION ACTUALIZADA >>>", trans.id, trans.estado)
+                enviar_email_entrega(trans)
+
             except Transaccion.DoesNotExist:
                 print("NO SE ENCONTRO TRANSACCION CON ID", external_ref)
 
     return HttpResponse("OK", status=200)
+
+def enviar_email_entrega(transaccion):
+    user = transaccion.usuario
+    pelicula = transaccion.pelicula
+
+    # Fecha de expiración si es arriendo
+    if transaccion.tipo == "arriendo":
+        expiracion = transaccion.fecha + timedelta(hours=48)
+    else:
+        expiracion = None
+
+    # Cuerpo HTML usando plantilla
+    html_message = render_to_string("emails/entrega_pelicula.html", {
+        "usuario": user,
+        "pelicula": pelicula,
+        "transaccion": transaccion,
+        "expiracion": expiracion,
+        "link": f"https://cinemarket-production.up.railway.app/arriendos/ver/{transaccion.ver_token}/",
+    })
+
+    # Texto plano (opcional)
+    plain_message = strip_tags(html_message)
+
+    send_mail(
+        subject=f"Tu {'arriendo' if transaccion.tipo=='arriendo' else 'compra'} de {pelicula.titulo}",
+        message=plain_message,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[user.email],
+        html_message=html_message,
+    )

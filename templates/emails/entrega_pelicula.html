@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Entrega de película</title>
+</head>
+<body style="font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px;">
+
+    <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 25px; border-radius: 8px;">
+
+        <h2 style="color: #222; margin-top: 0;">
+            ¡Tu {{ transaccion.tipo }} está listo! 🎬
+        </h2>
+
+        <p>Hola <strong>{{ usuario.first_name|default:usuario.username }}</strong>,</p>
+
+        <p>
+            Gracias por tu {{ transaccion.tipo }} en <strong>CineMarket</strong>.
+            Aquí tienes los datos de tu operación:
+        </p>
+
+        <hr>
+
+        <p><strong>🎞 Película:</strong> {{ pelicula.titulo }}</p>
+        <p><strong>💰 Monto pagado:</strong> ${{ transaccion.precio|floatformat:0 }}</p>
+        <p><strong>📅 Fecha de operación:</strong> {{ transaccion.fecha|date:"d/m/Y H:i" }}</p>
+        <p><strong>📦 Tipo:</strong> {{ transaccion.tipo|capfirst }}</p>
+
+        {% if expiracion %}
+        <p><strong>⏳ Disponible hasta:</strong> {{ expiracion|date:"d/m/Y H:i" }}</p>
+        {% endif %}
+
+        <hr>
+
+        <p>🎥 <strong>Tu enlace para ver la película:</strong></p>
+
+        <p>
+            <a href="{{ link }}" 
+               style="background: #0d6efd; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px;">
+                Ver película ahora
+            </a>
+        </p>
+
+        <p style="font-size: 13px; color: #666;">
+            Si no funciona el botón, copia y pega este enlace en tu navegador:
+            <br>
+            {{ link }}
+        </p>
+
+        <hr>
+
+        <p style="font-size: 12px; color: #888;">
+            Este correo se generó automáticamente. Por favor, no respondas a este mensaje.
+        </p>
+
+        <p style="font-size: 12px; color: #444;">CineMarket © 2025</p>
+
+    </div>
+
+</body>
+</html>

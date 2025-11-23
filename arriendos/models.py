@@ -37,6 +37,10 @@ class Transaccion(models.Model):
     mp_status = models.CharField(max_length=20, null=True, blank=True)
     mp_preference_id = models.CharField(max_length=50, null=True, blank=True)
 
+    #Link de la pelicula
+    link_token = models.CharField(max_length=100, null=True, blank=True) 
+    fecha_expira = models.DateTimeField(null=True, blank=True)  
+
     class Meta:
         ordering = ['-fecha']
 
