@@ -49,7 +49,7 @@ def historial(request):
         "transacciones": qs,
         "q": q,
     }
-    return render(request, "arriendos/historial.html", ctx)
+    return render(request, "transacciones/historial.html", ctx)
 
 @login_required
 @user_passes_test(es_admin)
