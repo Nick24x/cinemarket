@@ -32,14 +32,14 @@ class Transaccion(models.Model):
     )
     fecha_devolucion = models.DateTimeField(null=True, blank=True)
 
-    # 🔹 Campos para rastrear el pago en MercadoPago
+    # Campos MercadoPago
     mp_payment_id = models.CharField(max_length=50, null=True, blank=True)
     mp_status = models.CharField(max_length=20, null=True, blank=True)
     mp_preference_id = models.CharField(max_length=50, null=True, blank=True)
 
-    #Link de la pelicula
-    link_token = models.CharField(max_length=100, null=True, blank=True) 
-    fecha_expira = models.DateTimeField(null=True, blank=True)  
+    # 🔹 NUEVOS CAMPOS PARA LINK DE VISUALIZACIÓN
+    ver_token = models.CharField(max_length=64, null=True, blank=True)
+    ver_expires_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['-fecha']
