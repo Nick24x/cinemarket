@@ -114,7 +114,7 @@
                     <!-- Comprar -->
                     <a href="{% url 'pagos:iniciar_pago' p.id 'compra' %}" 
                        class="btn btn-outline-light btn-lg">
-                      Comprar por ${{ p.precio_arriendo|add:"1500"|floatformat:0 }}
+                      Comprar por ${{ p.precio_compra|floatformat:0 }}
                     </a>
                   </div>
 
@@ -248,10 +248,10 @@
                   </a>
                 </div>
 
-                <!-- COMPRAR (más caro que arriendo) -->
+                <!-- COMPRAR (usa precio_compra real) -->
                 <div class="d-flex justify-content-between align-items-center">
                   <span class="fw-semibold text-success small">
-                    Comprar: ${{ p.precio_arriendo|add:"1500"|floatformat:0 }}
+                    Comprar: ${{ p.precio_compra|floatformat:0 }}
                   </span>
                   <a href="{% url 'pagos:iniciar_pago' p.id 'compra' %}"
                      class="btn btn-outline-light btn-sm">
