@@ -55,11 +55,6 @@
                 {{ form.email }}
               </div>
 
-              <div class="col-12 small text-muted">
-                <p class="mb-1">Miembro desde: {{ user_obj.date_joined|date:"d/m/Y H:i" }}</p>
-                <p class="mb-0">Último acceso: {{ user_obj.last_login|date:"d/m/Y H:i" }}</p>
-              </div>
-
               <div class="col-12 d-flex justify-content-between align-items-center mt-2">
                 <a href="{% url 'home' %}" class="btn btn-outline-secondary">
                   Volver al inicio
