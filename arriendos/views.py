@@ -28,22 +28,28 @@ def comprar_pelicula(request, pelicula_id):
 
 @login_required
 def historial(request):
-    q = request.GET.get("q", "").strip()
-
-    trans_qs = (
+    """
+    Historial que ve el CLIENTE.
+    Solo muestra transacciones COMPLETADAS del usuario.
+    Las pendientes / rechazadas se siguen guardando para reportes admin.
+    """
+    qs = (
         Transaccion.objects
-        .filter(usuario=request.user)
-        .select_related("pelicula")
-        .order_by("-fecha")
+        .filter(usuario=request.user, estado='completada')
+        .select_related('pelicula')
+        .order_by('-fecha')
     )
 
+    # opcional: filtro por título
+    q = request.GET.get('q', '').strip()
     if q:
-        trans_qs = trans_qs.filter(pelicula__titulo__icontains=q)
+        qs = qs.filter(pelicula__titulo__icontains=q)
 
-    return render(request, "transacciones/historial.html", {
-        "transacciones": trans_qs,  # 👈 ahora el nombre coincide con el template
+    ctx = {
+        "transacciones": qs,
         "q": q,
-    })
+    }
+    return render(request, "arriendos/historial.html", ctx)
 
 @login_required
 @user_passes_test(es_admin)

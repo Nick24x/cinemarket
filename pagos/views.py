@@ -20,7 +20,10 @@ def iniciar_pago(request, pelicula_id, tipo):
     if tipo not in ("arriendo", "compra"):
         raise Http404("Tipo de operación no válido")
 
-    precio = float(pelicula.precio_arriendo)
+    if tipo == "arriendo":
+        precio = float(pelicula.precio_arriendo)
+    else:  # compra
+        precio = float(pelicula.precio_compra)
 
     # 1) Crear transacción pendiente
     trans = Transaccion.objects.create(
