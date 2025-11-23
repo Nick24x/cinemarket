@@ -5,11 +5,17 @@
 {% block content %}
 <div class="container-fluid py-4">
   <div class="row">
-    <!-- COLUMNA IZQUIERDA: NUEVA PELÍCULA -->
-    <div class="col-12 col-lg-3 mb-4">
-      <div class="card shadow-sm border-0">
+    <!-- COLUMNA IZQUIERDA: FORM NUEVA PELÍCULA -->
+    <div class="col-12 col-lg-3 mb-4 mb-lg-0">
+      <div class="card shadow-sm border-0 h-100">
         <div class="card-body">
           <h5 class="card-title mb-3">Nueva película</h5>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger py-2">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
 
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -19,17 +25,26 @@
             <div class="mb-3">
               <label class="form-label">Título</label>
               {{ form.titulo }}
+              {% if form.titulo.errors %}
+                <div class="text-danger small">{{ form.titulo.errors|striptags }}</div>
+              {% endif %}
             </div>
 
             <!-- Género / Año -->
             <div class="row">
-              <div class="col-6 mb-3">
+              <div class="col-12 col-md-6 mb-3 mb-md-0">
                 <label class="form-label">Género</label>
                 {{ form.genero }}
+                {% if form.genero.errors %}
+                  <div class="text-danger small">{{ form.genero.errors|striptags }}</div>
+                {% endif %}
               </div>
-              <div class="col-6 mb-3">
+              <div class="col-12 col-md-6">
                 <label class="form-label">Año</label>
                 {{ form.anio }}
+                {% if form.anio.errors %}
+                  <div class="text-danger small">{{ form.anio.errors|striptags }}</div>
+                {% endif %}
               </div>
             </div>
 
@@ -41,6 +56,9 @@
                 {{ form.precio_arriendo }}
                 <span class="input-group-text">CLP</span>
               </div>
+              {% if form.precio_arriendo.errors %}
+                <div class="text-danger small">{{ form.precio_arriendo.errors|striptags }}</div>
+              {% endif %}
             </div>
 
             <!-- Precio compra -->
@@ -51,121 +69,203 @@
                 {{ form.precio_compra }}
                 <span class="input-group-text">CLP</span>
               </div>
+              {% if form.precio_compra.errors %}
+                <div class="text-danger small">{{ form.precio_compra.errors|striptags }}</div>
+              {% endif %}
             </div>
 
-            <!-- Rating / Disponible / Imagen / Descripción... -->
-            <!-- (deja lo que ya tenías, solo asegúrate de usar los campos de form:
-                 form.calificacion, form.disponible, form.imagen, form.descripcion ) -->
+            <!-- Calificación -->
+            <div class="mb-3">
+              <label class="form-label">Calificación</label>
+              <div class="input-group">
+                <span class="input-group-text">⭐</span>
+                {{ form.calificacion }}
+                <span class="input-group-text">/5</span>
+              </div>
+              {% if form.calificacion.errors %}
+                <div class="text-danger small">{{ form.calificacion.errors|striptags }}</div>
+              {% endif %}
+            </div>
 
+            <!-- Disponible -->
             <div class="form-check form-switch mb-3">
               {{ form.disponible }}
-              <label class="form-check-label ms-2">Disponible</label>
+              <label class="form-check-label" for="{{ form.disponible.id_for_label }}">Disponible</label>
+              {% if form.disponible.errors %}
+                <div class="text-danger small">{{ form.disponible.errors|striptags }}</div>
+              {% endif %}
             </div>
 
+            <!-- Imagen -->
             <div class="mb-3">
               <label class="form-label">Imagen</label>
               {{ form.imagen }}
+              {% if form.imagen.errors %}
+                <div class="text-danger small">{{ form.imagen.errors|striptags }}</div>
+              {% endif %}
               <div class="form-text">Opcional. JPG/PNG</div>
             </div>
 
+            <!-- Descripción -->
             <div class="mb-3">
               <label class="form-label">Descripción (opcional)</label>
               {{ form.descripcion }}
+              {% if form.descripcion.errors %}
+                <div class="text-danger small">{{ form.descripcion.errors|striptags }}</div>
+              {% endif %}
             </div>
 
             <div class="d-grid gap-2">
               <button class="btn btn-dark" type="submit">Agregar</button>
-              <a href="{% url 'admin_catalogo' %}" class="btn btn-outline-secondary" type="button">
-                Limpiar
-              </a>
+              <button class="btn btn-outline-secondary" type="reset">Limpiar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
 
-    <!-- COLUMNA DERECHA: TABLA -->
+    <!-- COLUMNA DERECHA: LISTADO -->
     <div class="col-12 col-lg-9">
-      <!-- … buscador, etc … -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Listado de películas ({{ total }})</h5>
 
-      <div class="table-responsive">
-        <table class="table align-middle">
-          <thead>
-            <tr>
-              <th>Imagen</th>
-              <th>Título</th>
-              <th>Género</th>
-              <th>Año</th>
-              <th>Precio arriendo</th>
-              <th>Precio compra</th>
-              <th>Rating</th>
-              <th>Disponible</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for p in peliculas %}
-            <tr>
-
-              <!-- MINIATURA -->
-              <td>
-                {% if p.imagen %}
-                  <img src="{{ p.imagen.url }}" class="img-thumbnail" style="width:55px;height:55px;object-fit:cover;border-radius:8px;">
-                {% else %}
-                  <div style="width:55px;height:55px;background:#333;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:10px;">
-                    No img
-                  </div>
-                {% endif %}
-              </td>
-
-              <!-- TÍTULO -->
-              <td>{{ p.titulo }}</td>
-
-              <!-- GÉNERO -->
-              <td>{{ p.genero }}</td>
-
-              <!-- AÑO -->
-              <td>{{ p.anio }}</td>
-
-              <!-- PRECIO ARRIENDO -->
-              <td>${{ p.precio_arriendo|floatformat:0 }}</td>
-
-              <!-- PRECIO COMPRA -->
-              <td>${{ p.precio_compra|floatformat:0 }}</td>
-
-              <!-- RATING -->
-              <td>{{ p.calificacion }}</td>
-
-              <!-- DISPONIBLE -->
-              <td>
-                {% if p.disponible %}
-                  <span class="badge bg-success">Sí</span>
-                {% else %}
-                  <span class="badge bg-danger">No</span>
-                {% endif %}
-              </td>
-
-              <!-- ACCIONES -->
-              <td>
-                <a href="{% url 'admin_pelicula_editar' p.id %}" class="btn btn-sm btn-outline-primary">
-                  ✏️
-                </a>
-                <a href="{% url 'admin_pelicula_eliminar' p.id %}" class="btn btn-sm btn-outline-danger">
-                  🗑
-                </a>
-              </td>
-
-            </tr>
-            </tr>
-            {% empty %}
-            <tr>
-              <td colspan="8" class="text-center text-muted">No hay películas registradas.</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <form method="get" class="d-flex" style="max-width: 260px;">
+          <input type="text"
+                 name="q"
+                 class="form-control form-control-sm me-2"
+                 placeholder="Buscar por título..."
+                 value="{{ q }}">
+          <button class="btn btn-sm btn-outline-secondary" type="submit">Buscar</button>
+        </form>
       </div>
 
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 30%;">Título</th>
+                  <th>Género</th>
+                  <th>Año</th>
+                  <th>Precio arriendo</th>
+                  <th>Precio compra</th>
+                  <th>Rating</th>
+                  <th>Disponible</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in peliculas %}
+                  <tr>
+                    <!-- Título + miniatura -->
+                    <td>
+                      <div class="d-flex align-items-center">
+                        {% if p.imagen %}
+                          <img src="{{ p.imagen.url }}"
+                               alt="{{ p.titulo }}"
+                               class="me-2 rounded"
+                               style="width:48px;height:72px;object-fit:cover;">
+                        {% else %}
+                          <div class="me-2 rounded bg-secondary d-flex align-items-center justify-content-center text-white-50"
+                               style="width:48px;height:72px;font-size:0.7rem;">
+                            Sin img
+                          </div>
+                        {% endif %}
+                        <span>{{ p.titulo }}</span>
+                      </div>
+                    </td>
+
+                    <td>{{ p.genero }}</td>
+                    <td>{{ p.anio }}</td>
+                    <td>${{ p.precio_arriendo|floatformat:0 }}</td>
+                    <td>${{ p.precio_compra|floatformat:0 }}</td>
+                    <td>{{ p.calificacion|floatformat:1 }}</td>
+                    <td>
+                      {% if p.disponible %}
+                        <span class="badge bg-success rounded-pill">Sí</span>
+                      {% else %}
+                        <span class="badge bg-secondary rounded-pill">No</span>
+                      {% endif %}
+                    </td>
+                    <td class="text-end">
+                      <a href="{% url 'admin_pelicula_editar' p.id %}"
+                         class="btn btn-sm btn-outline-primary me-1">
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                      <a href="{% url 'admin_pelicula_eliminar' p.id %}"
+                         class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="8" class="text-center py-4 text-muted">
+                      No hay películas registradas.
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PAGINACIÓN -->
+          {% if peliculas.paginator.num_pages > 1 %}
+          <div class="px-3 py-2">
+            <nav aria-label="Paginación catálogo admin">
+              <ul class="pagination pagination-sm mb-0 justify-content-end">
+
+                <!-- Anterior -->
+                {% if peliculas.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ peliculas.previous_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+                      «
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <span class="page-link">«</span>
+                  </li>
+                {% endif %}
+
+                <!-- Números -->
+                {% for i in peliculas.paginator.page_range %}
+                  {% if i == peliculas.number %}
+                    <li class="page-item active">
+                      <span class="page-link">{{ i }}</span>
+                    </li>
+                  {% else %}
+                    <li class="page-item">
+                      <a class="page-link"
+                         href="?page={{ i }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+                        {{ i }}
+                      </a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+
+                <!-- Siguiente -->
+                {% if peliculas.has_next %}
+                  <li class="page-item">
+                    <a class="page-link"
+                       href="?page={{ peliculas.next_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+                      »
+                    </a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <span class="page-link">»</span>
+                  </li>
+                {% endif %}
+
+              </ul>
+            </nav>
+          </div>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </div>
 </div>
