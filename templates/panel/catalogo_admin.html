@@ -106,27 +106,56 @@
           <tbody>
             {% for p in peliculas %}
             <tr>
+
+              <!-- MINIATURA -->
+              <td>
+                {% if p.imagen %}
+                  <img src="{{ p.imagen.url }}" class="img-thumbnail" style="width:55px;height:55px;object-fit:cover;border-radius:8px;">
+                {% else %}
+                  <div style="width:55px;height:55px;background:#333;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:10px;">
+                    No img
+                  </div>
+                {% endif %}
+              </td>
+
+              <!-- TÍTULO -->
               <td>{{ p.titulo }}</td>
+
+              <!-- GÉNERO -->
               <td>{{ p.genero }}</td>
+
+              <!-- AÑO -->
               <td>{{ p.anio }}</td>
+
+              <!-- PRECIO ARRIENDO -->
               <td>${{ p.precio_arriendo|floatformat:0 }}</td>
+
+              <!-- PRECIO COMPRA -->
               <td>${{ p.precio_compra|floatformat:0 }}</td>
-              <td>{{ p.calificacion|floatformat:1 }}</td>
+
+              <!-- RATING -->
+              <td>{{ p.calificacion }}</td>
+
+              <!-- DISPONIBLE -->
               <td>
                 {% if p.disponible %}
                   <span class="badge bg-success">Sí</span>
                 {% else %}
-                  <span class="badge bg-secondary">No</span>
+                  <span class="badge bg-danger">No</span>
                 {% endif %}
               </td>
+
+              <!-- ACCIONES -->
               <td>
                 <a href="{% url 'admin_pelicula_editar' p.id %}" class="btn btn-sm btn-outline-primary">
-                  ✏
+                  ✏️
                 </a>
                 <a href="{% url 'admin_pelicula_eliminar' p.id %}" class="btn btn-sm btn-outline-danger">
                   🗑
                 </a>
               </td>
+
+            </tr>
             </tr>
             {% empty %}
             <tr>
