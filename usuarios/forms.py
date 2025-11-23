@@ -15,3 +15,20 @@ class RegistroForm(UserCreationForm):
         if commit:
             user.save()
         return user
+    
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "last_name", "email"]
+        labels = {
+            "username": "Usuario",
+            "first_name": "Nombre",
+            "last_name": "Apellido",
+            "email": "Correo electrónico",
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # estilos bonitos Bootstrap
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"

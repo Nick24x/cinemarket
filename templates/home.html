@@ -48,6 +48,11 @@
       <div class="d-flex align-items-center gap-2">
         {% if user.is_authenticated %}
           <span class="text-light small me-1">{{ user.username }}</span>
+
+          <a href="{% url 'mi_perfil' %}" class="btn btn-outline-light btn-sm me-1">
+            Mi perfil
+          </a>
+
           {% if user.is_staff %}
             <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light btn-sm">Admin</a>
           {% endif %}
