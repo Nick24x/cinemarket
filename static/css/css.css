@@ -45,12 +45,13 @@ body {
   outline: none;
 }
 
-/* ==== HERO ==== */
+/* ==== HERO (CARRUSEL PRINCIPAL) ==== */
+
+/* Contenedor negro con altura fija */
 .hero-wrapper {
   position: relative;
   background: #000;
   height: 420px;
-  overflow: hidden;
 }
 
 @media (min-width: 992px) {
@@ -59,44 +60,33 @@ body {
   }
 }
 
-/* Fondo desenfocado que rellena los espacios negros */
-.hero-bg {
+/* Póster del hero: que se vea completo sin deformarse */
+.hero-img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Placeholder cuando no hay imagen */
+.hero-img--placeholder {
+  background: #111;
+}
+
+/* Overlay oscuro para el texto */
+.hero-overlay {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: blur(18px);
-  transform: scale(1.1); /* para que el blur no deje bordes */
-  opacity: 0.6;
-  z-index: 0;
-}
-
-/* Póster nítido a la derecha */
-.hero-img {
-  position: absolute;
-  right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 90%;
-  width: auto;
-  max-width: 40%;
-  object-fit: contain;
-  z-index: 1;
-}
-
-/* Overlay para el texto encima del fondo y del póster */
-.hero-overlay {
-  position: relative;
-  z-index: 2;
-  height: 100%;
   display: flex;
   align-items: center;
   background: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.95),
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 0.4),
-    rgba(0, 0, 0, 0)
+    rgba(0, 0, 0, 0.90),
+    rgba(0, 0, 0, 0.70),
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.0)
   );
 }
 
@@ -106,13 +96,24 @@ body {
   animation: fadeInUp 0.45s ease both;
 }
 
+/* Texto visible para género, año y rating en el HERO */
+.hero-meta {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
+
+/* Sinopsis en el hero (limitamos ancho) */
+.hero-synopsis {
+  max-width: 680px;
+}
+
 /* Flechas carrusel más alejadas del texto */
 .carousel-control-prev,
 .carousel-control-next {
   width: 7%;
 }
 
-/* --- Flechas del carrusel en blanco y más visibles --- */
+/* Flechas del carrusel en blanco y más visibles */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
@@ -263,12 +264,6 @@ body {
 .auth-card input.form-control {
   background: #ffffff;
   color: #111827;
-}
-
-/* Texto visible para género, año y rating en el HERO */
-.hero-meta {
-  color: rgba(255, 255, 255, 0.92);
-  font-weight: 500;
 }
 
 .price-actions .small {

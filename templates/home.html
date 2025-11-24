@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CineMarket - Catálogo</title>
 
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/css.css' %}">
 </head>
@@ -23,16 +22,13 @@
     </button>
 
     <div class="collapse navbar-collapse" id="mainNav">
-      
-      <!-- LINKS CENTRO -->
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link fw-semibold active" href="{% url 'home' %}">Catálogo</a></li>
         <li class="nav-item"><a class="nav-link fw-semibold" href="{% url 'arriendos:historial' %}">Historial</a></li>
         <li class="nav-item"><a class="nav-link fw-semibold" href="{% url 'peliculas:recomendaciones' %}">Recomendaciones</a></li>
       </ul>
 
-      <!-- BARRA DE BÚSQUEDA -->
-      <form class="d-none d-lg-flex me-3 w-50" method="GET" action="{% url 'home' %}">
+      <form class="d-none d-lg-flex me-3 w-50" method="GET">
         <div class="input-group search-pill px-3 py-1 w-100">
           <input
             type="text"
@@ -44,7 +40,6 @@
         </div>
       </form>
 
-      <!-- LOGIN / REGISTRO -->
       <div class="d-flex align-items-center gap-2">
         {% if user.is_authenticated %}
           <span class="text-light small me-1">{{ user.username }}</span>
@@ -56,6 +51,7 @@
           {% if user.is_staff %}
             <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light btn-sm">Admin</a>
           {% endif %}
+
           <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Salir</a>
         {% else %}
           <div class="dropdown">
@@ -70,7 +66,6 @@
           </div>
         {% endif %}
       </div>
-
     </div>
   </nav>
 
@@ -80,7 +75,24 @@
     {% if peliculas %}
     <!-- HERO / CARRUSEL -->
     <section class="mb-4">
-      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <div id="heroCarousel"
+           class="carousel slide"
+           data-bs-ride="carousel"
+           data-bs-interval="7000"
+           data-bs-pause="false">
+
+        <!-- Indicadores (puntitos) -->
+        <div class="carousel-indicators">
+          {% for p in peliculas %}
+            <button type="button"
+                    data-bs-target="#heroCarousel"
+                    data-bs-slide-to="{{ forloop.counter0 }}"
+                    class="{% if forloop.first %}active{% endif %}"
+                    {% if forloop.first %}aria-current="true"{% endif %}
+                    aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
+        </div>
+
         <div class="carousel-inner rounded-4 overflow-hidden shadow-lg">
 
           {% for p in peliculas %}
@@ -88,17 +100,13 @@
             <div class="hero-wrapper">
 
               {% if p.imagen %}
-                <!-- Fondo desenfocado -->
-                <div class="hero-bg" style="background-image: url('{{ p.imagen.url }}');"></div>
-                <!-- Póster nítido -->
                 <img src="{{ p.imagen.url }}" class="hero-img" alt="{{ p.titulo }}">
               {% else %}
-                <div class="hero-bg" style="background: linear-gradient(135deg,#0f172a,#1d4ed8);"></div>
+                <div class="hero-img hero-img--placeholder"></div>
               {% endif %}
 
               <div class="hero-overlay">
                 <div class="hero-overlay-content px-4 px-md-5 py-4 py-md-0">
-                  
                   <span class="badge bg-primary mb-2">Destacado</span>
 
                   <h1 class="display-6 fw-bold mb-2">{{ p.titulo }}</h1>
@@ -108,18 +116,16 @@
                     {% if p.calificacion %} • ⭐ {{ p.calificacion }}/5{% endif %}
                   </p>
 
-                  <p class="lead text-light-50 mb-3" style="max-width: 680px;">
+                  <p class="lead text-light-50 mb-3 hero-synopsis">
                     {{ p.descripcion|default:"Sinopsis no disponible."|truncatechars:220 }}
                   </p>
 
                   <div class="d-flex flex-wrap gap-2">
-                    <!-- Arrendar -->
                     <a href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}" 
                        class="btn btn-primary btn-lg">
                       Arrendar por ${{ p.precio_arriendo|floatformat:0 }}
                     </a>
 
-                    <!-- Comprar -->
                     <a href="{% url 'pagos:iniciar_pago' p.id 'compra' %}" 
                        class="btn btn-outline-light btn-lg">
                       Comprar por ${{ p.precio_compra|floatformat:0 }}
@@ -152,32 +158,32 @@
       <div class="d-flex flex-wrap align-items-center gap-2">
         <span class="text-light small text-uppercase fw-semibold">Explorar por género</span>
 
-        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Todos"
+        <a href="?genre=Todos{% if q %}&q={{ q|urlencode }}{% endif %}"
            class="btn btn-sm btn-outline-light genre-pill {% if not genre or genre|lower == 'todos' %}active{% endif %}">
           Todos
         </a>
 
-        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Acción"
+        <a href="?genre=Acción{% if q %}&q={{ q|urlencode }}{% endif %}"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Acción' %}active{% endif %}">
           Acción
         </a>
 
-        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Terror"
+        <a href="?genre=Terror{% if q %}&q={{ q|urlencode }}{% endif %}"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Terror' %}active{% endif %}">
           Terror
         </a>
 
-        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Romance"
+        <a href="?genre=Romance{% if q %}&q={{ q|urlencode }}{% endif %}"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Romance' %}active{% endif %}">
           Romance
         </a>
 
-        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Comedia"
+        <a href="?genre=Comedia{% if q %}&q={{ q|urlencode }}{% endif %}"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Comedia' %}active{% endif %}">
           Comedia
         </a>
 
-        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}genre=Infantil"
+        <a href="?genre=Infantil{% if q %}&q={{ q|urlencode }}{% endif %}"
            class="btn btn-sm btn-outline-light genre-pill {% if genre == 'Infantil' %}active{% endif %}">
           Infantil
         </a>
@@ -216,7 +222,6 @@
                 {{ p.anio }}
               </span>
 
-              <!-- Tarjeta flotante -->
               <div class="movie-hover-card text-start">
                 <div class="movie-hover-title mb-1">
                   {{ p.titulo }}
@@ -236,7 +241,6 @@
                   {{ p.descripcion|default:"Sinopsis no disponible."|truncatechars:200 }}
                 </p>
               </div>
-              <!-- /Tarjeta flotante -->
 
             </div>
 
@@ -245,7 +249,6 @@
               <p class="small text-white mb-2 text-truncate">{{ p.genero }}</p>
 
               <div class="price-actions">
-                <!-- ARRENDAR -->
                 <div class="d-flex justify-content-between align-items-center mb-1">
                   <span class="fw-semibold text-info small">
                     Arrendar: ${{ p.precio_arriendo|floatformat:0 }}
@@ -256,7 +259,6 @@
                   </a>
                 </div>
 
-                <!-- COMPRAR (usa precio_compra real) -->
                 <div class="d-flex justify-content-between align-items-center">
                   <span class="fw-semibold text-success small">
                     Comprar: ${{ p.precio_compra|floatformat:0 }}
@@ -276,55 +278,22 @@
       </div>
     </section>
 
-    <!-- PAGINACIÓN -->
-    {% if peliculas.paginator.num_pages > 1 %}
-    <section class="mt-4">
-      <nav aria-label="Paginación catálogo">
-        <ul class="pagination pagination-sm justify-content-center mb-0">
-
-          {% if peliculas.has_previous %}
-            <li class="page-item">
-              <a class="page-link"
-                 href="?page={{ peliculas.previous_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}{% if genre %}&genre={{ genre|urlencode }}{% endif %}">
-                «
-              </a>
-            </li>
-          {% else %}
-            <li class="page-item disabled"><span class="page-link">«</span></li>
-          {% endif %}
-
-          {% for i in peliculas.paginator.page_range %}
-            {% if i == peliculas.number %}
-              <li class="page-item active"><span class="page-link">{{ i }}</span></li>
-            {% else %}
-              <li class="page-item">
-                <a class="page-link"
-                   href="?page={{ i }}{% if q %}&q={{ q|urlencode }}{% endif %}{% if genre %}&genre={{ genre|urlencode }}{% endif %}">
-                  {{ i }}
-                </a>
-              </li>
-            {% endif %}
-          {% endfor %}
-
-          {% if peliculas.has_next %}
-            <li class="page-item">
-              <a class="page-link"
-                 href="?page={{ peliculas.next_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}{% if genre %}&genre={{ genre|urlencode }}{% endif %}">
-                »
-              </a>
-            </li>
-          {% else %}
-            <li class="page-item disabled"><span class="page-link">»</span></li>
-          {% endif %}
-
-        </ul>
-      </nav>
-    </section>
-    {% endif %}
-
   </main>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var hero = document.getElementById('heroCarousel');
+      if (hero && window.bootstrap) {
+        new bootstrap.Carousel(hero, {
+          interval: 7000,
+          ride: 'carousel',
+          pause: false,
+          wrap: true
+        });
+      }
+    });
+  </script>
 </body>
 </html>
