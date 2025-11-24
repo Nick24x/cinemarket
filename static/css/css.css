@@ -173,34 +173,34 @@ body {
 /* =========================================================
    CAROUSEL – Flechas
 ========================================================= */
-.carousel-control-prev,
-.carousel-control-next {
-  width: 7%;
+
+/* Area click*/
+#heroCarousel .carousel-control-prev,
+#heroCarousel .carousel-control-next {
+  width: 0;               
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
+/* Iconos y sombra */
+#heroCarousel .carousel-control-prev-icon,
+#heroCarousel .carousel-control-next-icon {
   width: 3rem;
   height: 3rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
 }
 
 /* flecha izquierda */
-.carousel-control-prev-icon {
+#heroCarousel .carousel-control-prev-icon {
+  left: 1.5rem; 
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
 }
 
 /* flecha derecha */
-.carousel-control-next-icon {
+#heroCarousel .carousel-control-next-icon {
+  right: 1.5rem; 
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M4.646 1.646a.5.5 0 0 0 0 .708L9.293 7l-4.647 4.646a.5.5 0 0 0 .708.708l5-5a.5.5 0 0 0 0-.708l-5-5a.5.5 0 0 0-.708 0z'/%3e%3c/svg%3e");
-}
-
-.carousel-control-prev {
-  left: -2.5rem;
-}
-
-.carousel-control-next {
-  right: -2.5rem;
 }
 
 /* =========================================================
