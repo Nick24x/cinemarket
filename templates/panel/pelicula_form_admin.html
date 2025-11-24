@@ -165,6 +165,37 @@
               <div class="form-text">Opcional. JPG/PNG</div>
             </div>
 
+            <!-- 🔴 NUEVO BLOQUE: VIDEO -->
+            <div class="col-12">
+              <hr class="mt-4 mb-3">
+            </div>
+
+            <div class="col-12">
+              <label class="form-label d-block">Archivo de video</label>
+
+              {% if obj.video %}
+                <p class="mb-2">
+                  Video actual:
+                  <a href="{{ obj.video.url }}" target="_blank" class="link-primary">
+                    Ver archivo
+                  </a>
+                </p>
+              {% else %}
+                <p class="text-muted small mb-2">Sin video asociado.</p>
+              {% endif %}
+
+              {{ form.video }}
+
+              {% if form.video.errors %}
+                <div class="text-danger small">{{ form.video.errors|striptags }}</div>
+              {% endif %}
+
+              <div class="form-text">
+                Opcional. Archivo MP4 u otro formato soportado.
+              </div>
+            </div>
+            <!-- 🔴 FIN BLOQUE VIDEO -->
+
             <!-- Descripción -->
             <div class="col-12">
               <label class="form-label">Descripción</label>
