@@ -15,6 +15,9 @@ urlpatterns = [
     path('pagos/', include('pagos.urls')),
 ]
 
+# Manejo de archivos multimedia
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 # Manejo de archivos estáticos en desarrollo
 if settings.DEBUG:
     handler500 = 'django.views.defaults.server_error'
