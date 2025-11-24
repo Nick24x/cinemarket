@@ -199,6 +199,14 @@ body {
   border-color: #2563eb !important;
 }
 
+/* Título de sección "Explorar por género" */
+.section-title {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 /* =========================================================
    TARJETAS DE PELÍCULAS
 ========================================================= */
