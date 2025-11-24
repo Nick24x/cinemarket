@@ -46,7 +46,6 @@ def historial(request):
         .order_by('-fecha')
     )
 
-    # opcional: filtro por título
     q = request.GET.get('q', '').strip()
     if q:
         qs = qs.filter(pelicula__titulo__icontains=q)
@@ -54,6 +53,7 @@ def historial(request):
     ctx = {
         "transacciones": qs,
         "q": q,
+        "ahora": timezone.now(),   # 👈 para comparar expiración en el template
     }
     return render(request, "transacciones/historial.html", ctx)
 
