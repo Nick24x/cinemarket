@@ -1,7 +1,8 @@
 import json
+import os
 import uuid
 from datetime import timedelta
-
+import resend
 import mercadopago
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -201,10 +202,15 @@ def mp_webhook(request):
     return HttpResponse("OK", status=200)
 
 
-def enviar_email_entrega(transaccion: Transaccion):
+resend.api_key = os.getenv("RESEND_API_KEY")
+
+def enviar_email_entrega(transaccion):
     user = transaccion.usuario
     pelicula = transaccion.pelicula
-    expiracion = transaccion.ver_expires_at if transaccion.tipo == "arriendo" else None
+
+    expiracion = (
+        transaccion.ver_expires_at if transaccion.tipo == "arriendo" else None
+    )
 
     html_message = render_to_string(
         "emails/entrega_pelicula.html",
@@ -216,19 +222,23 @@ def enviar_email_entrega(transaccion: Transaccion):
             "link": f"https://cinemarket-production.up.railway.app/arriendos/ver/{transaccion.ver_token}/",
         },
     )
-    plain_message = strip_tags(html_message)
+
+    subject = (
+        f"Tu {'arriendo' if transaccion.tipo == 'arriendo' else 'compra'} "
+        f"de {pelicula.titulo}"
+    )
 
     try:
-        send_mail(
-            subject=(
-                f"Tu {'arriendo' if transaccion.tipo == 'arriendo' else 'compra'} "
-                f"de {pelicula.titulo}"
-            ),
-            message=plain_message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-            html_message=html_message,
+        resend.Emails.send(
+            {
+                "from": "CineMarket <onboarding@resend.dev>",
+                "to": [user.email],
+                "subject": subject,
+                "html": html_message,
+            }
         )
+
         print("EMAIL ENVIADO >>>", user.email)
+
     except Exception as e:
-        print("ERROR ENVIANDO EMAIL >>>", e)
+        print("ERROR AL ENVIAR EMAIL >>>", e)
