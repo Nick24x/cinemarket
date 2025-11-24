@@ -141,7 +141,7 @@ MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY")
 
 
 # CORREO — USANDO RESEND
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 DEFAULT_FROM_EMAIL = "CineMarket <onboarding@resend.dev>"
 
