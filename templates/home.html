@@ -100,9 +100,12 @@
             <div class="hero-wrapper">
 
               {% if p.imagen %}
-                <img src="{{ p.imagen.url }}" class="hero-img" alt="{{ p.titulo }}">
+                <!-- Fondo difuminado -->
+                <img src="{{ p.imagen.url }}" class="hero-bg" alt="{{ p.titulo }}">
+                <!-- Poster a la derecha, sin deformarse -->
+                <img src="{{ p.imagen.url }}" class="hero-poster" alt="{{ p.titulo }}">
               {% else %}
-                <div class="hero-img hero-img--placeholder"></div>
+                <div class="hero-bg hero-img--placeholder"></div>
               {% endif %}
 
               <div class="hero-overlay">
