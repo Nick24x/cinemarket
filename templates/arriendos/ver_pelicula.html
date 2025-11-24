@@ -14,10 +14,23 @@
   {% endif %}
 
   {% if video_url %}
-    <video controls style="width:100%; border-radius:10px;">
-      <source src="{{ video_url }}" type="video/mp4">
-      Tu navegador no soporta reproducción de video.
-    </video>
+    {% if "drive.google.com" in video_url %}
+      <!-- Embebido de Google Drive -->
+      <div class="ratio ratio-16x9 mt-3">
+        <iframe 
+          src="{{ video_url }}" 
+          allow="autoplay" 
+          allowfullscreen
+          style="border:0;">
+        </iframe>
+      </div>
+    {% else %}
+      <!-- Video directo (MP4 en otro hosting) -->
+      <video controls style="width:100%; border-radius:10px;" class="mt-3">
+        <source src="{{ video_url }}" type="video/mp4">
+        Tu navegador no soporta reproducción de video.
+      </video>
+    {% endif %}
   {% else %}
     <p class="mt-3">
       Esta película aún no tiene un archivo de video asociado.
