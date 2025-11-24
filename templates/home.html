@@ -12,17 +12,42 @@
 
   <!-- Ajustes visuales extra -->
   <style>
-    /* Hero: que todas las imágenes se vean bien sin deformarse */
-    .hero-img {
-      width: 100%;
+    /* Contenedor del hero: alto fijo y fondo negro */
+    .hero-wrapper {
+      position: relative;
+      background: #000;
       height: 420px;
-      object-fit: cover;
     }
 
     @media (min-width: 992px) {
-      .hero-img {
+      .hero-wrapper {
         height: 520px;
       }
+    }
+
+    /* Póster del hero: que se vea completo, sin deformarse */
+    .hero-img {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      margin: 0 auto;
+      display: block;
+      object-fit: contain; /* muestra toda la imagen, sin estirar */
+    }
+
+    /* Overlay para que el texto se lea bien encima del póster */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.90),
+        rgba(0, 0, 0, 0.70),
+        rgba(0, 0, 0, 0.25),
+        rgba(0, 0, 0, 0.0)
+      );
     }
   </style>
 </head>
@@ -101,7 +126,8 @@
 
           {% for p in peliculas %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <div class="position-relative">
+            <!-- contenedor con altura fija y fondo negro -->
+            <div class="hero-wrapper">
 
               {% if p.imagen %}
                 <img src="{{ p.imagen.url }}" class="hero-img" alt="{{ p.titulo }}">
@@ -109,7 +135,7 @@
                 <div class="hero-img" style="background: linear-gradient(135deg,#0f172a,#1d4ed8);"></div>
               {% endif %}
 
-              <div class="hero-overlay d-flex align-items-center">
+              <div class="hero-overlay">
                 <div class="hero-overlay-content px-4 px-md-5 py-4 py-md-0">
                   
                   <span class="badge bg-primary mb-2">Destacado</span>
