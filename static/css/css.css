@@ -1,10 +1,14 @@
-/* ==== FONDO GENERAL ==== */
+/* =========================================================
+   FONDO GENERAL
+========================================================= */
 body {
   background: radial-gradient(circle at top, #20263b 0, #050814 45%, #02030a 100%);
   color: #f5f5f5;
 }
 
-/* ==== NAVBAR ==== */
+/* =========================================================
+   NAVBAR
+========================================================= */
 .navbar-dark {
   background: rgba(2, 3, 10, 0.96);
   backdrop-filter: blur(10px);
@@ -19,7 +23,9 @@ body {
   color: #4cc9f0;
 }
 
-/* ==== BARRA DE BÚSQUEDA ==== */
+/* =========================================================
+   BARRA DE BÚSQUEDA
+========================================================= */
 .search-pill {
   background: #ffffff;
   border-radius: 999px;
@@ -45,90 +51,56 @@ body {
   outline: none;
 }
 
-/* ==== HERO ==== */
-
-/* Fondo difuminado completo */
-.hero-bg {
-  position: absolute;
-  inset: 0;
+/* =========================================================
+   HERO
+========================================================= */
+.hero-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.45) blur(3px);
-  z-index: 1;
-}
-
-/* Contenedor del hero */
-.hero-wrapper {
-  position: relative;
   height: 420px;
-  overflow: hidden;
+  object-fit: cover;
+  filter: brightness(0.55);
 }
 
-@media (min-width: 992px) {
-  .hero-wrapper {
-    height: 520px;
-  }
-}
-
-/* Poster a la derecha (no deformado) */
-.hero-poster {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  z-index: 3;
-}
-
-/* Overlay de texto */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  z-index: 5;
-
   background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.70) 40%,
-    rgba(0, 0, 0, 0.25) 65%,
-    rgba(0, 0, 0, 0) 100%
+    90deg,
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.58) 45%,
+    rgba(0, 0, 0, 0.18) 100%
   );
-
-  display: flex;
-  align-items: center;
 }
 
 .hero-overlay-content {
-  margin-left: 6%;
   max-width: 780px;
+  margin-left: 6%;
+  animation: fadeInUp 0.45s ease both;
 }
 
-/* Texto visible para género, año y rating en el HERO */
 .hero-meta {
   color: rgba(255, 255, 255, 0.92);
   font-weight: 500;
 }
 
-/* Sinopsis en el hero (limitamos ancho) */
-.hero-synopsis {
-  max-width: 680px;
-}
-
-/* Flechas carrusel más alejadas del texto */
+/* =========================================================
+   CAROUSEL – Flechas
+========================================================= */
 .carousel-control-prev,
 .carousel-control-next {
   width: 7%;
 }
 
-/* Flechas del carrusel en blanco y más visibles */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
   width: 3rem;
   height: 3rem;
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+/* flecha izquierda */
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
 }
 
 /* flecha derecha */
@@ -136,15 +108,17 @@ body {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3e%3cpath d='M4.646 1.646a.5.5 0 0 0 0 .708L9.293 7l-4.647 4.646a.5.5 0 0 0 .708.708l5-5a.5.5 0 0 0 0-.708l-5-5a.5.5 0 0 0-.708 0z'/%3e%3c/svg%3e");
 }
 
-/* separarlas un poco más hacia los bordes */
 .carousel-control-prev {
   left: 1.2rem;
 }
+
 .carousel-control-next {
   right: 1.2rem;
 }
 
-/* ==== PILLS DE GÉNERO ==== */
+/* =========================================================
+   PILLS DE GÉNERO
+========================================================= */
 .genre-pill {
   border-radius: 999px;
 }
@@ -154,59 +128,62 @@ body {
   border-color: #2563eb !important;
 }
 
-/* ==== TARJETAS DE PELÍCULAS ==== */
+/* =========================================================
+   TARJETAS DE PELÍCULAS
+========================================================= */
 .movie-card {
   background: #050816;
   border: none;
   border-radius: 1rem;
   overflow: hidden;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
   border: 1px solid rgba(148, 163, 184, 0.25);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
   animation: fadeInUp 0.4s ease both;
-  position: relative;         /* para el hover card */
 }
 
-/* efecto hover base */
 .movie-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
   border-color: #38bdf8;
 }
 
-/* póster */
+/* Imágenes */
 .movie-poster {
   height: 260px;
-  object-fit: cover;
   width: 100%;
+  object-fit: cover;
   transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-/* oscurecer y hacer zoom al pasar el mouse */
 .movie-card:hover .movie-poster {
   filter: brightness(0.35);
   transform: scale(1.03);
 }
 
+/* Rating */
 .badge-rating {
   background: #facc15;
   color: #1f2933;
   font-weight: 700;
 }
 
-/* ====== HOVER CARD (info flotante) ====== */
+/* =========================================================
+   HOVER CARD (Información flotante)
+========================================================= */
 .movie-hover-card {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) translateY(10px);
   width: 90%;
   max-width: 480px;
+  padding: 1.25rem 1.5rem;
   background: radial-gradient(circle at top, #1e293b 0%, #020617 70%);
   border-radius: 1rem;
-  padding: 1.25rem 1.5rem;
   box-shadow: 0 22px 45px rgba(0, 0, 0, 0.8);
   opacity: 0;
   pointer-events: none;
+  transform: translate(-50%, -50%) translateY(10px);
   transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
@@ -235,7 +212,9 @@ body {
   margin-top: 0.5rem;
 }
 
-/* Tablas / badges redondos (de tu CSS anterior) */
+/* =========================================================
+   TABLAS / BADGES
+========================================================= */
 .table td,
 .table th {
   vertical-align: middle;
@@ -245,7 +224,9 @@ body {
   border-radius: 999px;
 }
 
-/* Animación */
+/* =========================================================
+   ANIMACIONES
+========================================================= */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -257,10 +238,12 @@ body {
   }
 }
 
-/* Estilo específico para las pantallas de autenticación */
+/* =========================================================
+   PANTALLAS DE AUTENTICACIÓN
+========================================================= */
 .auth-card {
-  background-color: #e5e7eb;  /* gris claro */
-  color: #111827;             /* texto oscuro */
+  background-color: #e5e7eb;
+  color: #111827;
 }
 
 .auth-card h1,
@@ -275,6 +258,9 @@ body {
   color: #111827;
 }
 
+/* =========================================================
+   OTROS
+========================================================= */
 .price-actions .small {
   font-size: 0.9rem;
 }
