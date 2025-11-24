@@ -78,28 +78,21 @@ def devolver_transaccion(request, pk):
 # -------------------
 # Vista para ver película por token (la afinamos después)
 # -------------------
-@login_required
 def ver_pelicula(request, token):
-    # Token → transacción
-    trans = get_object_or_404(Transaccion, token=token)
+    trans = get_object_or_404(Transaccion, ver_token=token)
 
-    # Verificamos que la transacción le pertenezca
-    if trans.usuario != request.user:
-        raise Http404("No tienes acceso a esta película.")
+    # validar que la transacción esté completada
+    if trans.estado != "completada":
+        raise Http404("La transacción no está completa.")
 
-    # Si es arriendo, verificamos expiración
-    if trans.tipo == "arriendo" and trans.expires_at:
-        if timezone.now() > trans.expires_at:
-            return render(request, "transacciones/expirado.html", {
-                "pelicula": trans.pelicula,
-            })
+    # si es arriendo, verificar expiración
+    if trans.tipo == "arriendo" and trans.ver_expires_at:
+        if timezone.now() > trans.ver_expires_at:
+            raise Http404("El arriendo ha expirado.")
 
-    peli = trans.pelicula
-
-    # Validamos que exista el video
-    if not peli.video_url and not peli.video:
-        return render(request, "transacciones/sin_video.html")
-
-    return render(request, "transacciones/ver_pelicula.html", {
-        "pelicula": peli
+    # Renderizar vista de reproducción
+    return render(request, "arriendos/ver_pelicula.html", {
+        "transaccion": trans,
+        "pelicula": trans.pelicula,
+        "usuario": trans.usuario,
     })
