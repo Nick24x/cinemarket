@@ -22,6 +22,27 @@
           <div class="col-md-4">{{ form.precio_arriendo.label_tag }} {{ form.precio_arriendo }}</div>
           <div class="col-md-4">{{ form.calificacion.label_tag }} {{ form.calificacion }}</div>
           <div class="col-md-6">{{ form.imagen.label_tag }} {{ form.imagen }}</div>
+          <div class="row mt-4">
+          <div class="col-md-6">
+            <label class="form-label">Archivo de video</label>
+
+            {% if pelicula.video %}
+              <p class="mb-2">
+                Video actual:
+                <a href="{{ pelicula.video.url }}" target="_blank" class="link-light">
+                  Ver archivo
+                </a>
+              </p>
+            {% else %}
+              <p class="mb-2 text-muted">No hay video asociado aún.</p>
+            {% endif %}
+
+            <input type="file" name="video" class="form-control">
+            <small class="form-text text-muted">
+              Opcional. Formato MP4 idealmente.
+            </small>
+          </div>
+        </div>
           <div class="col-md-6 form-check mt-4">
             {{ form.disponible }} {{ form.disponible.label_tag }}
           </div>
