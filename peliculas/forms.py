@@ -14,7 +14,8 @@ class PeliculaForm(forms.ModelForm):
             "calificacion",
             "imagen",
             "descripcion",
-            "video",   # 👈 ya estaba, lo dejamos
+            "video",
+            "video_url",   # 👈 ya estaba, lo dejamos
         ]
         widgets = {
             "titulo": forms.TextInput(attrs={"class": "form-control"}),
@@ -34,4 +35,5 @@ class PeliculaForm(forms.ModelForm):
             "descripcion": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
             # 👇 NUEVO: estilo para el campo de video
             "video": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "video_url": forms.URLInput(attrs={"class": "form-control"}),
         }
