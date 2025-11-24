@@ -90,9 +90,29 @@ def ver_pelicula(request, token):
         if timezone.now() > trans.ver_expires_at:
             raise Http404("El arriendo ha expirado.")
 
-    # Renderizar vista de reproducción
-    return render(request, "arriendos/ver_pelicula.html", {
-        "transaccion": trans,
-        "pelicula": trans.pelicula,
-        "usuario": trans.usuario,
-    })
+    pelicula = trans.pelicula
+
+    # fecha de expiración (solo arriendo)
+    expira_en = trans.ver_expires_at if trans.tipo == "arriendo" else None
+
+    # URL del video:
+    # 1) si hay archivo subido (FileField)
+    # 2) si no, usamos video_url (URLField)
+    if pelicula.video:
+        video_url = pelicula.video.url
+    elif pelicula.video_url:
+        video_url = pelicula.video_url
+    else:
+        video_url = None
+
+    return render(
+        request,
+        "arriendos/ver_pelicula.html",
+        {
+            "transaccion": trans,
+            "pelicula": pelicula,
+            "usuario": trans.usuario,
+            "expira_en": expira_en,
+            "video_url": video_url,
+        },
+    )
