@@ -55,6 +55,22 @@ body {
    HERO
 ========================================================= */
 
+/* Mejor centrado del contenido del HERO */
+.hero-content-wrapper {
+    padding-left: 6%;
+    padding-right: 28%; /* deja espacio para la imagen derecha */
+    max-width: 900px;   /* evita que el texto se alargue demasiado */
+}
+
+/* Desplaza las flechas hacia afuera para que no tapen el texto */
+.carousel-control-prev {
+    left: 2rem !important;
+}
+
+.carousel-control-next {
+    right: 2rem !important;
+}
+
 /* (se mantiene para no romper otras vistas que usen hero-img) */
 .hero-img {
   width: 100%;
@@ -63,7 +79,7 @@ body {
   filter: brightness(0.55);
 }
 
-/* NUEVO CONTENEDOR TIPO NETFLIX */
+/* CONTENEDOR*/
 .hero-wrapper {
   position: relative;
   height: 420px;
