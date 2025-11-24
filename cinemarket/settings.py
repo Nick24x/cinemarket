@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ============================================================
 
 SECRET_KEY = 'django-insecure-b=@w%b$@utfdh93sa1(_zdwbkldsppq%sw7(r#)wcn1w1%##^r'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'cinemarket-production.up.railway.app',
