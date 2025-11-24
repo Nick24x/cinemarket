@@ -162,5 +162,5 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "nicolasespinoza24raac@gmail.com"
-EMAIL_HOST_PASSWORD = "msdx chxx pawk lozk"
+EMAIL_HOST_PASSWORD = "msdxchxxpawklozk"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

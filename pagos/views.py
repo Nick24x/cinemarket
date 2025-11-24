@@ -171,8 +171,7 @@ def mp_webhook(request):
                 if status == "approved":
                     # Generar token único si no existe aún
                     if not trans.ver_token:
-                        token = uuid.uuid4().hex
-                        trans.ver_token = token
+                        trans.ver_token = uuid.uuid4().hex
 
                     # Expiración solo para arriendo (ej: 48 horas)
                     if trans.tipo == "arriendo":
