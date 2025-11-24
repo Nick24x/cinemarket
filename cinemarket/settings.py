@@ -4,10 +4,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# ============================================================
-# SEGURIDAD
-# ============================================================
 
+# SEGURIDAD
 SECRET_KEY = 'django-insecure-b=@w%b$@utfdh93sa1(_zdwbkldsppq%sw7(r#)wcn1w1%##^r'
 DEBUG = False
 
@@ -18,10 +16,8 @@ ALLOWED_HOSTS = [
 ]
 
 
-# ============================================================
-# APPS
-# ============================================================
 
+# APPS
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,10 +35,8 @@ INSTALLED_APPS = [
 ]
 
 
-# ============================================================
-# MIDDLEWARE
-# ============================================================
 
+# MIDDLEWARE
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -58,10 +52,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'cinemarket.urls'
 
 
-# ============================================================
-# TEMPLATES
-# ============================================================
 
+# TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -81,10 +73,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cinemarket.wsgi.application'
 
 
-# ============================================================
-# BASE DE DATOS — Supabase
-# ============================================================
 
+# BASE DE DATOS — Supabase
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -100,10 +90,8 @@ DATABASES = {
 }
 
 
-# ============================================================
-# PASSWORDS
-# ============================================================
 
+# PASSWORDS
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -112,20 +100,16 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# ============================================================
-# INTERNACIONALIZACIÓN
-# ============================================================
 
+# INTERNACIONALIZACIÓN
 LANGUAGE_CODE = 'es-cl'
 TIME_ZONE = 'America/Santiago'
 USE_I18N = True
 USE_TZ = True
 
 
-# ============================================================
-# STATIC & MEDIA
-# ============================================================
 
+# STATIC & MEDIA
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -135,48 +119,33 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# ============================================================
-# LOGIN
-# ============================================================
 
+# LOGIN
 LOGIN_URL = '/usuarios/login/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 
-# ============================================================
-# CSRF
-# ============================================================
 
+# CSRF
 CSRF_TRUSTED_ORIGINS = [
     'https://cinemarket-production.up.railway.app',
 ]
 
 
-# ============================================================
-# MERCADO PAGO
-# ============================================================
 
+# MERCADO PAGO
 MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
 MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY")
 
 
-# ============================================================
+
 # CORREO — USANDO RESEND
-# ============================================================
-
-# Django no enviará correos SMTP (Resend usa API)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-# Clave de API Resend (DEBES agregarla en Railway)
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
-
-# FROM por defecto (lo usa tu función)
 DEFAULT_FROM_EMAIL = "CineMarket <onboarding@resend.dev>"
 
 
-# ============================================================
-# AUTO FIELD
-# ============================================================
 
+# AUTO FIELD
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

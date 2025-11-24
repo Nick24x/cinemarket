@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from peliculas.models import Pelicula
 
-
+# Clase de transacción para arriendos y compras de películas
 class Transaccion(models.Model):
     TIPO_CHOICES = (
         ('arriendo', 'Arriendo'),
@@ -20,7 +20,6 @@ class Transaccion(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
     precio = models.DecimalField(max_digits=9, decimal_places=2)
     fecha = models.DateTimeField(auto_now_add=True)
-
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='pendiente')
     motivo_devolucion = models.TextField(blank=True)
     devuelta_por = models.ForeignKey(
@@ -37,7 +36,7 @@ class Transaccion(models.Model):
     mp_status = models.CharField(max_length=20, null=True, blank=True)
     mp_preference_id = models.CharField(max_length=50, null=True, blank=True)
 
-    # 🔹 NUEVOS CAMPOS PARA LINK DE VISUALIZACIÓN
+    # Campos de visualización
     ver_token = models.CharField(max_length=64, null=True, blank=True)
     ver_expires_at = models.DateTimeField(null=True, blank=True)
 

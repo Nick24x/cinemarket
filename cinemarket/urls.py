@@ -2,11 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-
-from peliculas import views as peliculas_views  # 👈 usamos la home de películas
+from peliculas import views as peliculas_views
 
 urlpatterns = [
-    # Home del sitio = catálogo (home.html)
+    # Home
     path('', peliculas_views.home, name='home'),
     path('arriendos/', include('arriendos.urls')),
     path('usuarios/', include('usuarios.urls')),
@@ -16,6 +15,7 @@ urlpatterns = [
     path('pagos/', include('pagos.urls')),
 ]
 
+# Manejo de archivos estáticos en desarrollo
 if settings.DEBUG:
     handler500 = 'django.views.defaults.server_error'
     urlpatterns += static(settings.MEDIA_URL,

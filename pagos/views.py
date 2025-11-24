@@ -4,17 +4,14 @@ import uuid
 from datetime import timedelta
 import resend
 import mercadopago
-from django.conf import settings
+from django.conf import settings # para acceder a MP_ACCESS_TOKEN
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse # para respuestas HTTP
 from django.shortcuts import get_object_or_404, redirect, render
-from django.template.loader import render_to_string
-from django.urls import reverse
+from django.template.loader import render_to_string # para renderizar plantillas de email
+from django.urls import reverse # para construir URLs absolutas
 from django.utils import timezone
-from django.utils.html import strip_tags
-from django.views.decorators.csrf import csrf_exempt
-
+from django.views.decorators.csrf import csrf_exempt # para el webhook de MP
 from peliculas.models import Pelicula
 from arriendos.models import Transaccion
 
@@ -41,7 +38,7 @@ def iniciar_pago(request, pelicula_id, tipo):
         precio=precio,
         estado="pendiente",
     )
-
+    # 2) Crear preferencia en Mercado Pago
     sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
 
     # URLs absolutas
@@ -50,12 +47,13 @@ def iniciar_pago(request, pelicula_id, tipo):
     pending_url = request.build_absolute_uri(reverse("pagos:pago_pending"))
     notification_url = request.build_absolute_uri(reverse("pagos:mp_webhook"))
 
-    # Forzar https (Railway soporta https)
+    # Forzar https para RailWay 
     success_url = success_url.replace("http://", "https://")
     failure_url = failure_url.replace("http://", "https://")
     pending_url = pending_url.replace("http://", "https://")
     notification_url = notification_url.replace("http://", "https://")
 
+    # Construir preferencia
     preference_data = {
         "items": [
             {
@@ -84,10 +82,12 @@ def iniciar_pago(request, pelicula_id, tipo):
     response = result.get("response", {})
 
     print("MP preference response:", response)
-
+    
+    # 3) Guardar
     trans.mp_preference_id = response.get("id")
     trans.save()
 
+    # 4) Redirigir a MP
     init_point = response.get("init_point") or response.get("sandbox_init_point")
     if not init_point:
         return render(
@@ -98,36 +98,30 @@ def iniciar_pago(request, pelicula_id, tipo):
                 "detalle": response,
             },
         )
-
     return redirect(init_point)
 
 
 @login_required
+# Vista para manejar retorno exitoso
 def pago_success(request):
     return redirect("home")
 
 
 @login_required
+# Vista para manejar retorno fallido
 def pago_failure(request):
     return redirect("home")
 
 
 @login_required
+# Vista para manejar retorno pendiente
 def pago_pending(request):
     return redirect("home")
 
 
 @csrf_exempt
+# Webhook para recibir notificaciones de Mercado Pago
 def mp_webhook(request):
-    """
-    MercadoPago llama a esta URL cuando cambia el estado de un pago.
-    Actualizamos la Transaccion según el external_reference.
-    Si el pago queda 'approved':
-      - marcamos la transacción como 'completada'
-      - generamos un ver_token único
-      - seteamos ver_expires_at para arriendos (48h)
-      - enviamos email con link
-    """
     print("WEBHOOK RECIBIDO >>>", request.method, request.GET)
 
     # Intentamos leer JSON (si lo hay)
@@ -144,24 +138,25 @@ def mp_webhook(request):
         or request.GET.get("type")
         or payload.get("type")
     )
-
+    # Obtener ID de pago
     payment_id = (
         request.GET.get("id")
         or request.GET.get("data.id")
         or (payload.get("data") or {}).get("id")
     )
-
+    # Procesar solo si es notificación de pago
     if topic == "payment" and payment_id:
         sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
         payment_info = sdk.payment().get(payment_id)
         payment = payment_info.get("response", {})
 
         print("INFO PAGO MP >>>", payment)
-
-        status = payment.get("status")  # approved, rejected, etc.
+    
+        status = payment.get("status")  # aprobado, pendiente o rechazado
         external_ref = payment.get("external_reference")  # ID de Transaccion
         pref_id = payment.get("preference_id")
 
+        # Actualizar transacción según estado
         if external_ref:
             try:
                 trans = Transaccion.objects.get(id=external_ref)
@@ -187,6 +182,7 @@ def mp_webhook(request):
                     if trans.ver_expires_at:
                         print("EXPIRA EL >>>", trans.ver_expires_at)
 
+                    # Enviar email de entrega
                     trans.save()
                     enviar_email_entrega(trans)
 
@@ -201,9 +197,10 @@ def mp_webhook(request):
 
     return HttpResponse("OK", status=200)
 
-
+# Configurar Resend (servicio de email)
 resend.api_key = os.getenv("RESEND_API_KEY")
 
+# Función para enviar email de entrega
 def enviar_email_entrega(transaccion):
     user = transaccion.usuario
     pelicula = transaccion.pelicula
@@ -212,6 +209,7 @@ def enviar_email_entrega(transaccion):
         transaccion.ver_expires_at if transaccion.tipo == "arriendo" else None
     )
 
+    # Renderizar plantilla de email
     html_message = render_to_string(
         "emails/entrega_pelicula.html",
         {
@@ -222,7 +220,8 @@ def enviar_email_entrega(transaccion):
             "link": f"https://cinemarket-production.up.railway.app/arriendos/ver/{transaccion.ver_token}/",
         },
     )
-
+    
+    # Asunto del email
     subject = (
         f"Tu {'arriendo' if transaccion.tipo == 'arriendo' else 'compra'} "
         f"de {pelicula.titulo}"

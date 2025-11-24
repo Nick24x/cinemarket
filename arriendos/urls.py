@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from .views import ver_pelicula
 
+# URLs para la app de arriendos
 app_name = 'arriendos' 
 urlpatterns = [
     path('historial/', views.historial, name='historial'),
