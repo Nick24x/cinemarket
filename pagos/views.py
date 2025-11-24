@@ -204,8 +204,6 @@ def mp_webhook(request):
 def enviar_email_entrega(transaccion: Transaccion):
     user = transaccion.usuario
     pelicula = transaccion.pelicula
-
-    # Para mostrar en el correo: usamos la expiración real si existe
     expiracion = transaccion.ver_expires_at if transaccion.tipo == "arriendo" else None
 
     html_message = render_to_string(
@@ -218,16 +216,19 @@ def enviar_email_entrega(transaccion: Transaccion):
             "link": f"https://cinemarket-production.up.railway.app/arriendos/ver/{transaccion.ver_token}/",
         },
     )
-
     plain_message = strip_tags(html_message)
 
-    send_mail(
-        subject=(
-            f"Tu {'arriendo' if transaccion.tipo == 'arriendo' else 'compra'} "
-            f"de {pelicula.titulo}"
-        ),
-        message=plain_message,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[user.email],
-        html_message=html_message,
-    )
+    try:
+        send_mail(
+            subject=(
+                f"Tu {'arriendo' if transaccion.tipo == 'arriendo' else 'compra'} "
+                f"de {pelicula.titulo}"
+            ),
+            message=plain_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            html_message=html_message,
+        )
+        print("EMAIL ENVIADO >>>", user.email)
+    except Exception as e:
+        print("ERROR ENVIANDO EMAIL >>>", e)
