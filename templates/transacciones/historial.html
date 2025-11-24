@@ -93,7 +93,7 @@
                   <th class="text-center">Fecha</th>
                   <th class="text-center">Estado</th>
                   <th class="text-end">Monto</th>
-                  <th class="text-center">Acción</th>  {# nueva columna #}
+                  <th class="text-center">Acción</th>
                 </tr>
               </thead>
               <tbody>
@@ -150,7 +150,12 @@
                     <!-- ACCIÓN: Ver ahora / Expirado -->
                     <td class="text-center">
                       {% if t.estado == 'completada' %}
-                        {% if t.tipo == 'compra' or (t.tipo == 'arriendo' and t.ver_expires_at and t.ver_expires_at > ahora) %}
+                        {% if t.tipo == 'compra' %}
+                          <a href="{% url 'arriendos:ver_pelicula' t.ver_token %}"
+                             class="btn btn-sm btn-outline-primary">
+                            Ver ahora
+                          </a>
+                        {% elif t.tipo == 'arriendo' and t.ver_expires_at and t.ver_expires_at > ahora %}
                           <a href="{% url 'arriendos:ver_pelicula' t.ver_token %}"
                              class="btn btn-sm btn-outline-primary">
                             Ver ahora

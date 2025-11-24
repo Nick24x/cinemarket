@@ -34,11 +34,6 @@ def comprar_pelicula(request, pelicula_id):
 
 @login_required
 def historial(request):
-    """
-    Historial que ve el CLIENTE.
-    Solo muestra transacciones COMPLETADAS del usuario.
-    Las pendientes / rechazadas se siguen guardando para reportes admin.
-    """
     qs = (
         Transaccion.objects
         .filter(usuario=request.user, estado='completada')
@@ -53,7 +48,7 @@ def historial(request):
     ctx = {
         "transacciones": qs,
         "q": q,
-        "ahora": timezone.now(),   # 👈 para comparar expiración en el template
+        "ahora": timezone.now(),   # 👈 clave para comparar expiración
     }
     return render(request, "transacciones/historial.html", ctx)
 
