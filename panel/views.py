@@ -111,12 +111,22 @@ def pelicula_editar_admin(request, pk):
 @user_passes_test(is_admin)
 # Eliminar película
 def pelicula_eliminar_admin(request, pk):
+    """
+    Ya no borramos: alternamos el campo `disponible`.
+    Si viene POST, cambiamos disponible = not disponible y guardamos.
+    """
     obj = get_object_or_404(Pelicula, pk=pk)
+
     if request.method == 'POST':
-        titulo = obj.titulo
-        obj.delete()
-        messages.success(request, f'“{titulo}” eliminada.')
+        obj.disponible = not obj.disponible
+        obj.save()
+        if obj.disponible:
+            messages.success(request, f'“{obj.titulo}” activada nuevamente.')
+        else:
+            messages.success(request, f'“{obj.titulo}” desactivada correctamente.')
         return redirect('admin_catalogo')
+
+    # Si GET: mostramos la confirmación (puedes reutilizar tu template actual)
     return render(request, 'panel/pelicula_delete_admin.html', {'obj': obj})
 
 
