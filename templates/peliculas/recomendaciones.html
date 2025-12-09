@@ -15,7 +15,7 @@
 
 <body>
 
-    <!-- NAVBAR (mismo que en home.html) -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark px-4">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
             <span class="fs-4 fw-bold brand-accent">CineMarket</span>
@@ -50,7 +50,7 @@
                     {% endif %}
                     <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Salir</a>
                 {% else %}
-                    <!-- Un solo botón para Login / Registro -->
+                    <!-- Login / Registro -->
                     <div class="dropdown">
                         <button class="btn btn-outline-light btn-sm rounded-pill px-3 dropdown-toggle"
                                 type="button" data-bs-toggle="dropdown">

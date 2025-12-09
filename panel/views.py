@@ -1,31 +1,31 @@
-# panel/views.py
-from django.contrib.auth.decorators import login_required, user_passes_test
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.core.paginator import Paginator
-from django.db.models import Count, Sum
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required, user_passes_test # Asegura que solo admins accedan
+from django.shortcuts import render, redirect, get_object_or_404 # Para renderizar plantillas y manejar redirecciones
+from django.contrib import messages # Para mostrar mensajes flash
+from django.core.paginator import Paginator # Para paginar listas largas
+from django.db.models import Count, Sum # Para agregaciones en consultas
+from django.http import HttpResponse # Para respuestas HTTP personalizadas
 from peliculas.models import Pelicula
 from peliculas.forms import PeliculaForm
 from arriendos.models import Transaccion
 from datetime import datetime
 from django.utils import timezone
 
-
+# Verifica si el usuario es administrador
 def is_admin(user):
-    return user.is_staff  # o usa grupos/permissions si quieres granularidad
+    return user.is_staff 
 
 
 @login_required
 @user_passes_test(is_admin)
+# Panel de administración - Dashboard
 def dashboard(request):
     total_peliculas = Pelicula.objects.count()
     total_transacciones = Transaccion.objects.count()
-
     total_arriendos = Transaccion.objects.filter(tipo='arriendo').count()
     total_compras   = Transaccion.objects.filter(tipo='compra').count()
     total_devueltas = Transaccion.objects.filter(estado='devuelta').count()
 
+    # Ingresos por tipo de transacción
     ingreso_arriendos = (
         Transaccion.objects
         .filter(tipo='arriendo', estado='completada')
@@ -37,7 +37,8 @@ def dashboard(request):
         .aggregate(total=Sum('precio'))['total'] or 0
     )
     ingresos_totales = ingreso_arriendos + ingreso_compras
-
+    
+    # Datos para el contexto de la plantilla
     ctx = {
         'total_peliculas': total_peliculas,
         'total_transacciones': total_transacciones,
@@ -108,6 +109,7 @@ def pelicula_editar_admin(request, pk):
 
 @login_required
 @user_passes_test(is_admin)
+# Eliminar película
 def pelicula_eliminar_admin(request, pk):
     obj = get_object_or_404(Pelicula, pk=pk)
     if request.method == 'POST':
@@ -140,11 +142,8 @@ def reportes_admin(request):
 
 @login_required
 @user_passes_test(is_admin)
+# Transacciones
 def transacciones_admin(request):
-    """
-    Muestra las transacciones más recientes en el panel administrador.
-    Incluye información del usuario y la película relacionada.
-    """
     trans = (
         Transaccion.objects
         .select_related('usuario', 'pelicula')
@@ -158,12 +157,8 @@ def transacciones_admin(request):
 
 @login_required
 @user_passes_test(is_admin)
+# Devolver (reembolsar) una transacción
 def transaccion_devolver(request, trans_id):
-    """
-    Marca una transacción como devuelta (reembolso simulado).
-    - Cambia estado a 'devuelta'
-    - Guarda quién hizo la devolución y cuándo
-    """
     if request.method != "POST":
         return redirect('admin_transacciones')
 
@@ -181,11 +176,9 @@ def transaccion_devolver(request, trans_id):
     messages.success(request, 'Transacción marcada como devuelta.')
     return redirect('admin_transacciones')
 
-
+# Helpers para reportes
 def _parse_date(s):
-    """
-    Acepta 'dd-mm-aaaa' o 'aaaa-mm-dd'. Retorna datetime.date o None.
-    """
+    # Intenta parsear una fecha en varios formatos
     if not s:
         return None
     for fmt in ("%d-%m-%Y", "%Y-%m-%d"):
@@ -198,17 +191,20 @@ def _parse_date(s):
 
 @login_required
 @user_passes_test(is_admin)
+# Reportes avanzados con filtros y exportación CSV
 def reportes_admin(request):
     # Filtros
-    tipo   = request.GET.get('tipo', 'todos')           # 'todos' | 'arriendo' | 'compra'
-    genero = request.GET.get('genero', 'todos')         # 'todos' o valor exacto
+    tipo   = request.GET.get('tipo', 'todos')  
+    genero = request.GET.get('genero', 'todos')        
     desde  = _parse_date(request.GET.get('desde', ''))
     hasta  = _parse_date(request.GET.get('hasta', ''))
 
+    # Construir queryset base
     qs = (Transaccion.objects
           .select_related('pelicula', 'usuario')
           .order_by('-fecha'))
-
+    
+    # Aplicar filtros
     if tipo in ('arriendo', 'compra'):
         qs = qs.filter(tipo=tipo)
 
@@ -220,13 +216,16 @@ def reportes_admin(request):
     if hasta:
         qs = qs.filter(fecha__date__lte=hasta)
 
+    # Agregados
     ventas_totales = (qs.filter(estado='completada')
                         .aggregate(total=Sum('precio'))['total'] or 0)
-
+    
+    # Conteos por tipo
     compras_count   = qs.filter(tipo='compra').count()
     arriendos_count = qs.filter(tipo='arriendo').count()
     clientes_activos = qs.values('usuario').distinct().count()
-
+    
+    # Exportar CSV
     if request.GET.get('export') in ('1', 'csv'):
         import csv
         resp = HttpResponse(content_type='text/csv; charset=utf-8')

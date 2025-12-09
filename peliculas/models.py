@@ -1,5 +1,6 @@
 from django.db import models
 
+# Modelo para películas
 class Pelicula(models.Model):
     titulo = models.CharField(max_length=100)
     genero = models.CharField(max_length=50)

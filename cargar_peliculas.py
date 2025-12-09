@@ -1,5 +1,5 @@
 import json
-from peliculas.models import Pelicula  # cambia si tu app se llama distinto
+from peliculas.models import Pelicula
 from django.core.files.base import ContentFile
 import requests
 

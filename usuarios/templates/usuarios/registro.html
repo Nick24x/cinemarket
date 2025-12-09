@@ -22,11 +22,8 @@
 
     <!-- Formulario de registro. Se enviará usando el método POST -->
     <form method="POST">
-      <!-- Etiqueta de seguridad de Django para prevenir ataques de falsificación de solicitudes entre sitios (CSRF). Es obligatoria. -->
       {% csrf_token %}
-      <!-- Renderiza el formulario de Django (UserCreationForm) pasado desde la vista. '.as_p' lo formatea como párrafos. -->
       {{ form.as_p }}
-      <!-- Botón para enviar el formulario y crear la cuenta -->
       <button type="submit" class="btn btn-dark w-100 mt-3">Registrarse</button>
     </form>
 

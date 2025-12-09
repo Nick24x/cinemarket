@@ -34,12 +34,12 @@ def home(request):
     peliculas = paginator.get_page(page_number)
 
     return render(request, "home.html", {
-        "peliculas": peliculas,  # ahora es un Page, no un queryset
+        "peliculas": peliculas, # Películas paginadas
         "q": q,
         "genre": genre,
     })
 
-
+# Vista para el catálogo público de películas
 def catalogo_publico(request):
     q = request.GET.get('q', '').strip()
     qs = Pelicula.objects.filter(disponible=True).order_by('-anio', 'titulo')
@@ -64,11 +64,11 @@ def _populares(limit=16):
               .order_by('-calificacion', '-anio')[:limit])
     return qs
 
-
+# Vista para recomendaciones personalizadas
 def recomendaciones(request):
     peliculas = Pelicula.objects.none()
 
-    # 1️⃣ Recomendación por búsqueda reciente
+    # Recomendación por búsqueda reciente
     ultima_busqueda = request.session.get("ultima_busqueda")
 
     if ultima_busqueda:
@@ -78,7 +78,7 @@ def recomendaciones(request):
             Q(descripcion__icontains=ultima_busqueda)
         ).distinct()
 
-    # 2️⃣ Si no encontró nada, recomendar por historial del usuario
+    # Si no encontró nada, recomendar por historial del usuario
     if request.user.is_authenticated and not peliculas.exists():
         generos_vistos = Transaccion.objects.filter(
             usuario=request.user
@@ -89,7 +89,7 @@ def recomendaciones(request):
                 genero__in=generos_vistos
             ).distinct()
 
-    # 3️⃣ Si aún no hay nada, recomendar por calificación
+    # Si aún no hay nada, recomendar por calificación
     if not peliculas.exists():
         peliculas = Pelicula.objects.order_by("-calificacion")[:12]
 

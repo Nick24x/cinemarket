@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+# URL patterns para el panel de administración
 urlpatterns = [
     path('', views.dashboard, name='admin_dashboard'),
     path('catalogo/', views.catalogo_admin, name='admin_catalogo'),

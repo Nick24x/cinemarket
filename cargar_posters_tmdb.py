@@ -52,7 +52,7 @@ def asignar_posters():
                 print(f"Error HTTP {img_resp.status_code} descargando imagen de {p.titulo}")
                 continue
 
-            # Borro la imagen anterior para no dejar basura en el disco
+            # Borro la imagen anterior
             if p.imagen:
                 p.imagen.delete(save=False)
 

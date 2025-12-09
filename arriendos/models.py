@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from peliculas.models import Pelicula
 
 # Clase de transacción para arriendos y compras de películas
+from django.conf import settings
+from django.db import models
+from peliculas.models import Pelicula
+
 class Transaccion(models.Model):
     TIPO_CHOICES = (
         ('arriendo', 'Arriendo'),
@@ -15,7 +19,11 @@ class Transaccion(models.Model):
         ('rechazada', 'Rechazada'),
     )
 
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transacciones')
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='transacciones'
+    )
     pelicula = models.ForeignKey(Pelicula, on_delete=models.PROTECT, related_name='transacciones')
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
     precio = models.DecimalField(max_digits=9, decimal_places=2)
@@ -23,7 +31,7 @@ class Transaccion(models.Model):
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='pendiente')
     motivo_devolucion = models.TextField(blank=True)
     devuelta_por = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

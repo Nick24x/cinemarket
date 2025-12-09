@@ -11,7 +11,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
 def home(request):
-    # trae SOLO disponibles; si quieres probar, usa .all()
+    # Mostrar películas disponibles en la página principal
     peliculas = Pelicula.objects.filter(disponible=True).order_by('-anio', 'titulo')
     return render(request, 'home.html', {'peliculas': peliculas})
 
@@ -45,10 +45,8 @@ def logout_view(request):
     return redirect('home')
 
 @login_required
+# Vista para ver y editar el perfil del usuario
 def mi_perfil(request):
-    """
-    Ver y editar datos básicos del usuario (username, email, etc.).
-    """
     user = request.user
 
     if request.method == "POST":
@@ -70,11 +68,8 @@ def mi_perfil(request):
     })
 
 @login_required
+# Vista para cambiar la contraseña del usuario
 def cambiar_password(request):
-    """
-    Permite al usuario cambiar su contraseña.
-    Al guardar, se actualiza en la BD y se mantiene la sesión.
-    """
     if request.method == "POST":
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
