@@ -1,4 +1,4 @@
-{% extends "home.html" %}
+{% extends "panel/base_admin.html" %}  {# o "base.html" si existe #}
 
 {% block title %}Pagar {{ pelicula.titulo }}{% endblock %}
 
@@ -6,7 +6,11 @@
 <div class="container py-4">
     <h3>Pagar "{{ pelicula.titulo }}" ({{ tipo|capfirst }})</h3>
     <p>Precio: ${{ precio|floatformat:0 }}</p>
-    <p>Saldo disponible: ${{ saldo_usuario|floatformat:0 }}</p>
+    <p>Saldo disponible: ${{ saldo|floatformat:0 }}</p>
+
+    {% if mensaje %}
+        <div class="alert alert-warning">{{ mensaje }}</div>
+    {% endif %}
 
     <form method="post">
         {% csrf_token %}
