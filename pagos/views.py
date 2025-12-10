@@ -23,7 +23,8 @@ def terminos_compra(request, pelicula_id, tipo):
 
     if request.method == "POST":
         if request.POST.get("acepta"):
-            return redirect("pagos:iniciar_pago", pelicula_id=pelicula.id, tipo=tipo)
+            # 🔹 Redirigir a la selección de método de pago
+            return redirect("pagos:checkout_saldo", pelicula_id=pelicula.id, tipo=tipo)
         else:
             messages.info(request, "Debes aceptar los términos para continuar con la compra.")
             return redirect("peliculas:catalogo")
@@ -32,6 +33,7 @@ def terminos_compra(request, pelicula_id, tipo):
         "pelicula": pelicula,
         "tipo": tipo
     })
+
 
 @login_required
 def checkout_saldo(request, pelicula_id, tipo):
@@ -42,7 +44,7 @@ def checkout_saldo(request, pelicula_id, tipo):
 
     precio = float(pelicula.precio_arriendo if tipo == "arriendo" else pelicula.precio_compra)
 
-    perfil, _ = request.user.perfil, None
+    perfil = request.user.perfil
     saldo_usuario = float(perfil.saldo)
 
     mensaje = None
@@ -76,7 +78,7 @@ def checkout_saldo(request, pelicula_id, tipo):
 
                 # Mensaje de éxito
                 messages.success(request, f"Pago con saldo aprobado. Accede a tu película ahora.")
-                return redirect("peliculas:recomendaciones")  # o donde quieras que vaya
+                return redirect("peliculas:recomendaciones")
         else:
             mensaje = "Método de pago inválido."
 

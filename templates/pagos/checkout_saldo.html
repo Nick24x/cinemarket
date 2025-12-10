@@ -1,29 +1,23 @@
-{% extends 'panel/base_admin.html' %}
+{% extends "base.html" %}
 
-{% block title %}Checkout - CineMarket{% endblock %}
+{% block title %}Pagar {{ pelicula.titulo }}{% endblock %}
 
 {% block content %}
 <div class="container py-4">
-  <h3>Checkout - {{ pelicula.titulo }}</h3>
-  <p>Tipo: {{ tipo|capfirst }}</p>
-  <p>Precio: ${{ precio|floatformat:0|intcomma }}</p>
-  <p>Saldo disponible: ${{ saldo|floatformat:0|intcomma }}</p>
+    <h3>Pagar "{{ pelicula.titulo }}" ({{ tipo|capfirst }})</h3>
+    <p>Precio: ${{ precio|floatformat:0 }}</p>
+    <p>Saldo disponible: ${{ saldo_usuario|floatformat:0 }}</p>
 
-  {% if mensaje %}
-    <div class="alert alert-warning">{{ mensaje }}</div>
-  {% endif %}
-
-  <form method="post">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label class="form-label">Método de pago</label>
-      <select name="metodo_pago" class="form-select" required>
-        <option value="saldo">Saldo CineMarket</option>
-        <option value="mp">MercadoPago</option>
-      </select>
-    </div>
-
-    <button class="btn btn-primary">Pagar</button>
-  </form>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Elige tu método de pago:</label>
+            <select name="metodo_pago" class="form-select">
+                <option value="saldo">Saldo</option>
+                <option value="mp">Mercado Pago</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Pagar</button>
+    </form>
 </div>
 {% endblock %}
