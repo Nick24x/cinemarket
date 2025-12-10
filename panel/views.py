@@ -162,6 +162,18 @@ def transacciones_admin(request):
         .order_by('-fecha')[:200]
     )
 
+    # Calculamos si ya expiró el reembolso y tiempo restante
+    now = timezone.now()
+    for t in trans:
+        limite = t.fecha + timedelta(minutes=15)
+        if now > limite:
+            t.reembolso_expirado = True
+            t.tiempo_restante = 0
+        else:
+            t.reembolso_expirado = False
+            # Tiempo restante en segundos
+            t.tiempo_restante = int((limite - now).total_seconds())
+
     return render(request, 'panel/transacciones_admin.html', {
         'trans': trans,
     })

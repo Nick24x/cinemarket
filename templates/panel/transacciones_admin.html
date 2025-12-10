@@ -57,11 +57,25 @@
               {% elif a.estado == 'completada' %}
                 <form method="post" action="{% url 'admin_transaccion_devolver' a.id %}" class="d-inline">
                   {% csrf_token %}
-                  <button class="btn btn-sm btn-outline-danger"
-                          onclick="return confirm('¿Marcar esta transacción como devuelta?');">
-                    Devolver
+                  <button class="btn btn-sm btn-outline-danger" id="btn-{{ a.id }}">
+                    Devolver (<span id="contador-{{ a.id }}">{{ a.tiempo_restante }}</span>s)
                   </button>
                 </form>
+                <script>
+                  (function(){
+                    const span = document.getElementById("contador-{{ a.id }}");
+                    let tiempo = parseInt(span.innerText);
+                    const interval = setInterval(() => {
+                      tiempo -= 1;
+                      if(tiempo <= 0){
+                        clearInterval(interval);
+                        span.parentElement.innerHTML = '<span class="text-muted small">Expirado</span>';
+                      } else {
+                        span.innerText = tiempo;
+                      }
+                    }, 1000);
+                  })();
+                </script>
               {% else %}
                 <span class="text-muted small">Pendiente</span>
               {% endif %}
