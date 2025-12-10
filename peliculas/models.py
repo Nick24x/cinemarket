@@ -5,6 +5,15 @@ class PeliculaActivaManager(models.Manager):
         return super().get_queryset().filter(disponible=True)
 
 class Pelicula(models.Model):
+
+    GENEROS_CHOICES = [
+        ("Acción", "Acción"),
+        ("Terror", "Terror"),
+        ("Romance", "Romance"),
+        ("Comedia", "Comedia"),
+        ("Infantil", "Infantil"),
+    ]
+    
     titulo = models.CharField(max_length=100)
     genero = models.CharField(max_length=50)
     anio = models.IntegerField()
