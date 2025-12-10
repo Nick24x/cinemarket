@@ -51,13 +51,17 @@
             </td>
             <td class="text-end">
               {% if a.estado != 'devuelta' %}
-              <form method="post" action="{% url 'admin_transaccion_devolver' a.id %}" class="d-inline">
-                {% csrf_token %}
-                <button class="btn btn-sm btn-outline-danger"
-                        onclick="return confirm('¿Marcar esta transacción como devuelta?');">
-                  Devolver
-                </button>
-              </form>
+                {% if a.reembolso_expirado %}
+                  <span class="text-muted small">Expirado</span>
+                {% else %}
+                  <form method="post" action="{% url 'admin_transaccion_devolver' a.id %}" class="d-inline">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('¿Marcar esta transacción como devuelta?');">
+                      Devolver
+                    </button>
+                  </form>
+                {% endif %}
               {% else %}
                 <span class="text-muted small">Reembolsada</span>
               {% endif %}

@@ -197,6 +197,14 @@ def transaccion_devolver(request, trans_id):
     messages.success(request, 'Transacción marcada como devuelta y saldo actualizado.')
     return redirect('admin_transacciones')
 
+@property
+def reembolso_expirado(self):
+    # Solo aplica si la transacción está completada
+    if self.estado != 'completada':
+        return False
+    # Comparar fecha de transacción + 15 min con ahora
+    return timezone.now() > self.fecha + timedelta(minutes=15)
+
 # Helpers para reportes
 def _parse_date(s):
     # Intenta parsear una fecha en varios formatos
