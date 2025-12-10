@@ -53,7 +53,12 @@
             <!-- LOGIN / REGISTRO -->
             <div class="d-flex align-items-center gap-2">
                 {% if user.is_authenticated %}
-                    <span class="text-light small me-1">{{ user.username }}</span>
+                    <span class="text-light small me-2">{{ user.username }}</span>
+
+                    <!-- SALDO -->
+                    <span class="text-warning small me-3">
+                        Saldo: <strong>${{ user.perfil.saldo|default:0|floatformat:0 }}</strong> CLP
+                    </span>
 
                     <a href="{% url 'mi_perfil' %}" class="btn btn-outline-light btn-sm me-1">
                         Mi perfil
@@ -82,7 +87,7 @@
                                 <a class="dropdown-item" href="{% url 'login' %}">Iniciar sesión</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{% url 'registro' %}">Registrarse</a>
+                    <a class="dropdown-item" href="{% url 'registro' %}">Registrarse</a>
                             </li>
                         </ul>
                     </div>
