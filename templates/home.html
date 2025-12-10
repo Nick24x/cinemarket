@@ -130,7 +130,7 @@
                                         <div class="d-flex flex-wrap gap-2">
                                             <!-- Arrendar -->
                                             <a
-                                                href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}"
+                                                href="{% url 'pagos:terminos' p.id 'arriendo' %}"
                                                 class="btn btn-primary btn-lg"
                                             >
                                                 Arrendar por ${{ p.precio_arriendo|floatformat:0 }}
@@ -138,7 +138,7 @@
 
                                             <!-- Comprar -->
                                             <a
-                                                href="{% url 'pagos:iniciar_pago' p.id 'compra' %}"
+                                                href="{% url 'pagos:terminos' p.id 'compra' %}"
                                                 class="btn btn-outline-light btn-lg"
                                             >
                                                 Comprar por ${{ p.precio_compra|floatformat:0 }}
@@ -303,7 +303,7 @@
                                         Arrendar: ${{ p.precio_arriendo|floatformat:0 }}
                                     </span>
                                     <a
-                                        href="{% url 'pagos:iniciar_pago' p.id 'arriendo' %}"
+                                        href="{% url 'pagos:terminos' p.id 'arriendo' %}"
                                         class="btn btn-primary btn-sm"
                                     >
                                         Arrendar
@@ -316,7 +316,7 @@
                                         Comprar: ${{ p.precio_compra|floatformat:0 }}
                                     </span>
                                     <a
-                                        href="{% url 'pagos:iniciar_pago' p.id 'compra' %}"
+                                        href="{% url 'pagos:terminos' p.id 'compra' %}"
                                         class="btn btn-outline-light btn-sm"
                                     >
                                         Comprar

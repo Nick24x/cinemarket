@@ -44,7 +44,7 @@ def catalogo_publico(request):
 
     page = Paginator(qs, 12).get_page(request.GET.get('page'))
 
-    return render(request, 'peliculas/catalogo_publico.html', {
+    return render(request, 'peliculas/catalogo.html', {
         'peliculas': page,
         'q': q
     })
