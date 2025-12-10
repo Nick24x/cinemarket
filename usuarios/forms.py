@@ -4,7 +4,26 @@ from django.contrib.auth.forms import UserCreationForm
 
 # Formulario de registro de usuario
 class RegistroForm(UserCreationForm):
+
+    username = forms.CharField(
+        max_length=10,
+        label="Nombre de usuario",
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+
+    password1 = forms.CharField(
+        max_length=15,
+        label="Contraseña",
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
+
+    password2 = forms.CharField(
+        max_length=15,
+        label="Confirmar contraseña",
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
     email = forms.EmailField(required=True, label="Correo electrónico")
+
     rut = forms.CharField(
         required=True,
         label="RUT",
@@ -15,6 +34,18 @@ class RegistroForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "rut", "password1", "password2")
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        if len(username) > 10:
+            raise forms.ValidationError("El nombre de usuario no puede tener más de 10 caracteres.")
+        return username
+
+    def clean_password1(self):
+        password = self.cleaned_data.get("password1")
+        if password and len(password) > 15:
+            raise forms.ValidationError("La contraseña no puede tener más de 15 caracteres.")
+        return password
 
     def save(self, commit=True):
         user = super().save(commit=False)
