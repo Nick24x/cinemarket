@@ -39,31 +39,43 @@
         <div class="col-md-6">
           <label class="form-label" for="{{ form.username.id_for_label }}">Nombre de usuario</label>
           {{ form.username|add_class:"form-control" }}
-          {% for err in form.username.errors %}<div class="text-danger small mt-1">{{ err }}</div>{% endfor %}
+          <small class="text-muted">{{ form.username.help_text }}</small>
+          {% for err in form.username.errors %}
+            <div class="text-danger small mt-1">{{ err }}</div>
+          {% endfor %}
         </div>
 
         <div class="col-md-6">
           <label class="form-label" for="{{ form.email.id_for_label }}">Correo electrónico</label>
           {{ form.email|add_class:"form-control" }}
-          {% for err in form.email.errors %}<div class="text-danger small mt-1">{{ err }}</div>{% endfor %}
+          {% for err in form.email.errors %}
+            <div class="text-danger small mt-1">{{ err }}</div>
+          {% endfor %}
         </div>
 
         <div class="col-12">
           <label class="form-label" for="{{ form.rut.id_for_label }}">RUT</label>
           {{ form.rut|add_class:"form-control" }}
-          {% for err in form.rut.errors %}<div class="text-danger small mt-1">{{ err }}</div>{% endfor %}
+          {% for err in form.rut.errors %}
+            <div class="text-danger small mt-1">{{ err }}</div>
+          {% endfor %}
         </div>
 
         <div class="col-md-6">
           <label class="form-label" for="{{ form.password1.id_for_label }}">Contraseña</label>
           {{ form.password1|add_class:"form-control" }}
-          {% for err in form.password1.errors %}<div class="text-danger small mt-1">{{ err }}</div>{% endfor %}
+          <small class="text-muted">{{ form.password1.help_text }}</small>
+          {% for err in form.password1.errors %}
+            <div class="text-danger small mt-1">{{ err }}</div>
+          {% endfor %}
         </div>
 
         <div class="col-md-6">
           <label class="form-label" for="{{ form.password2.id_for_label }}">Contraseña (confirmación)</label>
           {{ form.password2|add_class:"form-control" }}
-          {% for err in form.password2.errors %}<div class="text-danger small mt-1">{{ err }}</div>{% endfor %}
+          {% for err in form.password2.errors %}
+            <div class="text-danger small mt-1">{{ err }}</div>
+          {% endfor %}
         </div>
       </div>
 
