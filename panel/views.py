@@ -10,6 +10,8 @@ from arriendos.models import Transaccion
 from datetime import datetime
 from django.utils import timezone
 
+from usuarios.models import Perfil
+
 # Verifica si el usuario es administrador
 def is_admin(user):
     return user.is_staff 
@@ -183,7 +185,7 @@ def transaccion_devolver(request, trans_id):
     trans.save()
 
     # Actualizar saldo del usuario que hizo la transacción
-    perfil, created = trans.usuario.perfil_set.get_or_create(usuario=trans.usuario)
+    perfil, created = Perfil.objects.get_or_create(user=trans.usuario)
     perfil.saldo += trans.precio
     perfil.save()
 
