@@ -1,3 +1,4 @@
+from datetime import timedelta, timezone
 from django.db import models
 from django.contrib.auth.models import User
 from peliculas.models import Pelicula
@@ -53,3 +54,13 @@ class Transaccion(models.Model):
 
     def __str__(self):
         return f'{self.usuario} - {self.tipo} - {self.pelicula} - {self.estado}'
+    
+@property
+def reembolso_expirado(self):
+    """
+    Devuelve True si la transacción ya superó los 15 minutos desde completada.
+    Solo aplica a transacciones completadas.
+    """
+    if self.estado != 'completada':
+        return False
+    return timezone.now() > self.fecha + timedelta(minutes=15)

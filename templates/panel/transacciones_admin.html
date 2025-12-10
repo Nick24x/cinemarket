@@ -50,20 +50,20 @@
               ${{ a.precio|floatformat:0|intcomma }}
             </td>
             <td class="text-end">
-              {% if a.estado != 'devuelta' %}
-                {% if a.reembolso_expirado %}
-                  <span class="text-muted small">Expirado</span>
-                {% else %}
-                  <form method="post" action="{% url 'admin_transaccion_devolver' a.id %}" class="d-inline">
-                    {% csrf_token %}
-                    <button class="btn btn-sm btn-outline-danger"
-                            onclick="return confirm('¿Marcar esta transacción como devuelta?');">
-                      Devolver
-                    </button>
-                  </form>
-                {% endif %}
-              {% else %}
+              {% if a.estado == 'devuelta' %}
                 <span class="text-muted small">Reembolsada</span>
+              {% elif a.estado == 'completada' and a.reembolso_expirado %}
+                <span class="text-muted small">Expirado</span>
+              {% elif a.estado == 'completada' %}
+                <form method="post" action="{% url 'admin_transaccion_devolver' a.id %}" class="d-inline">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-danger"
+                          onclick="return confirm('¿Marcar esta transacción como devuelta?');">
+                    Devolver
+                  </button>
+                </form>
+              {% else %}
+                <span class="text-muted small">Pendiente</span>
               {% endif %}
             </td>
           </tr>
