@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Pago exitoso{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <h3>¡Pago exitoso!</h3>
+    <p>Has adquirido: <strong>{{ transaccion.pelicula.titulo }}</strong></p>
+    <p>Tipo: <strong>{{ transaccion.tipo|capfirst }}</strong></p>
+    <p>Fecha: {{ transaccion.fecha|date:"d-m-Y H:i" }}</p>
+    <p>Saldo gastado: ${{ saldo_gastado|floatformat:0 }}</p>
+    <p>Saldo restante: ${{ saldo_restante|floatformat:0 }}</p>
+
+    <p class="mt-4">Serás redirigido al <a href="{% url 'home' %}">inicio</a> en 5 segundos...</p>
+</div>
+
+<script>
+    setTimeout(() => {
+        window.location.href = "{% url 'home' %}";
+    }, 5000); // 5 segundos
+</script>
+{% endblock %}

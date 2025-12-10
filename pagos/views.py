@@ -44,10 +44,8 @@ def checkout_saldo(request, pelicula_id, tipo):
         raise Http404("Tipo de operación no válido")
 
     precio = Decimal(pelicula.precio_arriendo if tipo == "arriendo" else pelicula.precio_compra)
-
     perfil = request.user.perfil
-    saldo_usuario = perfil.saldo
-
+    saldo_usuario = perfil.saldo  # mantener Decimal
     mensaje = None
 
     if request.method == "POST":
@@ -69,6 +67,7 @@ def checkout_saldo(request, pelicula_id, tipo):
                     tipo=tipo,
                     precio=precio,
                     estado="completada",
+                    fecha=timezone.now()
                 )
 
                 # Generar token y expiración si es arriendo
@@ -77,9 +76,12 @@ def checkout_saldo(request, pelicula_id, tipo):
                     trans.ver_expires_at = timezone.now() + timedelta(hours=48)
                 trans.save()
 
-                # Mensaje de éxito
-                messages.success(request, f"Pago con saldo aprobado. Accede a tu película ahora.")
-                return redirect("peliculas:recomendaciones")
+                # Mostrar resumen de pago
+                return render(request, "pagos/pago_saldo_success.html", {
+                    "transaccion": trans,
+                    "saldo_gastado": precio,
+                    "saldo_restante": perfil.saldo,
+                })
         else:
             mensaje = "Método de pago inválido."
 
@@ -87,7 +89,7 @@ def checkout_saldo(request, pelicula_id, tipo):
         "pelicula": pelicula,
         "tipo": tipo,
         "precio": precio,
-        "saldo": saldo_usuario,
+        "saldo_usuario": saldo_usuario,
         "mensaje": mensaje,
     })
 
