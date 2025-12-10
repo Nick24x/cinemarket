@@ -1,3 +1,4 @@
+from decimal import Decimal
 import json
 import os
 import uuid
@@ -42,10 +43,10 @@ def checkout_saldo(request, pelicula_id, tipo):
     if tipo not in ("arriendo", "compra"):
         raise Http404("Tipo de operación no válido")
 
-    precio = float(pelicula.precio_arriendo if tipo == "arriendo" else pelicula.precio_compra)
+    precio = Decimal(pelicula.precio_arriendo if tipo == "arriendo" else pelicula.precio_compra)
 
     perfil = request.user.perfil
-    saldo_usuario = float(perfil.saldo)
+    saldo_usuario = perfil.saldo
 
     mensaje = None
 
