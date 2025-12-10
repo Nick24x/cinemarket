@@ -8,18 +8,21 @@ class RegistroForm(UserCreationForm):
     username = forms.CharField(
         max_length=10,
         label="Nombre de usuario",
+        help_text="Máximo 10 caracteres",
         widget=forms.TextInput(attrs={"class": "form-control"})
     )
 
     password1 = forms.CharField(
         max_length=15,
         label="Contraseña",
+        help_text="Máximo 15 caracteres",
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
 
     password2 = forms.CharField(
         max_length=15,
         label="Confirmar contraseña",
+        help_text="Máximo 15 caracteres",
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
     email = forms.EmailField(required=True, label="Correo electrónico")

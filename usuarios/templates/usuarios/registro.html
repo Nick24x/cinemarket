@@ -39,7 +39,7 @@
         <div class="col-md-6">
           <label class="form-label" for="{{ form.username.id_for_label }}">Nombre de usuario</label>
           {{ form.username|add_class:"form-control" }}
-          <small class="text-muted">{{ form.username.help_text }}</small>
+          <small class="text-secondary fw-semibold">{{ form.username.help_text }}</small>
           {% for err in form.username.errors %}
             <div class="text-danger small mt-1">{{ err }}</div>
           {% endfor %}
@@ -64,7 +64,7 @@
         <div class="col-md-6">
           <label class="form-label" for="{{ form.password1.id_for_label }}">Contraseña</label>
           {{ form.password1|add_class:"form-control" }}
-          <small class="text-muted">{{ form.password1.help_text }}</small>
+          <small class="text-secondary fw-semibold">{{ form.password1.help_text }}</small>
           {% for err in form.password1.errors %}
             <div class="text-danger small mt-1">{{ err }}</div>
           {% endfor %}
