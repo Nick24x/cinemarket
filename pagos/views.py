@@ -16,6 +16,7 @@ from peliculas.models import Pelicula
 from arriendos.models import Transaccion
 from django.contrib import messages
 
+
 @login_required
 def terminos_compra(request, pelicula_id, tipo):
     pelicula = get_object_or_404(Pelicula, id=pelicula_id)
@@ -31,6 +32,62 @@ def terminos_compra(request, pelicula_id, tipo):
         "pelicula": pelicula,
         "tipo": tipo
     })
+
+@login_required
+def checkout_saldo(request, pelicula_id, tipo):
+    pelicula = get_object_or_404(Pelicula, id=pelicula_id)
+    tipo = tipo.lower()
+    if tipo not in ("arriendo", "compra"):
+        raise Http404("Tipo de operación no válido")
+
+    precio = float(pelicula.precio_arriendo if tipo == "arriendo" else pelicula.precio_compra)
+
+    perfil, _ = request.user.perfil, None
+    saldo_usuario = float(perfil.saldo)
+
+    mensaje = None
+
+    if request.method == "POST":
+        metodo = request.POST.get("metodo_pago")
+        if metodo == "mp":
+            return redirect("pagos:iniciar_pago", pelicula_id=pelicula.id, tipo=tipo)
+        elif metodo == "saldo":
+            if saldo_usuario < precio:
+                mensaje = "Saldo insuficiente para completar la compra."
+            else:
+                # Restar saldo
+                perfil.saldo -= precio
+                perfil.save()
+
+                # Crear transacción completada
+                trans = Transaccion.objects.create(
+                    usuario=request.user,
+                    pelicula=pelicula,
+                    tipo=tipo,
+                    precio=precio,
+                    estado="completada",
+                )
+
+                # Generar token y expiración si es arriendo
+                if tipo == "arriendo":
+                    trans.ver_token = uuid.uuid4().hex
+                    trans.ver_expires_at = timezone.now() + timedelta(hours=48)
+                trans.save()
+
+                # Mensaje de éxito
+                messages.success(request, f"Pago con saldo aprobado. Accede a tu película ahora.")
+                return redirect("peliculas:recomendaciones")  # o donde quieras que vaya
+        else:
+            mensaje = "Método de pago inválido."
+
+    return render(request, "pagos/checkout_saldo.html", {
+        "pelicula": pelicula,
+        "tipo": tipo,
+        "precio": precio,
+        "saldo": saldo_usuario,
+        "mensaje": mensaje,
+    })
+
 
 @login_required
 def iniciar_pago(request, pelicula_id, tipo):
