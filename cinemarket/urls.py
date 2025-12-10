@@ -12,7 +12,7 @@ urlpatterns = [
     path('peliculas/', include('peliculas.urls')),
     path('panel/', include('panel.urls')),
     path('admin/', admin.site.urls),
-    path('pagos/', include('pagos.urls')),
+    path('pagos/', include('pagos.urls', namespace='pagos')),
 ]
 
 # Manejo de archivos multimedia
