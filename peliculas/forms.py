@@ -38,7 +38,7 @@ class PeliculaForm(forms.ModelForm):
         }
         
     def clean_titulo(self):
-        titulo = self.cleaned_data["titulo"].strip()
+        titulo = self.cleaned_data.get("titulo").strip()
         if Pelicula.objects.filter(titulo__iexact=titulo).exists():
             raise forms.ValidationError(
                 "Ya existe una película con este título."

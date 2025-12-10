@@ -15,7 +15,7 @@ class Pelicula(models.Model):
     ]
     
     titulo = models.CharField(max_length=100)
-    genero = models.CharField(max_length=50)
+    genero = models.CharField(max_length=50, choices=GENEROS_CHOICES)
     anio = models.IntegerField()
     precio_arriendo = models.DecimalField(max_digits=7, decimal_places=0, default=0)
     precio_compra = models.DecimalField(max_digits=7, decimal_places=0, default=0)
