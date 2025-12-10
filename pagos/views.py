@@ -14,7 +14,23 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt # para el webhook de MP
 from peliculas.models import Pelicula
 from arriendos.models import Transaccion
+from django.contrib import messages
 
+@login_required
+def terminos_compra(request, pelicula_id, tipo):
+    pelicula = get_object_or_404(Pelicula, id=pelicula_id)
+
+    if request.method == "POST":
+        if request.POST.get("acepta"):
+            return redirect("pagos:iniciar_pago", pelicula_id=pelicula.id, tipo=tipo)
+        else:
+            messages.info(request, "Debes aceptar los términos para continuar con la compra.")
+            return redirect("peliculas:catalogo")
+
+    return render(request, "pagos/terminos_compra.html", {
+        "pelicula": pelicula,
+        "tipo": tipo
+    })
 
 @login_required
 def iniciar_pago(request, pelicula_id, tipo):
