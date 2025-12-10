@@ -27,12 +27,6 @@
       <div class="muted">Iniciar sesión</div>
     </div>
 
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} py-2">{{ message }}</div>
-      {% endfor %}
-    {% endif %}
-
     <form method="POST" novalidate>
       {% csrf_token %}
 
