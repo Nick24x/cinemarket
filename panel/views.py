@@ -167,7 +167,6 @@ def transacciones_admin(request):
 
 @login_required
 @user_passes_test(is_admin)
-# Devolver (reembolsar) una transacción
 def transaccion_devolver(request, trans_id):
     if request.method != "POST":
         return redirect('admin_transacciones')
@@ -183,7 +182,12 @@ def transaccion_devolver(request, trans_id):
     trans.fecha_devolucion = timezone.now()
     trans.save()
 
-    messages.success(request, 'Transacción marcada como devuelta.')
+    # Actualizar saldo del usuario que hizo la transacción
+    perfil, created = trans.usuario.perfil_set.get_or_create(usuario=trans.usuario)
+    perfil.saldo += trans.precio
+    perfil.save()
+
+    messages.success(request, 'Transacción marcada como devuelta y saldo actualizado.')
     return redirect('admin_transacciones')
 
 # Helpers para reportes

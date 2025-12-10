@@ -1,0 +1,8 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <h3>Saldo disponible</h3>
+    <p>Tu saldo actual es: <strong>${{ user.perfil.saldo|default:0|floatformat:0 }}</strong> CLP</p>
+</div>
+{% endblock %}
