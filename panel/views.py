@@ -7,7 +7,7 @@ from django.http import HttpResponse # Para respuestas HTTP personalizadas
 from peliculas.models import Pelicula
 from peliculas.forms import PeliculaForm
 from arriendos.models import Transaccion
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 
 from usuarios.models import Perfil
@@ -174,6 +174,11 @@ def transaccion_devolver(request, trans_id):
         return redirect('admin_transacciones')
 
     trans = get_object_or_404(Transaccion, id=trans_id)
+
+    # Verificar límite de 15 minutos
+    if timezone.now() > trans.fecha + timedelta(minutes=15):
+        messages.error(request, "El reembolso ya no es posible. Superó el límite de 15 minutos.")
+        return redirect('admin_transacciones')
 
     if trans.estado == 'devuelta':
         messages.info(request, 'Esta transacción ya estaba marcada como devuelta.')
