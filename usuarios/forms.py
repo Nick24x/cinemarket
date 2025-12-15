@@ -27,16 +27,10 @@ class RegistroForm(UserCreationForm):
     )
     email = forms.EmailField(required=True, label="Correo electrónico")
 
-    rut = forms.CharField(
-        required=True,
-        label="RUT",
-        max_length=20,
-        widget=forms.TextInput(attrs={"class": "form-control"})
-    )
 
     class Meta:
         model = User
-        fields = ("username", "email", "rut", "password1", "password2")
+        fields = ("username", "email", "password1", "password2")
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -53,7 +47,7 @@ class RegistroForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
-        user.rut = self.cleaned_data["rut"] 
+        
         if commit:
             user.save()
         return user
