@@ -53,7 +53,7 @@ class RegistroForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
-        user.rut = self.cleaned_data["rut"]   # ← AQUÍ se guarda el rut
+        user.rut = self.cleaned_data["rut"] 
         if commit:
             user.save()
         return user
