@@ -1,5 +1,10 @@
 /* =========================================================
-   FONDO GENERAL
+  css.css — Estilos globales del sitio
+  Mantener aquí estilos compartidos entre vistas (navbar, hero,
+  tarjetas, etc.). Evitar duplicar reglas específicas de vistas.
+========================================================= */
+/* =========================================================
+  FONDO GENERAL
 ========================================================= */
 body {
   background: radial-gradient(circle at top, #20263b 0, #050814 45%, #02030a 100%);
