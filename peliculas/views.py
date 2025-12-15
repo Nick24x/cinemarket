@@ -50,28 +50,6 @@ def catalogo_publico(request):
     })
 
 
-def _populares(limit=16):
-    pop_ids = (
-        Transaccion.objects
-        .filter(estado='completada')
-        .values('pelicula')
-        .annotate(n=Count('id'))
-        .order_by('-n')[:max(limit, 50)]
-    )
-    ids = [x['pelicula'] for x in pop_ids]
-
-    qs = (
-        Pelicula.activas
-        .filter(id__in=ids)
-        .order_by('-calificacion', '-anio')[:limit]
-    )
-
-    if not qs.exists():
-        qs = Pelicula.activas.order_by('-calificacion', '-anio')[:limit]
-
-    return qs
-
-
 def recomendaciones(request):
     peliculas = Pelicula.objects.none()
     ultima_busqueda = request.session.get("ultima_busqueda")

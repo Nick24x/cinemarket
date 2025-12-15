@@ -134,26 +134,6 @@ def pelicula_eliminar_admin(request, pk):
 
 @login_required
 @user_passes_test(is_admin)
-def reportes_admin(request):
-    # Ejemplos simples: top géneros y años
-    por_genero = (
-        Pelicula.objects.values('genero')
-        .annotate(cantidad=Count('id'))
-        .order_by('-cantidad')[:10]
-    )
-    por_anio = (
-        Pelicula.objects.values('anio')
-        .annotate(cantidad=Count('id'))
-        .order_by('-anio')[:10]
-    )
-    return render(request, 'panel/reportes_admin.html', {
-        'por_genero': por_genero,
-        'por_anio': por_anio
-    })
-
-
-@login_required
-@user_passes_test(is_admin)
 # Transacciones
 def transacciones_admin(request):
     trans = (
