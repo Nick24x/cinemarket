@@ -89,23 +89,6 @@
                             ⭐ {{ p.calificacion|floatformat:1 }}
                         </span>
                         {% endif %}
-
-                        <!-- Tarjeta flotante (mismo comportamiento que en home) -->
-                        <div class="movie-hover-card text-start">
-                            <div class="movie-hover-title mb-1">{{ p.titulo }}</div>
-
-                            <div class="movie-hover-meta mb-2">
-                                {% if p.calificacion %}
-                                    <span>{{ p.calificacion|floatformat:1 }}/5</span>
-                                {% else %}
-                                    <span>Sin rating</span>
-                                {% endif %}
-                                <span class="text-light">{{ p.anio }}</span>
-                                <span class="badge bg-warning text-dark">HD</span>
-                            </div>
-
-                            <p class="movie-hover-description mb-0">{{ p.descripcion|default:"Sinopsis no disponible."|truncatechars:200 }}</p>
-                        </div>
                     </div>
 
                     <div class="p-3">
